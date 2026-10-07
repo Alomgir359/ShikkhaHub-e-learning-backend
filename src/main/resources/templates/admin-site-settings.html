@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Landing Video &amp; Payment · Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', 'Hind Siliguri', sans-serif; background: #f0f7f0; color: #1f2937; }
+        a { color: inherit; text-decoration: none; }
+        .dashboard { display: flex; min-height: 100vh; }
+        .sidebar { width: 270px; background: #0a3d2f; color: #fff; position: fixed; inset: 0 auto 0 0; overflow-y: auto; z-index: 50; transition: transform .25s; }
+        .sidebar-header { padding: 28px 22px; border-bottom: 1px solid rgba(255,255,255,.12); background: linear-gradient(135deg,#0a3d2f,#0f5a45); }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-icon { font-size: 30px; color: #7ed957; }
+        .logo-text h3 { font-size: 17px; font-weight: 700; }
+        .logo-text p { font-size: 11px; opacity: .7; margin-top: 3px; }
+        .nav-menu { padding: 22px 16px; display: flex; flex-direction: column; gap: 6px; }
+        .nav-item { display: flex; align-items: center; gap: 14px; padding: 11px 16px; border-radius: 12px; font-size: 14px; font-weight: 500; color: #e2f0e9; }
+        .nav-item i { width: 22px; }
+        .nav-item:hover { background: rgba(43,140,94,.3); color: #fff; }
+        .nav-item.active { background: #2b8c5e; color: #fff; box-shadow: 0 6px 12px rgba(0,0,0,.15); }
+        .nav-section-title { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,.45); padding: 12px 16px 4px; }
+        .nav-badge { margin-left: auto; background: #e53e3e; color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+
+        .main { margin-left: 270px; flex: 1; padding: 28px; min-width: 0; max-width: 1180px; }
+        .topbar { display: flex; gap: 12px; align-items: center; margin-bottom: 22px; }
+        .topbar h1 { font-size: 24px; font-weight: 800; color: #0a3d2f; }
+        .topbar p { color: #6b7280; font-size: 14px; margin-top: 4px; }
+        .menu-toggle { display: none; background: #0a3d2f; color: #fff; border: 0; width: 42px; height: 42px; border-radius: 10px; font-size: 18px; cursor: pointer; }
+
+        .alert { padding: 12px 16px; border-radius: 12px; margin-bottom: 18px; font-size: 14px; display: flex; gap: 10px; }
+        .alert-success { background: #dcfce7; color: #14532d; border: 1px solid #86efac; }
+        .alert-error { background: #fee2e2; color: #7f1d1d; border: 1px solid #fca5a5; }
+
+        .grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 20px; align-items: start; }
+        .card { background: #fff; border-radius: 18px; box-shadow: 0 2px 12px rgba(0,0,0,.05); padding: 22px; }
+        .card h2 { font-size: 17px; font-weight: 700; color: #0a3d2f; display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+        .card .sub { font-size: 13px; color: #6b7280; margin-bottom: 18px; }
+        .field { margin-bottom: 16px; }
+        .field label, .label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+        .field input[type=text], .field input[type=url], .field input[type=tel], .field textarea {
+            width: 100%; padding: 11px 13px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 14px; font-family: inherit; }
+        .field textarea { min-height: 80px; resize: vertical; }
+        .hint { font-size: 12px; color: #6b7280; margin-top: 5px; }
+        .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+        .seg label { border: 2px solid #e5e7eb; border-radius: 12px; padding: 12px; cursor: pointer; display: flex; gap: 10px; align-items: flex-start; }
+        .seg label strong { display: block; font-size: 14px; }
+        .seg label span { font-size: 12px; color: #6b7280; }
+        .seg input { margin-top: 3px; accent-color: #16a34a; }
+        .seg label:has(input:checked) { border-color: #16a34a; background: #f0fdf4; }
+        .drop { border: 2px dashed #a7f3d0; background: #f0fdf4; border-radius: 14px; padding: 18px; text-align: center; }
+        .drop input { margin-top: 8px; max-width: 100%; }
+        .drop i { font-size: 28px; color: #16a34a; }
+        .preview { margin-top: 12px; border-radius: 12px; overflow: hidden; background: #000; }
+        .preview video { width: 100%; display: block; max-height: 300px; }
+        .current { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px; padding: 10px 12px; margin-top: 10px; font-size: 13px; }
+        .switch { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+        .switch input { width: 18px; height: 18px; accent-color: #16a34a; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; cursor: pointer; border-radius: 10px; font-weight: 600; font-size: 14px; padding: 11px 18px; font-family: inherit; }
+        .btn-primary { background: #16a34a; color: #fff; }
+        .btn-primary:hover { background: #15803d; }
+        .btn-link { background: none; color: #b91c1c; padding: 4px 6px; font-size: 13px; }
+        .progress { display: none; margin-top: 12px; font-size: 13px; color: #065f46; }
+        .bar { height: 8px; background: #e5e7eb; border-radius: 99px; overflow: hidden; margin-top: 6px; }
+        .bar span { display: block; height: 100%; width: 0; background: #16a34a; transition: width .2s; }
+        .brand { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 7px; color: #fff; font-weight: 800; font-size: 12px; }
+        .bk { background: #e2136e; } .ng { background: #f6921e; }
+        .hidden { display: none; }
+        @media (max-width: 1000px) { .grid { grid-template-columns: 1fr; } }
+        @media (max-width: 860px) {
+            .sidebar { transform: translateX(-100%); } .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; padding: 18px; } .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-area">
+                <i class="fas fa-chalkboard-teacher logo-icon"></i>
+                <div class="logo-text"><h3>ShikkhaHub</h3><p>Admin Portal</p></div>
+            </div>
+        </div>
+        <nav class="nav-menu">
+            <a href="/admin/teachers" class="nav-item"><i class="fas fa-users"></i><span>Teachers &amp; Courses</span></a>
+            <div class="nav-section-title">Students &amp; Website</div>
+            <a href="/admin/enrollments" class="nav-item"><i class="fas fa-wallet"></i><span>Enrollment Requests</span>
+                <span class="nav-badge" th:if="${pendingCount > 0}" th:text="${pendingCount}">0</span></a>
+            <a href="/admin/site-settings" class="nav-item active"><i class="fas fa-film"></i><span>Landing Video &amp; Payment</span></a>
+            <div class="nav-section-title">Exam</div>
+            <a href="/admin/exam/dashboard" class="nav-item"><i class="fas fa-tachometer-alt"></i><span>Exam Dashboard</span></a>
+            <a href="/admin/logout" class="nav-item"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <div class="topbar">
+            <button class="menu-toggle" type="button" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Menu"><i class="fas fa-bars"></i></button>
+            <div>
+                <h1>Landing Video &amp; Payment</h1>
+                <p>The video appears on the home page right after the hero. The numbers appear in the "Enroll now" instructions.</p>
+            </div>
+        </div>
+
+        <div class="alert alert-success" th:if="${success}"><i class="fas fa-check-circle"></i><span th:text="${success}">ok</span></div>
+        <div class="alert alert-error" th:if="${error}"><i class="fas fa-exclamation-circle"></i><span th:text="${error}">error</span></div>
+
+        <div class="grid">
+            <!-- LANDING VIDEO -->
+            <section class="card">
+                <h2><i class="fas fa-film"></i> Landing page video</h2>
+                <p class="sub">Upload an MP4 / WebM (max 200 MB) or paste a YouTube link.</p>
+
+                <form id="videoForm" method="post" action="/admin/site-settings/video" enctype="multipart/form-data">
+                    <label class="switch"><input type="checkbox" name="videoEnabled" th:checked="${videoEnabled}"> Show the video section on the home page</label>
+
+                    <span class="label">Video source</span>
+                    <div class="seg" role="radiogroup">
+                        <label><input type="radio" name="videoSource" value="UPLOAD" th:checked="${videoSource != 'LINK'}">
+                            <div><strong>Upload a file</strong><span>Served from this server</span></div></label>
+                        <label><input type="radio" name="videoSource" value="LINK" th:checked="${videoSource == 'LINK'}">
+                            <div><strong>YouTube / link</strong><span>YouTube, Vimeo or .mp4 URL</span></div></label>
+                    </div>
+
+                    <div id="uploadBox" class="field">
+                        <div class="drop">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <div style="font-size:14px;margin-top:6px">Choose a video file</div>
+                            <input type="file" name="videoFile" id="videoFile" accept="video/mp4,video/webm,video/ogg,video/quicktime">
+                        </div>
+                        <div class="current" th:if="${videoFile != null}">
+                            <span><i class="fas fa-check-circle" style="color:#16a34a"></i> Current: <span th:text="${videoFile}">file</span></span>
+                            <button class="btn btn-link" type="submit" form="removeVideoForm" onclick="return confirm('Remove the uploaded video?')"><i class="fas fa-trash"></i> Remove</button>
+                        </div>
+                        <div class="preview" id="previewWrap" th:if="${videoFileUrl != null}">
+                            <video th:src="${videoFileUrl}" controls preload="metadata"></video>
+                        </div>
+                    </div>
+
+                    <div id="linkBox" class="field">
+                        <label for="videoLink">Video link</label>
+                        <input type="url" id="videoLink" name="videoLink" th:value="${videoLink}" placeholder="https://www.youtube.com/watch?v=...">
+                    </div>
+
+                    <div class="field">
+                        <label>Poster / thumbnail image (optional)</label>
+                        <input type="file" name="posterFile" accept="image/jpeg,image/png,image/webp">
+                        <p class="hint">Shown before the video plays. YouTube links use their own thumbnail if you skip this.</p>
+                        <div class="current" th:if="${posterUrl != null}">
+                            <span style="display:flex;align-items:center;gap:10px"><img th:src="${posterUrl}" alt="" style="height:38px;border-radius:6px"> Current poster</span>
+                            <button class="btn btn-link" type="submit" form="removePosterForm"><i class="fas fa-trash"></i> Remove</button>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="videoTitle">Section heading (Bangla or English)</label>
+                        <input type="text" id="videoTitle" name="videoTitle" th:value="${videoTitle}" placeholder="ShikkhaHub-এ কীভাবে শেখানো হয়, দেখে নিন">
+                    </div>
+                    <div class="field">
+                        <label for="videoSubtitle">Short description</label>
+                        <textarea id="videoSubtitle" name="videoSubtitle" th:text="${videoSubtitle}" placeholder="মুখস্থ নয়, বোঝা — এক মিনিটে আমাদের শেখানোর পদ্ধতি দেখুন।"></textarea>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit" id="saveVideoBtn"><i class="fas fa-save"></i> Save video</button>
+                    <div class="progress" id="progress">Uploading… <span id="pct">0%</span><div class="bar"><span id="barFill"></span></div></div>
+                </form>
+                <form id="removeVideoForm" method="post" action="/admin/site-settings/video/remove"></form>
+                <form id="removePosterForm" method="post" action="/admin/site-settings/poster/remove"></form>
+            </section>
+
+            <!-- PAYMENT NUMBERS -->
+            <section class="card">
+                <h2><i class="fas fa-wallet"></i> Payment numbers</h2>
+                <p class="sub">Students "Send Money" to these personal numbers, then submit the Transaction ID.</p>
+                <form method="post" action="/admin/site-settings/payment">
+                    <div class="field">
+                        <label for="bkash"><span class="brand bk">b</span> bKash personal number</label>
+                        <input type="tel" id="bkash" name="bkashNumber" th:value="${bkashNumber}" placeholder="01XXXXXXXXX" inputmode="numeric" maxlength="14">
+                    </div>
+                    <div class="field">
+                        <label for="nagad"><span class="brand ng">N</span> Nagad personal number</label>
+                        <input type="tel" id="nagad" name="nagadNumber" th:value="${nagadNumber}" placeholder="01XXXXXXXXX" inputmode="numeric" maxlength="14">
+                    </div>
+                    <div class="field">
+                        <label for="note">Note shown under the instructions</label>
+                        <textarea id="note" name="paymentNote" th:text="${paymentNote}" placeholder="অবশ্যই Send Money করবেন, Payment বা Cash Out নয়।"></textarea>
+                    </div>
+                    <div class="field">
+                        <label for="support">Support / WhatsApp number (optional)</label>
+                        <input type="tel" id="support" name="supportPhone" th:value="${supportPhone}" placeholder="01XXXXXXXXX">
+                    </div>
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Save numbers</button>
+                </form>
+            </section>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Show the right input for the chosen source
+    const uploadBox = document.getElementById('uploadBox');
+    const linkBox = document.getElementById('linkBox');
+    function syncSource() {
+        const v = document.querySelector('input[name=videoSource]:checked')?.value || 'UPLOAD';
+        uploadBox.classList.toggle('hidden', v !== 'UPLOAD');
+        linkBox.classList.toggle('hidden', v !== 'LINK');
+    }
+    document.querySelectorAll('input[name=videoSource]').forEach(r => r.addEventListener('change', syncSource));
+    syncSource();
+
+    // Local preview of the chosen file
+    document.getElementById('videoFile').addEventListener('change', (e) => {
+        const f = e.target.files[0];
+        if (!f) return;
+        if (f.size > 200 * 1024 * 1024) { alert('Video is larger than 200 MB. Please compress it first.'); e.target.value = ''; return; }
+        let wrap = document.getElementById('previewWrap');
+        if (!wrap) { wrap = document.createElement('div'); wrap.className = 'preview'; wrap.id = 'previewWrap'; uploadBox.appendChild(wrap); }
+        wrap.innerHTML = '';
+        const v = document.createElement('video');
+        v.controls = true; v.src = URL.createObjectURL(f);
+        wrap.appendChild(v);
+    });
+
+    // Upload with a progress bar (falls back to a normal submit if XHR fails)
+    document.getElementById('videoForm').addEventListener('submit', (e) => {
+        const file = document.getElementById('videoFile').files[0];
+        if (!file) return; // nothing big to upload → normal submit
+        e.preventDefault();
+        const form = e.target;
+        const xhr = new XMLHttpRequest();
+        document.getElementById('progress').style.display = 'block';
+        document.getElementById('saveVideoBtn').disabled = true;
+        xhr.upload.onprogress = (ev) => {
+            if (!ev.lengthComputable) return;
+            const p = Math.round(ev.loaded / ev.total * 100);
+            document.getElementById('pct').textContent = p + '%';
+            document.getElementById('barFill').style.width = p + '%';
+        };
+        // The redirected page (with the success / error message) is already in the response
+        xhr.onload = () => {
+            history.replaceState(null, '', '/admin/site-settings');
+            document.open(); document.write(xhr.responseText); document.close();
+        };
+        xhr.onerror = () => { form.submit(); };
+        xhr.open('POST', form.action);
+        xhr.send(new FormData(form));
+    });
+</script>
+</body>
+</html>

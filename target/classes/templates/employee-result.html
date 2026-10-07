@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Exam Result</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f0f7f0; }
+        .header {
+            background: linear-gradient(135deg, #0a3d2f, #1a6e48);
+            color: white;
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 32px 24px; }
+        .result-card {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 24px;
+            text-align: center;
+            border: 1px solid #e2efe5;
+        }
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2b8c5e, #7ed957);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            color: white;
+        }
+        .score-circle span { font-size: 48px; font-weight: 800; }
+        .status-pass { background: #d1fae5; color: #065f46; padding: 8px 24px; border-radius: 40px; display: inline-block; font-weight: 700; }
+        .status-fail { background: #fee2e2; color: #dc2626; padding: 8px 24px; border-radius: 40px; display: inline-block; font-weight: 700; }
+        .btn { padding: 12px 28px; border-radius: 40px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary { background: #2b8c5e; color: white; }
+        .answers-section { margin-top: 32px; }
+        .answer-item {
+            background: #fafef7;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border-left: 4px solid #e2efe5;
+        }
+        .answer-item.correct { border-left-color: #2b8c5e; background: #f0fdf4; }
+        .answer-item.incorrect { border-left-color: #ef4444; background: #fef2f2; }
+        .user-answer { font-size: 14px; color: #4b5563; margin-top: 8px; }
+        .correct-answer { font-size: 14px; color: #2b8c5e; margin-top: 4px; }
+        @media (max-width: 768px) { .container { padding: 16px; } .answer-item { padding: 16px; } }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div><i class="fas fa-graduation-cap"></i> Employee Learning System</div>
+    <a href="/employee/dashboard" style="color: white; text-decoration: none;"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+</div>
+
+<div class="container">
+    <div class="result-card">
+        <h2 th:text="${attempt.exam.examName}">Exam Result</h2>
+        <div class="score-circle">
+            <span th:text="${attempt.obtainedMarks} + '/' + ${attempt.exam.totalMarks}">0/0</span>
+        </div>
+        <div style="margin-top: 16px;">
+            <span th:class="${attempt.obtainedMarks >= attempt.exam.passingMarks} ? 'status-pass' : 'status-fail'">
+                <i th:if="${attempt.obtainedMarks >= attempt.exam.passingMarks}" class="fas fa-check-circle"></i>
+                <i th:unless="${attempt.obtainedMarks >= attempt.exam.passingMarks}" class="fas fa-times-circle"></i>
+                <span th:text="${attempt.obtainedMarks >= attempt.exam.passingMarks} ? 'PASSED' : 'FAILED'"></span>
+            </span>
+        </div>
+        <p style="margin-top: 16px; color: #6f8f82;">Passing Marks: <span th:text="${attempt.exam.passingMarks}"></span> | Percentage: <span th:text="${(attempt.obtainedMarks * 100 / attempt.exam.totalMarks)} + '%'"></span></p>
+        <p style="margin-top: 8px; color: #f59e0b;" th:if="${attempt.tabSwitchCount > 0}">
+            <i class="fas fa-exclamation-triangle"></i> Tab switches recorded: <span th:text="${attempt.tabSwitchCount}"></span>
+            <span th:if="${attempt.isPenaltyApplied}"> (Penalty applied: 10% marks deducted)</span>
+        </p>
+    </div>
+
+    <div class="answers-section">
+        <h3 style="margin-bottom: 20px;"><i class="fas fa-list-ol"></i> Your Answers</h3>
+        <div th:each="answer, stat : ${answers}" class="answer-item" th:classappend="${answer.isCorrect} ? 'correct' : (${answer.isCorrect != null && !answer.isCorrect} ? 'incorrect' : '')">
+            <div style="font-weight: 700;"><span th:text="${stat.index + 1}"></span>. <span th:text="${answer.question.questionText}"></span></div>
+            <div class="user-answer">
+                <strong>Your Answer:</strong> <span th:text="${answer.givenAnswer != null ? answer.givenAnswer : 'Not answered'}"></span>
+            </div>
+            <div class="correct-answer" th:if="${answer.question.questionType == 'MCQ' and answer.question.correctAnswer != null}">
+                <strong>Correct Answer:</strong> <span th:text="${answer.question.correctAnswer}"></span>
+            </div>
+            <div style="margin-top: 8px; font-size: 13px;">
+                <strong>Marks:</strong> <span th:text="${answer.obtainedMarks} + ' / ' + ${answer.question.marks}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 24px; text-align: center;">
+        <a href="/employee/dashboard" class="btn btn-primary"><i class="fas fa-home"></i> Back to Dashboard</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Ranks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f7f0;
+        }
+        .dashboard { display: flex; min-height: 100vh; }
+        /* Sidebar (same as dashboard) */
+        .sidebar {
+            width: 280px;
+            background: #0a3d2f;
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar-header { padding: 32px 24px; border-bottom: 1px solid rgba(255,255,255,0.12); background: linear-gradient(135deg, #0a3d2f, #0f5a45); }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-icon { font-size: 32px; color: #7ed957; }
+        .logo-text h3 { font-size: 18px; font-weight: 700; }
+        .logo-text p { font-size: 11px; opacity: 0.7; }
+        .nav-menu { padding: 24px 20px; display: flex; flex-direction: column; gap: 6px; }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 18px;
+            border-radius: 14px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #e2f0e9;
+        }
+        .nav-item i { width: 24px; }
+        .nav-item:hover, .nav-item.active { background: #2b8c5e; color: white; }
+        .nav-divider { height: 1px; background: rgba(255,255,255,0.15); margin: 12px 4px; }
+        .nav-section-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: rgba(255,255,255,0.45);
+            padding: 8px 18px 4px;
+        }
+        .sidebar-footer { padding: 24px 20px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 12px; opacity: 0.7; }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 24px 32px;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .page-title h1 { font-size: 28px; font-weight: 700; background: linear-gradient(135deg, #0a3d2f, #1a6e48); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .admin-badge { background: white; padding: 8px 20px; border-radius: 40px; display: flex; align-items: center; gap: 12px; }
+        .logout-btn { background: #ef4444; color: white; padding: 8px 20px; border-radius: 40px; text-decoration: none; font-weight: 600; }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid #e2efe5;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0a3d2f;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaf5ea;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #eef3ea;
+        }
+        th {
+            background: #f8faf8;
+            font-weight: 700;
+            color: #0a3d2f;
+        }
+        .btn-sm {
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary { background: #2b8c5e; color: white; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-secondary { background: #eef2fa; color: #2b8c5e; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; color: #0a3d2f; margin-bottom: 6px; }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #e2efe5;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        .modal-overlay.active { visibility: visible; opacity: 1; }
+        .modal-container {
+            background: white;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 500px;
+            padding: 28px;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6f8f82;
+        }
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-area">
+                <i class="fas fa-chalkboard-user logo-icon"></i>
+                <div class="logo-text">
+                    <h3>Employee Learning System</h3>
+                    <p>Admin Portal</p>
+                </div>
+            </div>
+        </div>
+        <div class="nav-menu">
+            <div class="nav-section-title">MAIN</div>
+            <a href="/admin/teachers" class="nav-item"><i class="fas fa-users"></i> <span>Teachers</span></a>
+            <div class="nav-divider"></div>
+            <div class="nav-section-title">EXAM MANAGEMENT</div>
+            <a href="/admin/exam/dashboard" class="nav-item"><i class="fas fa-tachometer-alt"></i> <span>Exam Dashboard</span></a>
+            <a href="/admin/exam/ranks" class="nav-item active"><i class="fas fa-chart-line"></i> <span>Manage Ranks</span></a>
+            <a href="/admin/exam/employees" class="nav-item"><i class="fas fa-users"></i> <span>Manage Employees</span></a>
+            <a href="/admin/exam/settings" class="nav-item"><i class="fas fa-cog"></i> <span>Exam Settings</span></a>
+            <a href="/admin/exam/results" class="nav-item"><i class="fas fa-chart-bar"></i> <span>Results & Analytics</span></a>
+            <div class="nav-divider"></div>
+            <a href="/admin/logout" class="nav-item"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+        </div>
+        <div class="sidebar-footer"><i class="fas fa-shield-alt"></i> Admin Access</div>
+    </div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title"><h1>Manage Ranks</h1></div>
+            <div><div class="admin-badge"><i class="fas fa-user-cog"></i><span th:text="${session.admin.fullName}">Admin</span></div></div>
+        </div>
+
+        <!-- Add Rank Form -->
+        <div class="card">
+            <div class="card-title">Add New Rank</div>
+            <form action="/admin/exam/ranks/add" method="post">
+                <div class="form-row">
+                    <div class="form-group"><label>Rank Name</label><input type="text" name="rankName" required placeholder="e.g., TAO, AO, SO"></div>
+                    <div class="form-group"><label>Short Code</label><input type="text" name="shortCode" required placeholder="e.g., TAO"></div>
+                    <div class="form-group"><label>Priority (1=Highest)</label><input type="number" name="priority" required min="1"></div>
+                </div>
+                <div class="form-group"><label>Description</label><textarea name="description" rows="2" placeholder="Rank description"></textarea></div>
+                <button type="submit" class="btn-sm btn-primary"><i class="fas fa-plus"></i> Add Rank</button>
+            </form>
+        </div>
+
+        <!-- Ranks Table -->
+        <div class="card">
+            <div class="card-title">Configured Ranks</div>
+            <table>
+                <thead>
+                <tr><th>ID</th><th>Rank Name</th><th>Short Code</th><th>Priority</th><th>Description</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                <tr th:each="rank : ${ranks}">
+                    <td th:text="${rank.id}">1</td>
+                    <td th:text="${rank.rankName}">TAO</td>
+                    <td th:text="${rank.shortCode}">TAO</td>
+                    <td th:text="${rank.priority}">1</td>
+                    <td th:text="${rank.description}">Trainee Accounts Officer</td>
+                    <td>
+                        <button class="btn-sm btn-secondary edit-rank" th:data-id="${rank.id}" th:data-name="${rank.rankName}" th:data-code="${rank.shortCode}" th:data-priority="${rank.priority}" th:data-desc="${rank.description}"><i class="fas fa-edit"></i> Edit</button>
+                        <a th:href="@{/admin/exam/ranks/delete/{id}(id=${rank.id})}" class="btn-sm btn-danger" onclick="return confirm('Delete this rank?')"><i class="fas fa-trash"></i> Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>Edit Rank</h3>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <form id="editForm" method="post">
+            <div class="form-row">
+                <div class="form-group"><label>Rank Name</label><input type="text" name="rankName" id="editName" required></div>
+                <div class="form-group"><label>Short Code</label><input type="text" name="shortCode" id="editCode" required></div>
+                <div class="form-group"><label>Priority</label><input type="number" name="priority" id="editPriority" required min="1"></div>
+            </div>
+            <div class="form-group"><label>Description</label><textarea name="description" id="editDesc" rows="2"></textarea></div>
+            <button type="submit" class="btn-sm btn-primary">Update Rank</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function closeModal() {
+        document.getElementById('editModal').classList.remove('active');
+    }
+    document.querySelectorAll('.edit-rank').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            const name = this.getAttribute('data-name');
+            const code = this.getAttribute('data-code');
+            const priority = this.getAttribute('data-priority');
+            const desc = this.getAttribute('data-desc') || '';
+            document.getElementById('editName').value = name;
+            document.getElementById('editCode').value = code;
+            document.getElementById('editPriority').value = priority;
+            document.getElementById('editDesc').value = desc;
+            document.getElementById('editForm').action = '/admin/exam/ranks/update/' + id;
+            document.getElementById('editModal').classList.add('active');
+        });
+    });
+    document.getElementById('editModal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+</script>
+</body>
+</html>

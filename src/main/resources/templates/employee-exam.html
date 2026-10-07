@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${exam.examName} + ' - Take Exam'"></title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f0f7f0; overflow-x: hidden; }
+        .exam-header {
+            background: linear-gradient(135deg, #0a3d2f, #1a6e48);
+            color: white;
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .exam-title h2 { font-size: 18px; font-weight: 600; }
+        .timer-box {
+            background: rgba(0,0,0,0.3);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 24px;
+            font-family: monospace;
+            letter-spacing: 2px;
+        }
+        .warning-badge {
+            background: #f59e0b;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 24px; }
+        .question-card {
+            background: white;
+            border-radius: 24px;
+            padding: 28px;
+            margin-bottom: 24px;
+            border: 1px solid #e2efe5;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .question-number {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2b8c5e;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .question-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f3a2a;
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+        .options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: #fafef7;
+            border: 1px solid #e2efe5;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option:hover { background: #e8f5e9; border-color: #2b8c5e; }
+        .option input { width: 20px; height: 20px; cursor: pointer; }
+        .option label { flex: 1; cursor: pointer; font-size: 14px; color: #2d3e3a; }
+        textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #e2efe5;
+            border-radius: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            resize: vertical;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .btn {
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary { background: #2b8c5e; color: white; }
+        .btn-primary:hover { background: #1e6e48; transform: translateY(-1px); }
+        .btn-secondary { background: #eef2fa; color: #2b8c5e; }
+        .btn-secondary:hover { background: #e2e8f2; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-danger:hover { background: #dc2626; }
+        .question-nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e2efe5;
+        }
+        .q-nav-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: #f1f3f5;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .q-nav-btn.answered { background: #2b8c5e; color: white; }
+        .q-nav-btn.current { background: #f59e0b; color: white; transform: scale(1.05); }
+        .q-nav-btn:hover { transform: translateY(-2px); }
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .question-card { padding: 20px; }
+            .timer-box { font-size: 18px; padding: 4px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="exam-header">
+    <div class="exam-title">
+        <h2 th:text="${exam.examName}">Exam Name</h2>
+        <p style="font-size: 12px; opacity: 0.8;"><i class="fas fa-clock"></i> <span th:text="${exam.durationMinutes}"></span> minutes total</p>
+    </div>
+    <div style="display: flex; gap: 12px; align-items: center;">
+        <div class="warning-badge" id="tabWarning" style="display: none;">
+            <i class="fas fa-exclamation-triangle"></i> Tab switch detected!
+        </div>
+        <div class="timer-box" id="timer">--:--</div>
+        <button class="btn btn-danger" id="submitExamBtn"><i class="fas fa-check-double"></i> Submit Exam</button>
+    </div>
+</div>
+
+<div class="container">
+    <div id="questionsContainer"></div>
+    <div class="question-nav" id="questionNav"></div>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const examId = /*[[${exam.id}]]*/ 1;
+    const attemptId = /*[[${attempt.id}]]*/ 1;
+    const durationMinutes = /*[[${exam.durationMinutes}]]*/ 60;
+    const questions = /*[[${questions}]]*/ [];
+    const startTime = new Date();
+
+    let currentQuestionIndex = 0;
+    let answers = {};
+    let timerInterval;
+    let tabSwitchCount = 0;
+    let examSubmitted = false;
+
+    // Timer setup
+    function startTimer() {
+        const endTime = new Date(startTime.getTime() + durationMinutes * 60 * 1000);
+
+        function updateTimer() {
+            const now = new Date();
+            const remaining = endTime - now;
+
+            if (remaining <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('timer').innerHTML = "00:00";
+                autoSubmitExam();
+                return;
+            }
+
+            const minutes = Math.floor(remaining / 60000);
+            const seconds = Math.floor((remaining % 60000) / 1000);
+            document.getElementById('timer').innerHTML =
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        updateTimer();
+        timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    // Save answer to server
+    async function saveAnswer(questionId, answer) {
+        if (examSubmitted) return;
+        try {
+            const response = await fetch('/api/exam/save-answer', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    attemptId: attemptId,
+                    questionId: questionId,
+                    answer: answer
+                })
+            });
+            const data = await response.json();
+            if (data.success) {
+                answers[questionId] = answer;
+                updateNavButtons();
+            }
+        } catch (error) {
+            console.error('Error saving answer:', error);
+        }
+    }
+
+    // Render current question
+    function renderQuestion() {
+        const question = questions[currentQuestionIndex];
+        if (!question) return;
+
+        const container = document.getElementById('questionsContainer');
+        const savedAnswer = answers[question.id] || '';
+
+        let optionsHtml = '';
+        if (question.questionType === 'MCQ') {
+            optionsHtml = `
+                <div class="options">
+                    <div class="option" onclick="document.getElementById('optA').click()">
+                        <input type="radio" name="answer" id="optA" value="A" ${savedAnswer === 'A' ? 'checked' : ''} onchange="saveAnswer(${question.id}, this.value)">
+                        <label for="optA">A. ${escapeHtml(question.optionA)}</label>
+                    </div>
+                    <div class="option" onclick="document.getElementById('optB').click()">
+                        <input type="radio" name="answer" id="optB" value="B" ${savedAnswer === 'B' ? 'checked' : ''} onchange="saveAnswer(${question.id}, this.value)">
+                        <label for="optB">B. ${escapeHtml(question.optionB)}</label>
+                    </div>
+                    <div class="option" onclick="document.getElementById('optC').click()">
+                        <input type="radio" name="answer" id="optC" value="C" ${savedAnswer === 'C' ? 'checked' : ''} onchange="saveAnswer(${question.id}, this.value)">
+                        <label for="optC">C. ${escapeHtml(question.optionC)}</label>
+                    </div>
+                    <div class="option" onclick="document.getElementById('optD').click()">
+                        <input type="radio" name="answer" id="optD" value="D" ${savedAnswer === 'D' ? 'checked' : ''} onchange="saveAnswer(${question.id}, this.value)">
+                        <label for="optD">D. ${escapeHtml(question.optionD)}</label>
+                    </div>
+                </div>
+            `;
+        } else {
+            optionsHtml = `
+                <textarea id="textAnswer" rows="5" placeholder="Write your answer here..."
+                    onchange="saveAnswer(${question.id}, this.value)">${escapeHtml(savedAnswer)}</textarea>
+            `;
+        }
+
+        container.innerHTML = `
+            <div class="question-card">
+                <div class="question-number">Question ${currentQuestionIndex + 1} of ${questions.length} | ${question.questionType} | ${question.marks} marks</div>
+                <div class="question-text">${escapeHtml(question.questionText)}</div>
+                ${optionsHtml}
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" id="prevBtn" ${currentQuestionIndex === 0 ? 'disabled style="opacity:0.5"' : ''}>
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button class="btn btn-primary" id="nextBtn">
+                        ${currentQuestionIndex === questions.length - 1 ? '<i class="fas fa-check"></i> Finish' : 'Next <i class="fas fa-arrow-right"></i>'}
+                    </button>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('prevBtn')?.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+                highlightCurrentNav();
+            }
+        });
+
+        document.getElementById('nextBtn')?.addEventListener('click', () => {
+            if (currentQuestionIndex === questions.length - 1) {
+                submitExam();
+            } else {
+                currentQuestionIndex++;
+                renderQuestion();
+                highlightCurrentNav();
+            }
+        });
+    }
+
+    // Navigation buttons
+    function renderNavButtons() {
+        const nav = document.getElementById('questionNav');
+        nav.innerHTML = questions.map((q, idx) => `
+            <button class="q-nav-btn ${answers[q.id] ? 'answered' : ''} ${idx === currentQuestionIndex ? 'current' : ''}"
+                onclick="goToQuestion(${idx})">${idx + 1}</button>
+        `).join('');
+    }
+
+    function updateNavButtons() {
+        document.querySelectorAll('.q-nav-btn').forEach((btn, idx) => {
+            const q = questions[idx];
+            if (answers[q.id]) {
+                btn.classList.add('answered');
+            } else {
+                btn.classList.remove('answered');
+            }
+        });
+    }
+
+    function highlightCurrentNav() {
+        document.querySelectorAll('.q-nav-btn').forEach((btn, idx) => {
+            if (idx === currentQuestionIndex) {
+                btn.classList.add('current');
+            } else {
+                btn.classList.remove('current');
+            }
+        });
+    }
+
+    window.goToQuestion = function(index) {
+        currentQuestionIndex = index;
+        renderQuestion();
+        highlightCurrentNav();
+    }
+
+    // Submit exam
+    async function submitExam() {
+        if (examSubmitted) return;
+        if (confirm('Are you sure you want to submit the exam? You cannot change answers after submission.')) {
+            examSubmitted = true;
+            clearInterval(timerInterval);
+
+            try {
+                const response = await fetch(`/employee/exam/submit/${attemptId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                });
+                window.location.href = '/employee/dashboard';
+            } catch (error) {
+                console.error('Error submitting exam:', error);
+                window.location.href = '/employee/dashboard';
+            }
+        }
+    }
+
+    async function autoSubmitExam() {
+        if (examSubmitted) return;
+        examSubmitted = true;
+        try {
+            await fetch(`/api/exam/auto-submit/${attemptId}`, { method: 'POST' });
+            alert('Time is up! Exam has been auto-submitted.');
+            window.location.href = '/employee/dashboard';
+        } catch (error) {
+            window.location.href = '/employee/dashboard';
+        }
+    }
+
+    // Tab visibility detection (penalty)
+    document.addEventListener('visibilitychange', async function() {
+        if (document.hidden && !examSubmitted) {
+            tabSwitchCount++;
+            const warningDiv = document.getElementById('tabWarning');
+            warningDiv.style.display = 'flex';
+            warningDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Tab switch #${tabSwitchCount} recorded! Penalty after 3 switches.`;
+
+            await fetch(`/api/exam/tab-switch/${attemptId}`, { method: 'POST' });
+
+            setTimeout(() => {
+                warningDiv.style.display = 'none';
+            }, 3000);
+        }
+    });
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // Initialize
+    startTimer();
+    renderNavButtons();
+    renderQuestion();
+
+    document.getElementById('submitExamBtn').addEventListener('click', () => {
+        submitExam();
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

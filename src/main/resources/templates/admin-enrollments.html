@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Enrollment Requests · Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', 'Hind Siliguri', sans-serif; background: #f0f7f0; color: #1f2937; }
+        a { color: inherit; text-decoration: none; }
+        .dashboard { display: flex; min-height: 100vh; }
+
+        .sidebar { width: 270px; background: #0a3d2f; color: #fff; position: fixed; inset: 0 auto 0 0; overflow-y: auto; z-index: 50; transition: transform .25s; }
+        .sidebar-header { padding: 28px 22px; border-bottom: 1px solid rgba(255,255,255,.12); background: linear-gradient(135deg,#0a3d2f,#0f5a45); }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-icon { font-size: 30px; color: #7ed957; }
+        .logo-text h3 { font-size: 17px; font-weight: 700; }
+        .logo-text p { font-size: 11px; opacity: .7; margin-top: 3px; }
+        .nav-menu { padding: 22px 16px; display: flex; flex-direction: column; gap: 6px; }
+        .nav-item { display: flex; align-items: center; gap: 14px; padding: 11px 16px; border-radius: 12px; font-size: 14px; font-weight: 500; color: #e2f0e9; transition: background .2s; }
+        .nav-item i { width: 22px; }
+        .nav-item:hover { background: rgba(43,140,94,.3); color: #fff; }
+        .nav-item.active { background: #2b8c5e; color: #fff; box-shadow: 0 6px 12px rgba(0,0,0,.15); }
+        .nav-section-title { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,.45); padding: 12px 16px 4px; }
+        .nav-badge { margin-left: auto; background: #e53e3e; color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+
+        .main { margin-left: 270px; flex: 1; padding: 28px; min-width: 0; }
+        .topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+        .topbar h1 { font-size: 24px; font-weight: 800; color: #0a3d2f; }
+        .topbar p { color: #6b7280; font-size: 14px; margin-top: 4px; }
+        .menu-toggle { display: none; background: #0a3d2f; color: #fff; border: 0; width: 42px; height: 42px; border-radius: 10px; font-size: 18px; cursor: pointer; }
+
+        .alert { padding: 12px 16px; border-radius: 12px; margin-bottom: 18px; font-size: 14px; display: flex; gap: 10px; align-items: flex-start; }
+        .alert-success { background: #dcfce7; color: #14532d; border: 1px solid #86efac; }
+        .alert-error { background: #fee2e2; color: #7f1d1d; border: 1px solid #fca5a5; }
+
+        .stats { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin-bottom: 20px; }
+        .stat { background: #fff; border-radius: 16px; padding: 16px 18px; border: 2px solid transparent; box-shadow: 0 2px 10px rgba(0,0,0,.04); display: block; }
+        .stat:hover { border-color: #bbf7d0; }
+        .stat.active { border-color: #2b8c5e; }
+        .stat h3 { font-size: 26px; font-weight: 800; }
+        .stat p { font-size: 13px; color: #6b7280; margin-top: 2px; }
+        .stat.pending h3 { color: #b45309; } .stat.active-s h3 { color: #15803d; } .stat.rejected h3 { color: #b91c1c; }
+
+        .toolbar { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+        .toolbar input { flex: 1; min-width: 220px; padding: 11px 14px; border: 1px solid #d1d5db; border-radius: 12px; font-size: 14px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; cursor: pointer; border-radius: 10px; font-weight: 600; font-size: 13px; padding: 9px 14px; font-family: inherit; }
+        .btn-dark { background: #0a3d2f; color: #fff; }
+        .btn-approve { background: #16a34a; color: #fff; }
+        .btn-approve:hover { background: #15803d; }
+        .btn-reject { background: #fff; color: #b91c1c; border: 1px solid #fca5a5; }
+        .btn-reject:hover { background: #fef2f2; }
+        .btn-ghost { background: #f3f4f6; color: #374151; }
+
+        .card { background: #fff; border-radius: 18px; box-shadow: 0 2px 12px rgba(0,0,0,.05); overflow: hidden; }
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th { text-align: left; background: #f9fafb; color: #6b7280; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .4px; padding: 12px 14px; white-space: nowrap; }
+        td { padding: 14px; border-top: 1px solid #f1f5f9; vertical-align: top; }
+        .muted { color: #6b7280; font-size: 12px; margin-top: 2px; }
+        .trx { font-family: ui-monospace, Menlo, Consolas, monospace; font-weight: 700; background: #f3f4f6; padding: 3px 8px; border-radius: 6px; letter-spacing: .5px; display: inline-block; }
+        .copy { background: none; border: 0; color: #6b7280; cursor: pointer; margin-left: 4px; }
+        .pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+        .pill-PENDING { background: #fef3c7; color: #92400e; }
+        .pill-ACTIVE, .pill-COMPLETED { background: #dcfce7; color: #166534; }
+        .pill-REJECTED, .pill-CANCELLED { background: #fee2e2; color: #991b1b; }
+        .method { display: inline-block; padding: 3px 9px; border-radius: 6px; font-size: 12px; font-weight: 700; color: #fff; }
+        .method-BKASH { background: #e2136e; } .method-NAGAD { background: #f6921e; } .method-FREE { background: #6b7280; }
+        .amount { font-weight: 800; color: #0a3d2f; }
+        .actions { display: flex; gap: 6px; flex-wrap: wrap; }
+        .note { font-size: 12px; color: #991b1b; margin-top: 4px; max-width: 240px; }
+        .empty { text-align: center; padding: 60px 20px; color: #6b7280; }
+        .empty i { font-size: 44px; color: #86efac; margin-bottom: 12px; display: block; }
+
+        .how { background: #ecfdf5; border: 1px dashed #6ee7b7; color: #065f46; padding: 12px 16px; border-radius: 14px; font-size: 13px; margin-bottom: 16px; line-height: 1.6; }
+
+        dialog { border: 0; border-radius: 18px; padding: 0; width: min(460px, 92vw); box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+        dialog::backdrop { background: rgba(0,0,0,.45); }
+        .dlg { padding: 22px; }
+        .dlg h3 { font-size: 18px; margin-bottom: 6px; }
+        .dlg p { font-size: 14px; color: #4b5563; margin-bottom: 14px; }
+        .dlg label { font-size: 13px; font-weight: 600; display: block; margin-bottom: 6px; }
+        .dlg textarea { width: 100%; border: 1px solid #d1d5db; border-radius: 10px; padding: 10px; font-family: inherit; font-size: 14px; min-height: 90px; }
+        .quick { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 14px; }
+        .quick button { background: #f3f4f6; border: 0; border-radius: 999px; padding: 5px 10px; font-size: 12px; cursor: pointer; font-family: inherit; }
+        .dlg-actions { display: flex; gap: 8px; justify-content: flex-end; }
+
+        @media (max-width: 1000px) { .stats { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+        @media (max-width: 860px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; padding: 18px; }
+            .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-area">
+                <i class="fas fa-chalkboard-teacher logo-icon"></i>
+                <div class="logo-text"><h3>ShikkhaHub</h3><p>Admin Portal</p></div>
+            </div>
+        </div>
+        <nav class="nav-menu">
+            <a href="/admin/teachers" class="nav-item"><i class="fas fa-users"></i><span>Teachers &amp; Courses</span></a>
+            <div class="nav-section-title">Students &amp; Website</div>
+            <a href="/admin/enrollments" class="nav-item active"><i class="fas fa-wallet"></i><span>Enrollment Requests</span>
+                <span class="nav-badge" th:if="${pendingCount > 0}" th:text="${pendingCount}">0</span></a>
+            <a href="/admin/site-settings" class="nav-item"><i class="fas fa-film"></i><span>Landing Video &amp; Payment</span></a>
+            <div class="nav-section-title">Exam</div>
+            <a href="/admin/exam/dashboard" class="nav-item"><i class="fas fa-tachometer-alt"></i><span>Exam Dashboard</span></a>
+            <a href="/admin/logout" class="nav-item"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <div class="topbar">
+            <div style="display:flex;gap:12px;align-items:center">
+                <button class="menu-toggle" type="button" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Menu"><i class="fas fa-bars"></i></button>
+                <div>
+                    <h1>Enrollment Requests</h1>
+                    <p>Check each Transaction ID in your bKash / Nagad app, then approve or reject.</p>
+                </div>
+            </div>
+            <div class="muted" th:text="${admin != null ? admin.fullName : ''}">Admin</div>
+        </div>
+
+        <div class="alert alert-success" th:if="${success}"><i class="fas fa-check-circle"></i><span th:text="${success}">ok</span></div>
+        <div class="alert alert-error" th:if="${error}"><i class="fas fa-exclamation-circle"></i><span th:text="${error}">error</span></div>
+
+        <div class="how">
+            <strong>How to verify:</strong> open the bKash / Nagad app (or merchant statement) of the receiving number →
+            find the incoming <em>Send Money</em> with the same <strong>TrxID</strong>, <strong>amount</strong> and sender number →
+            Approve. After approval the student's account is activated and they can log in. If nothing matches, Reject with a reason —
+            the student sees that reason when they try to log in and can submit again with the correct TrxID.
+        </div>
+
+        <div class="stats">
+            <a class="stat pending" th:classappend="${filter == 'PENDING'} ? 'active'" href="/admin/enrollments?status=PENDING">
+                <h3 th:text="${pendingCount}">0</h3><p>Waiting for verification</p></a>
+            <a class="stat active-s" th:classappend="${filter == 'ACTIVE'} ? 'active'" href="/admin/enrollments?status=ACTIVE">
+                <h3 th:text="${activeCount}">0</h3><p>Approved</p></a>
+            <a class="stat rejected" th:classappend="${filter == 'REJECTED'} ? 'active'" href="/admin/enrollments?status=REJECTED">
+                <h3 th:text="${rejectedCount}">0</h3><p>Rejected</p></a>
+            <a class="stat" th:classappend="${filter == 'ALL'} ? 'active'" href="/admin/enrollments?status=ALL">
+                <h3 th:text="${totalCount}">0</h3><p>All enrollments</p></a>
+        </div>
+
+        <form class="toolbar" method="get" action="/admin/enrollments">
+            <input type="hidden" name="status" th:value="${filter}">
+            <input type="search" name="q" th:value="${q}" placeholder="Search by TrxID, name, email, mobile or course…" aria-label="Search">
+            <button class="btn btn-dark" type="submit"><i class="fas fa-search"></i> Search</button>
+            <a class="btn btn-ghost" th:if="${q != ''}" th:href="@{/admin/enrollments(status=${filter})}">Clear</a>
+        </form>
+
+        <div class="card">
+            <div class="empty" th:if="${#lists.isEmpty(enrollments)}">
+                <i class="fas fa-inbox"></i>
+                <p th:text="${filter == 'PENDING'} ? 'No payments are waiting for verification.' : 'Nothing to show here.'">Empty</p>
+            </div>
+
+            <div class="table-wrap" th:unless="${#lists.isEmpty(enrollments)}">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Course</th>
+                        <th>Payment</th>
+                        <th>Transaction ID</th>
+                        <th>Submitted</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="e : ${enrollments}">
+                        <td>
+                            <div style="font-weight:600" th:text="${e.studentName}">Name</div>
+                            <div class="muted"><i class="fas fa-phone-alt"></i> <span th:text="${e.studentPhone ?: '—'}">01</span></div>
+                            <div class="muted"><i class="fas fa-envelope"></i> <span th:text="${e.studentEmail}">mail</span></div>
+                        </td>
+                        <td>
+                            <div style="font-weight:600" th:text="${e.courseTitle}">Course</div>
+                            <div class="muted" th:text="${e.courseCode}">CRS-1</div>
+                        </td>
+                        <td>
+                            <span class="method" th:classappend="'method-' + ${e.paymentMethod != null ? #strings.toUpperCase(e.paymentMethod) : 'FREE'}"
+                                  th:text="${e.paymentMethod != null ? #strings.toUpperCase(e.paymentMethod) : '—'}">BKASH</span>
+                            <div class="amount" style="margin-top:6px" th:text="${'৳' + #numbers.formatDecimal(e.amount ?: 0, 1, 'COMMA', 0, 'POINT')}">৳0</div>
+                        </td>
+                        <td>
+                            <span class="trx" th:text="${e.transactionId}">TRX</span>
+                            <button class="copy" type="button" th:attr="data-copy=${e.transactionId}" title="Copy TrxID" aria-label="Copy transaction ID"><i class="far fa-copy"></i></button>
+                        </td>
+                        <td>
+                            <div th:text="${e.enrollmentDate != null ? #temporals.format(e.enrollmentDate, 'dd MMM yyyy') : ''}">date</div>
+                            <div class="muted" th:text="${e.enrollmentDate != null ? #temporals.format(e.enrollmentDate, 'hh:mm a') : ''}">time</div>
+                        </td>
+                        <td>
+                            <span class="pill" th:classappend="'pill-' + ${e.status ?: 'ACTIVE'}" th:text="${e.status ?: 'ACTIVE'}">PENDING</span>
+                            <div class="muted" th:if="${e.verifiedBy != null}" th:text="${'by ' + e.verifiedBy}">by admin</div>
+                            <div class="note" th:if="${e.status == 'REJECTED' and e.adminNote != null}" th:text="${e.adminNote}">reason</div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <form th:if="${e.status == 'PENDING' or e.status == 'REJECTED'}" method="post"
+                                      th:action="@{/admin/enrollments/{id}/approve(id=${e.id})}"
+                                      onsubmit="return confirm('Payment matched? Approve this enrollment and activate the student account?');">
+                                    <input type="hidden" name="returnStatus" th:value="${filter}">
+                                    <button class="btn btn-approve" type="submit"><i class="fas fa-check"></i> Approve</button>
+                                </form>
+                                <button th:if="${e.status == 'PENDING' or e.status == 'ACTIVE'}" class="btn btn-reject" type="button"
+                                        th:attr="data-id=${e.id},data-name=${e.studentName},data-trx=${e.transactionId}"
+                                        onclick="openReject(this)"><i class="fas fa-times"></i> Reject</button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<dialog id="rejectDialog">
+    <form class="dlg" method="post" id="rejectForm">
+        <h3>Reject enrollment</h3>
+        <p id="rejectInfo">—</p>
+        <input type="hidden" name="returnStatus" th:value="${filter}">
+        <label for="reason">Reason (the student will see this)</label>
+        <div class="quick">
+            <button type="button" data-r="Transaction ID মিলেনি।">TrxID মিলেনি</button>
+            <button type="button" data-r="পেমেন্টের পরিমাণ কোর্স ফি-এর চেয়ে কম।">টাকা কম</button>
+            <button type="button" data-r="Send Money করা হয়নি (Payment/Cash Out করা হয়েছে)।">Send Money নয়</button>
+            <button type="button" data-r="এই নম্বর থেকে কোনো পেমেন্ট পাওয়া যায়নি।">পেমেন্ট পাওয়া যায়নি</button>
+        </div>
+        <textarea id="reason" name="reason" placeholder="e.g. Transaction ID মিলেনি।" required></textarea>
+        <div class="dlg-actions" style="margin-top:14px">
+            <button class="btn btn-ghost" type="button" onclick="document.getElementById('rejectDialog').close()">Cancel</button>
+            <button class="btn btn-reject" type="submit"><i class="fas fa-times"></i> Reject</button>
+        </div>
+    </form>
+</dialog>
+
+<script>
+    function openReject(btn) {
+        const dlg = document.getElementById('rejectDialog');
+        document.getElementById('rejectForm').action = '/admin/enrollments/' + btn.dataset.id + '/reject';
+        document.getElementById('rejectInfo').textContent = btn.dataset.name + ' · TrxID ' + btn.dataset.trx;
+        document.getElementById('reason').value = '';
+        dlg.showModal();
+    }
+    document.querySelectorAll('.quick button').forEach(b =>
+        b.addEventListener('click', () => { document.getElementById('reason').value = b.dataset.r; }));
+    document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', () => {
+        navigator.clipboard && navigator.clipboard.writeText(b.dataset.copy);
+        b.innerHTML = '<i class="fas fa-check"></i>';
+        setTimeout(() => { b.innerHTML = '<i class="far fa-copy"></i>'; }, 1200);
+    }));
+</script>
+</body>
+</html>

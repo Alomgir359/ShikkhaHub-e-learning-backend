@@ -1,0 +1,2610 @@
+
+
+
+<!--&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;-->
+<!--&lt;!&ndash;<html xmlns:th="http://www.thymeleaf.org">&ndash;&gt;-->
+<!--&lt;!&ndash;<head>&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta charset="UTF-8">&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">&ndash;&gt;-->
+<!--&lt;!&ndash;    <title>Course Insights | Admin Panel</title>&ndash;&gt;-->
+<!--&lt;!&ndash;    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">&ndash;&gt;-->
+<!--&lt;!&ndash;    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">&ndash;&gt;-->
+<!--&lt;!&ndash;    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">&ndash;&gt;-->
+<!--&lt;!&ndash;    <style>&ndash;&gt;-->
+<!--&lt;!&ndash;        * { margin: 0; padding: 0; box-sizing: border-box; }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        body {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-family: 'Inter', system-ui, -apple-system, sans-serif;&ndash;&gt;-->
+<!--&lt;!&ndash;            background: #f0f7f0;&ndash;&gt;-->
+<!--&lt;!&ndash;            min-height: 100vh;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        /* ── TOP NAV ── */&ndash;&gt;-->
+<!--&lt;!&ndash;        .top-nav {&ndash;&gt;-->
+<!--&lt;!&ndash;            background: #0f3b2c;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 12px 32px;&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex;&ndash;&gt;-->
+<!--&lt;!&ndash;            align-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            justify-content: space-between;&ndash;&gt;-->
+<!--&lt;!&ndash;            position: sticky;&ndash;&gt;-->
+<!--&lt;!&ndash;            top: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;            z-index: 100;&ndash;&gt;-->
+<!--&lt;!&ndash;            box-shadow: 0 2px 12px rgba(0,0,0,0.08);&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .top-nav-left { display: flex; align-items: center; gap: 24px; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .back-btn {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: inline-flex;&ndash;&gt;-->
+<!--&lt;!&ndash;            align-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            gap: 8px;&ndash;&gt;-->
+<!--&lt;!&ndash;            background: rgba(255,255,255,0.12);&ndash;&gt;-->
+<!--&lt;!&ndash;            color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 6px 16px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 40px;&ndash;&gt;-->
+<!--&lt;!&ndash;            text-decoration: none;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 13px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-weight: 500;&ndash;&gt;-->
+<!--&lt;!&ndash;            transition: all 0.2s;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid rgba(255,255,255,0.2);&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .back-btn:hover { background: white; color: #0f3b2c; transform: translateY(-1px); }&ndash;&gt;-->
+<!--&lt;!&ndash;        .top-nav h1 { font-size: 18px; font-weight: 600; margin: 0; letter-spacing: -0.2px; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .admin-name {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 13px;&ndash;&gt;-->
+<!--&lt;!&ndash;            background: rgba(255,255,255,0.1);&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 6px 14px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 40px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-weight: 500;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        /* ── PAGE ── */&ndash;&gt;-->
+<!--&lt;!&ndash;        .page-container {&ndash;&gt;-->
+<!--&lt;!&ndash;            max-width: 1400px;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin: 0 auto;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 28px 24px 50px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        /* ── HERO CARD ── */&ndash;&gt;-->
+<!--&lt;!&ndash;        .hero-card {&ndash;&gt;-->
+<!--&lt;!&ndash;            background: white;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;            overflow: hidden;&ndash;&gt;-->
+<!--&lt;!&ndash;            box-shadow: 0 4px 12px rgba(0,0,0,0.05);&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-bottom: 28px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid #e2efe5;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .hero-banner {&ndash;&gt;-->
+<!--&lt;!&ndash;            position: relative;&ndash;&gt;-->
+<!--&lt;!&ndash;            height: 160px;&ndash;&gt;-->
+<!--&lt;!&ndash;            background: linear-gradient(105deg, #1a5d3a, #2b7e4b);&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex;&ndash;&gt;-->
+<!--&lt;!&ndash;            align-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            justify-content: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            overflow: hidden;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .hero-banner img { width: 100%; height: 100%; object-fit: cover; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .hero-banner-placeholder { font-size: 56px; color: rgba(255,255,255,0.2); }&ndash;&gt;-->
+<!--&lt;!&ndash;        .approval-ribbon {&ndash;&gt;-->
+<!--&lt;!&ndash;            position: absolute;&ndash;&gt;-->
+<!--&lt;!&ndash;            top: 14px;&ndash;&gt;-->
+<!--&lt;!&ndash;            right: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 5px 16px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 40px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 11px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-weight: 700;&ndash;&gt;-->
+<!--&lt;!&ndash;            letter-spacing: 0.5px;&ndash;&gt;-->
+<!--&lt;!&ndash;            backdrop-filter: blur(8px);&ndash;&gt;-->
+<!--&lt;!&ndash;            box-shadow: 0 2px 8px rgba(0,0,0,0.1);&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .ribbon-pending  { background: rgba(255,241,184,0.95); color: #b45f06; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .ribbon-approved { background: rgba(187,247,208,0.96); color: #166534; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .ribbon-published{ background: rgba(191,219,254,0.96); color: #1e3a8a; }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .hero-info { padding: 20px 24px; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .hero-info h2 { font-size: 22px; font-weight: 700; color: #1a3a2a; margin-bottom: 6px; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .hero-info .subtitle {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 13px; color: #5f7a6b; margin-bottom: 14px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-left: 3px solid #4ade80; padding-left: 12px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .tag {&ndash;&gt;-->
+<!--&lt;!&ndash;            background: #eef6ee; color: #1f6e2d;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 4px 14px; border-radius: 30px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 11px; font-weight: 600;&ndash;&gt;-->
+<!--&lt;!&ndash;            display: inline-flex; align-items: center; gap: 6px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        /* ── ACTION STRIP ── */&ndash;&gt;-->
+<!--&lt;!&ndash;        .action-strip { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .btn-action {&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 8px 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 40px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 13px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-weight: 600;&ndash;&gt;-->
+<!--&lt;!&ndash;            display: inline-flex;&ndash;&gt;-->
+<!--&lt;!&ndash;            align-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            gap: 8px;&ndash;&gt;-->
+<!--&lt;!&ndash;            text-decoration: none;&ndash;&gt;-->
+<!--&lt;!&ndash;            transition: all 0.2s;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: none;&ndash;&gt;-->
+<!--&lt;!&ndash;            cursor: pointer;&ndash;&gt;-->
+<!--&lt;!&ndash;            background: none;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .btn-approve-main  { background: #10b981; color: white; box-shadow: 0 2px 6px rgba(16,185,129,0.2); }&ndash;&gt;-->
+<!--&lt;!&ndash;        .btn-approve-main:hover  { background: #059669; color: white; transform: translateY(-1px); }&ndash;&gt;-->
+<!--&lt;!&ndash;        .btn-publish-main  { background: #3b82f6; color: white; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .btn-publish-main:hover  { background: #2563eb; color: white; transform: translateY(-1px); }&ndash;&gt;-->
+<!--&lt;!&ndash;        .btn-teacher-main  { background: white; color: #2b7e4b; border: 1.5px solid #2b7e4b; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .btn-teacher-main:hover  { background: #eef6ee; transform: translateY(-1px); }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        /* ── INFO GRID ── */&ndash;&gt;-->
+<!--&lt;!&ndash;        .compact-grid {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: grid;&ndash;&gt;-->
+<!--&lt;!&ndash;            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));&ndash;&gt;-->
+<!--&lt;!&ndash;            gap: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-bottom: 28px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .info-card {&ndash;&gt;-->
+<!--&lt;!&ndash;            background: white;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 18px;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 18px 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid #e6f0e6;&ndash;&gt;-->
+<!--&lt;!&ndash;            box-shadow: 0 2px 8px rgba(0,0,0,0.03);&ndash;&gt;-->
+<!--&lt;!&ndash;            transition: all 0.2s;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .info-card:hover { border-color: #c0e0c3; box-shadow: 0 6px 14px rgba(0,0,0,0.05); }&ndash;&gt;-->
+<!--&lt;!&ndash;        .info-card-title {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 13px; font-weight: 700; letter-spacing: 0.4px;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #2b7e4b; margin-bottom: 14px;&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex; align-items: center; gap: 8px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-bottom: 1.5px solid #eef3e8; padding-bottom: 8px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .info-row {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex; justify-content: space-between; align-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 8px 0; border-bottom: 1px solid #f5faf5; gap: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .info-label { font-size: 12px; font-weight: 500; color: #6b7c72; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .info-value {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 13px; font-weight: 600; color: #1f3a2a;&ndash;&gt;-->
+<!--&lt;!&ndash;            background: #fafef7; padding: 2px 12px; border-radius: 30px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .badge-status {&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 4px 12px; border-radius: 40px; font-size: 11px; font-weight: 700;&ndash;&gt;-->
+<!--&lt;!&ndash;            display: inline-flex; align-items: center; gap: 6px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .badge-pending   { background: #fff2e0; color: #c47b2e; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .badge-approved  { background: #e2f3e6; color: #1f7840; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .badge-published { background: #e0ebff; color: #1e40af; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .badge-unpublished{ background: #f1f3f5; color: #5a6b62; }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        /* ── FULL CARDS ── */&ndash;&gt;-->
+<!--&lt;!&ndash;        .full-card {&ndash;&gt;-->
+<!--&lt;!&ndash;            background: white; border-radius: 18px; padding: 18px 24px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid #e6f0e6; margin-bottom: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;            box-shadow: 0 2px 6px rgba(0,0,0,0.02);&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .full-card p {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 13px; line-height: 1.5; color: #3b5546; margin-bottom: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .video-placeholder {&ndash;&gt;-->
+<!--&lt;!&ndash;            background: #f4fbf4; border-radius: 14px; padding: 12px;&ndash;&gt;-->
+<!--&lt;!&ndash;            text-align: center; color: #6b8f7a; font-size: 12px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .ratio-16x9 { border-radius: 14px; overflow: hidden; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .text-muted { color: #819b8c; font-size: 12px; }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        /* ── WEEKLY CURRICULUM CARDS ── */&ndash;&gt;-->
+<!--&lt;!&ndash;        .curriculum-section { margin-bottom: 20px; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .week-grid {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: grid;&ndash;&gt;-->
+<!--&lt;!&ndash;            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));&ndash;&gt;-->
+<!--&lt;!&ndash;            gap: 14px;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-top: 14px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .week-card {&ndash;&gt;-->
+<!--&lt;!&ndash;            background: #fafef7;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid #daeeda;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 14px;&ndash;&gt;-->
+<!--&lt;!&ndash;            overflow: hidden;&ndash;&gt;-->
+<!--&lt;!&ndash;            transition: all 0.2s;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .week-card:hover {&ndash;&gt;-->
+<!--&lt;!&ndash;            border-color: #a7d7b0;&ndash;&gt;-->
+<!--&lt;!&ndash;            box-shadow: 0 6px 18px rgba(43,126,75,0.08);&ndash;&gt;-->
+<!--&lt;!&ndash;            transform: translateY(-2px);&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .week-header {&ndash;&gt;-->
+<!--&lt;!&ndash;            background: linear-gradient(105deg, #1a5d3a, #2b7e4b);&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 12px 16px;&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex;&ndash;&gt;-->
+<!--&lt;!&ndash;            align-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            gap: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .week-num {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 30px; height: 30px; border-radius: 50%;&ndash;&gt;-->
+<!--&lt;!&ndash;            background: rgba(255,255,255,0.2);&ndash;&gt;-->
+<!--&lt;!&ndash;            color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 12px; font-weight: 700;&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex; align-items: center; justify-content: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            flex-shrink: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1.5px solid rgba(255,255,255,0.35);&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .week-title {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 13px; font-weight: 600; color: white; line-height: 1.35;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .week-topics { padding: 12px 14px; display: flex; flex-direction: column; gap: 7px; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .topic-item {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex; align-items: flex-start; gap: 8px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 12px; color: #3b5546; line-height: 1.45;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .topic-dot {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 5px; height: 5px; border-radius: 50%;&ndash;&gt;-->
+<!--&lt;!&ndash;            background: #4ade80; margin-top: 5px; flex-shrink: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .no-curriculum {&ndash;&gt;-->
+<!--&lt;!&ndash;            text-align: center; padding: 30px 20px; color: #7a9982;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 13px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        /* ── BOTTOM STRIP ── */&ndash;&gt;-->
+<!--&lt;!&ndash;        .bottom-strip {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex; justify-content: flex-start;&ndash;&gt;-->
+<!--&lt;!&ndash;            gap: 16px; margin-top: 20px; flex-wrap: wrap;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        /* ── CUSTOM MODAL OVERLAY ── */&ndash;&gt;-->
+<!--&lt;!&ndash;        .modal-overlay {&ndash;&gt;-->
+<!--&lt;!&ndash;            position: fixed; inset: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;            background: rgba(0,0,0,0.45);&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex; align-items: center; justify-content: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            z-index: 9999;&ndash;&gt;-->
+<!--&lt;!&ndash;            opacity: 0; pointer-events: none;&ndash;&gt;-->
+<!--&lt;!&ndash;            transition: opacity 0.22s ease;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .modal-overlay.open { opacity: 1; pointer-events: all; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .modal-box {&ndash;&gt;-->
+<!--&lt;!&ndash;            background: white;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 32px 28px 24px;&ndash;&gt;-->
+<!--&lt;!&ndash;            max-width: 400px; width: 90%;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid #e2efe5;&ndash;&gt;-->
+<!--&lt;!&ndash;            box-shadow: 0 20px 60px rgba(0,0,0,0.15);&ndash;&gt;-->
+<!--&lt;!&ndash;            transform: translateY(16px) scale(0.97);&ndash;&gt;-->
+<!--&lt;!&ndash;            transition: transform 0.22s ease;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .modal-overlay.open .modal-box { transform: translateY(0) scale(1); }&ndash;&gt;-->
+<!--&lt;!&ndash;        .modal-icon-wrap {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 56px; height: 56px; border-radius: 50%;&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex; align-items: center; justify-content: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 24px; margin: 0 auto 16px; transition: background 0.2s;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .modal-icon-approve  { background: #d1fae5; color: #065f46; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .modal-icon-publish  { background: #dbeafe; color: #1e40af; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .modal-title-text {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 17px; font-weight: 700; color: #1a3a2a;&ndash;&gt;-->
+<!--&lt;!&ndash;            text-align: center; margin-bottom: 8px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .modal-body-text {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 13px; color: #5a7a68;&ndash;&gt;-->
+<!--&lt;!&ndash;            text-align: center; line-height: 1.65; margin-bottom: 24px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .modal-action-row { display: flex; gap: 10px; justify-content: center; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .mbtn {&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 9px 24px; border-radius: 40px; font-size: 13px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-weight: 600; cursor: pointer; transition: all 0.18s;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1.5px solid #d0e8d5;&ndash;&gt;-->
+<!--&lt;!&ndash;            background: white; color: #3b5546;&ndash;&gt;-->
+<!--&lt;!&ndash;            display: inline-flex; align-items: center; gap: 7px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .mbtn:hover { background: #f0f7f0; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .mbtn.confirm-approve { background: #10b981; color: white; border-color: #10b981; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .mbtn.confirm-approve:hover { background: #059669; border-color: #059669; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .mbtn.confirm-publish { background: #3b82f6; color: white; border-color: #3b82f6; }&ndash;&gt;-->
+<!--&lt;!&ndash;        .mbtn.confirm-publish:hover { background: #2563eb; border-color: #2563eb; }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        @media (max-width: 700px) {&ndash;&gt;-->
+<!--&lt;!&ndash;            .page-container { padding: 20px 16px; }&ndash;&gt;-->
+<!--&lt;!&ndash;            .hero-info h2 { font-size: 18px; }&ndash;&gt;-->
+<!--&lt;!&ndash;            .compact-grid { grid-template-columns: 1fr; }&ndash;&gt;-->
+<!--&lt;!&ndash;            .week-grid { grid-template-columns: 1fr; }&ndash;&gt;-->
+<!--&lt;!&ndash;            .top-nav { padding: 10px 18px; }&ndash;&gt;-->
+<!--&lt;!&ndash;            .top-nav-left { gap: 12px; }&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;    </style>&ndash;&gt;-->
+<!--&lt;!&ndash;</head>&ndash;&gt;-->
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+
+<!--&lt;!&ndash;&lt;!&ndash; ── TOP NAV ── &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="top-nav">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="top-nav-left">&ndash;&gt;-->
+<!--&lt;!&ndash;        <a href="/admin/teachers" class="back-btn">&ndash;&gt;-->
+<!--&lt;!&ndash;            <i class="fas fa-arrow-left"></i> Dashboard&ndash;&gt;-->
+<!--&lt;!&ndash;        </a>&ndash;&gt;-->
+<!--&lt;!&ndash;        <h1><i class="fas fa-graduation-cap me-2"></i> Course Studio</h1>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="top-nav-right d-flex gap-2 align-items-center">&ndash;&gt;-->
+<!--&lt;!&ndash;        <span class="admin-name">&ndash;&gt;-->
+<!--&lt;!&ndash;            <i class="fas fa-user-shield me-1"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;            <span th:text="${session.admin.fullName}">Admin</span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </span>&ndash;&gt;-->
+<!--&lt;!&ndash;        <a href="/admin/logout" class="back-btn"><i class="fas fa-sign-out-alt"></i> Exit</a>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;&lt;!&ndash; ── MAIN ── &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="page-container">&ndash;&gt;-->
+
+<!--&lt;!&ndash;    &lt;!&ndash; HERO &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="hero-card">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="hero-banner">&ndash;&gt;-->
+<!--&lt;!&ndash;            <img th:if="${course.thumbnailUrl != null and !course.thumbnailUrl.isEmpty()}"&ndash;&gt;-->
+<!--&lt;!&ndash;                 th:src="${course.thumbnailUrl}" alt="Course Thumbnail"&ndash;&gt;-->
+<!--&lt;!&ndash;                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">&ndash;&gt;-->
+<!--&lt;!&ndash;            <i class="fas fa-book-open hero-banner-placeholder"&ndash;&gt;-->
+<!--&lt;!&ndash;               th:classappend="${course.thumbnailUrl != null and !course.thumbnailUrl.isEmpty()} ? 'd-none' : ''"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;            <span th:if="${course.isApproved == 0}" class="approval-ribbon ribbon-pending">&ndash;&gt;-->
+<!--&lt;!&ndash;                <i class="fas fa-clock"></i> PENDING&ndash;&gt;-->
+<!--&lt;!&ndash;            </span>&ndash;&gt;-->
+<!--&lt;!&ndash;            <span th:if="${course.isApproved == 1 and course.isPublished == 0}" class="approval-ribbon ribbon-approved">&ndash;&gt;-->
+<!--&lt;!&ndash;                <i class="fas fa-thumbs-up"></i> APPROVED&ndash;&gt;-->
+<!--&lt;!&ndash;            </span>&ndash;&gt;-->
+<!--&lt;!&ndash;            <span th:if="${course.isApproved == 1 and course.isPublished == 1}" class="approval-ribbon ribbon-published">&ndash;&gt;-->
+<!--&lt;!&ndash;                <i class="fas fa-globe"></i> LIVE&ndash;&gt;-->
+<!--&lt;!&ndash;            </span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="hero-info">&ndash;&gt;-->
+<!--&lt;!&ndash;            <h2 th:text="${course.courseTitle}">Strategic Leadership Masterclass</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p class="subtitle" th:text="${course.subTitle}">Advance your career with expert insights</p>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="hero-tags">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="tag" th:if="${course.category != null}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <i class="fas fa-folder-open"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span th:text="${course.category}">Business</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                </span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="tag" th:if="${course.level != null}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <i class="fas fa-chart-line"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span th:text="${course.level}">Intermediate</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                </span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="tag" th:if="${course.language != null}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <i class="fas fa-language"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span th:text="${course.language}">English</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                </span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="tag" th:if="${course.durationInWeeks != null}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <i class="far fa-calendar-check"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span th:text="${course.durationInWeeks}"></span> weeks&ndash;&gt;-->
+<!--&lt;!&ndash;                </span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="tag" th:if="${course.totalClasses != null}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <i class="fas fa-video"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span th:text="${course.totalClasses}"></span> lessons&ndash;&gt;-->
+<!--&lt;!&ndash;                </span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    &lt;!&ndash; ACTION STRIP &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="action-strip">&ndash;&gt;-->
+<!--&lt;!&ndash;        <button th:if="${course.isApproved == 0}"&ndash;&gt;-->
+<!--&lt;!&ndash;                th:attr="data-url=@{/admin/course/approve/{id}(id=${course.id})}"&ndash;&gt;-->
+<!--&lt;!&ndash;                class="btn-action btn-approve-main"&ndash;&gt;-->
+<!--&lt;!&ndash;                onclick="openModal('approve', this.dataset.url)">&ndash;&gt;-->
+<!--&lt;!&ndash;            <i class="fas fa-check-double"></i> Approve Course&ndash;&gt;-->
+<!--&lt;!&ndash;        </button>&ndash;&gt;-->
+<!--&lt;!&ndash;        <button th:if="${course.isApproved == 1 and course.isPublished == 0}"&ndash;&gt;-->
+<!--&lt;!&ndash;                th:attr="data-url=@{/admin/course/publish/{id}(id=${course.id})}"&ndash;&gt;-->
+<!--&lt;!&ndash;                class="btn-action btn-publish-main"&ndash;&gt;-->
+<!--&lt;!&ndash;                onclick="openModal('publish', this.dataset.url)">&ndash;&gt;-->
+<!--&lt;!&ndash;            <i class="fas fa-upload"></i> Publish to Store&ndash;&gt;-->
+<!--&lt;!&ndash;        </button>&ndash;&gt;-->
+<!--&lt;!&ndash;        <a th:if="${course.teacherId != null}"&ndash;&gt;-->
+<!--&lt;!&ndash;           th:href="@{/admin/teacher-details/{id}(id=${course.teacherId})}"&ndash;&gt;-->
+<!--&lt;!&ndash;           class="btn-action btn-teacher-main">&ndash;&gt;-->
+<!--&lt;!&ndash;            <i class="fas fa-chalkboard-user"></i> Instructor Profile&ndash;&gt;-->
+<!--&lt;!&ndash;        </a>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    &lt;!&ndash; COMPACT INFO GRID &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="compact-grid">&ndash;&gt;-->
+
+<!--&lt;!&ndash;        &lt;!&ndash; Card 1: Essentials &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="info-card">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-card-title"><i class="fas fa-crown"></i> Essentials</div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Course ID</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value" th:text="${course.id}">#101</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Price</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value">৳ <span th:text="${course.price != null ? course.price : 'Free'}">0</span></span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Seats</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value" th:text="${course.totalSeats != null ? course.totalSeats : 'Unlimited'}">Unlimited</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Enrolled</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value" th:text="${course.enrolledStudents != null ? course.enrolledStudents : 0}">0</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Schedule</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value" th:text="${course.schedule != null ? course.schedule : 'Flexible'}">—</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Rating</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span th:text="${course.rating != null ? course.rating : 'N/A'}"></span> ⭐&ndash;&gt;-->
+<!--&lt;!&ndash;                    (<span th:text="${course.totalRatings != null ? course.totalRatings : 0}"></span>)&ndash;&gt;-->
+<!--&lt;!&ndash;                </span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;        &lt;!&ndash; Card 2: Moderation &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="info-card">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-card-title"><i class="fas fa-flag-checkered"></i> Moderation</div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Approval</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span th:if="${course.isApproved == 0}" class="badge-status badge-pending">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <i class="fas fa-hourglass-half"></i> Pending&ndash;&gt;-->
+<!--&lt;!&ndash;                    </span>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span th:if="${course.isApproved == 1}" class="badge-status badge-approved">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <i class="fas fa-check-circle"></i> Approved&ndash;&gt;-->
+<!--&lt;!&ndash;                    </span>&ndash;&gt;-->
+<!--&lt;!&ndash;                </span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Visibility</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span th:if="${course.isPublished == 0}" class="badge-status badge-unpublished">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <i class="fas fa-lock"></i> Unpublished&ndash;&gt;-->
+<!--&lt;!&ndash;                    </span>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span th:if="${course.isPublished == 1}" class="badge-status badge-published">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <i class="fas fa-globe"></i> Published&ndash;&gt;-->
+<!--&lt;!&ndash;                    </span>&ndash;&gt;-->
+<!--&lt;!&ndash;                </span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Status</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value" th:text="${course.status != null ? course.status : 'DRAFT'}">DRAFT</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Created</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value" th:text="${course.createdAt != null ? #temporals.format(course.createdAt, 'dd MMM yyyy') : '—'}">—</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Updated</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value" th:text="${course.updatedAt != null ? #temporals.format(course.updatedAt, 'dd MMM yyyy') : '—'}">—</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Teacher ID</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value" th:text="${course.teacherId != null ? course.teacherId : 'N/A'}"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;        &lt;!&ndash; Card 3: Lead Instructor &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="info-card">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-card-title"><i class="fas fa-person-chalkboard"></i> Lead Instructor</div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Full Name</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value" th:text="${course.instructorName != null ? course.instructorName : 'Not assigned'}">—</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Title/Role</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value" th:text="${course.instructorTitle != null ? course.instructorTitle : '—'}">—</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Experience</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value" th:text="${course.instructorExperience != null ? course.instructorExperience : '—'}">—</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-row">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-label">Email</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="info-value" th:text="${course.teacherEmail != null ? course.teacherEmail : '—'}">—</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;        &lt;!&ndash; Card 4: Promo Video &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="info-card">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="info-card-title"><i class="fas fa-play-circle"></i> Media Preview</div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div th:if="${course.promoVideoUrl != null and !course.promoVideoUrl.isEmpty()}">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="ratio ratio-16x9 mt-1" style="border-radius: 12px; overflow: hidden; margin-bottom: 6px;">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <iframe th:src="${course.promoVideoUrl}" title="Promo" frameborder="0" allowfullscreen style="width:100%; height:100%;"></iframe>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="text-muted mt-1"><i class="fas fa-video"></i> Promo teaser</div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div th:unless="${course.promoVideoUrl != null and !course.promoVideoUrl.isEmpty()}">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="video-placeholder text-center py-3">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <i class="fas fa-video-slash fa-2x mb-2 d-block"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span>No promo video</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    &lt;!&ndash; FULL WIDTH CONTENT CARDS &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="full-card" th:if="${course.description != null and !course.description.isEmpty()}">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-align-left"></i> Description</div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p th:text="${course.description}"></p>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div class="full-card" th:if="${course.learningOutcomes != null and !course.learningOutcomes.isEmpty()}">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-brain"></i> Learning Outcomes</div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p th:text="${course.learningOutcomes}"></p>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div class="full-card" th:if="${course.requirements != null and !course.requirements.isEmpty()}">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-microchip"></i> Requirements</div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p th:text="${course.requirements}"></p>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div class="full-card" th:if="${course.audience != null and !course.audience.isEmpty()}">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-users"></i> Target Audience</div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p th:text="${course.audience}"></p>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div class="full-card" th:if="${course.whatsIncluded != null and !course.whatsIncluded.isEmpty()}">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-gem"></i> What's Included</div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p th:text="${course.whatsIncluded}"></p>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div class="full-card" th:if="${course.instructorBio != null and !course.instructorBio.isEmpty()}">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-microphone-alt"></i> Instructor Bio</div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p th:text="${course.instructorBio}"></p>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    &lt;!&ndash; ── WEEKLY CURRICULUM — card grid view ── &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="full-card curriculum-section"&ndash;&gt;-->
+<!--&lt;!&ndash;         th:if="${course.weeklyModules != null and !course.weeklyModules.isEmpty()}">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="info-card-title">&ndash;&gt;-->
+<!--&lt;!&ndash;            <i class="fas fa-layer-group"></i> Weekly Curriculum&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;        &lt;!&ndash; Hidden raw data for JS to parse &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        <div id="rawModules"&ndash;&gt;-->
+<!--&lt;!&ndash;             th:text="${course.weeklyModules}"&ndash;&gt;-->
+<!--&lt;!&ndash;             style="display:none;"></div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;        &lt;!&ndash; Cards injected here by JS &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="week-grid" id="weekGrid"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    &lt;!&ndash; BOTTOM ACTIONS &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="bottom-strip">&ndash;&gt;-->
+<!--&lt;!&ndash;        <button th:if="${course.isApproved == 0}"&ndash;&gt;-->
+<!--&lt;!&ndash;                th:attr="data-url=@{/admin/course/approve/{id}(id=${course.id})}"&ndash;&gt;-->
+<!--&lt;!&ndash;                class="btn-action btn-approve-main"&ndash;&gt;-->
+<!--&lt;!&ndash;                onclick="openModal('approve', this.dataset.url)">&ndash;&gt;-->
+<!--&lt;!&ndash;            <i class="fas fa-check-circle"></i> Approve&ndash;&gt;-->
+<!--&lt;!&ndash;        </button>&ndash;&gt;-->
+<!--&lt;!&ndash;        <button th:if="${course.isApproved == 1 and course.isPublished == 0}"&ndash;&gt;-->
+<!--&lt;!&ndash;                th:attr="data-url=@{/admin/course/publish/{id}(id=${course.id})}"&ndash;&gt;-->
+<!--&lt;!&ndash;                class="btn-action btn-publish-main"&ndash;&gt;-->
+<!--&lt;!&ndash;                onclick="openModal('publish', this.dataset.url)">&ndash;&gt;-->
+<!--&lt;!&ndash;            <i class="fas fa-rocket"></i> Publish&ndash;&gt;-->
+<!--&lt;!&ndash;        </button>&ndash;&gt;-->
+<!--&lt;!&ndash;        <a href="/admin/teachers" class="btn-action btn-teacher-main">&ndash;&gt;-->
+<!--&lt;!&ndash;            <i class="fas fa-arrow-left"></i> Back to Dashboard&ndash;&gt;-->
+<!--&lt;!&ndash;        </a>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;&lt;!&ndash; ── CUSTOM MODAL ── &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="modal-box">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="modal-icon-wrap" id="modalIcon"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="modal-title-text" id="modalTitle"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="modal-body-text"  id="modalBody"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="modal-action-row">&ndash;&gt;-->
+<!--&lt;!&ndash;            <button class="mbtn" onclick="closeModal()">&ndash;&gt;-->
+<!--&lt;!&ndash;                <i class="fas fa-times"></i> Cancel&ndash;&gt;-->
+<!--&lt;!&ndash;            </button>&ndash;&gt;-->
+<!--&lt;!&ndash;            <button class="mbtn" id="modalConfirmBtn" onclick="confirmAction()">Confirm</button>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;<script>&ndash;&gt;-->
+<!--&lt;!&ndash;    /* ─────────────────────────────────────────────&ndash;&gt;-->
+<!--&lt;!&ndash;       MODAL SYSTEM&ndash;&gt;-->
+<!--&lt;!&ndash;    ───────────────────────────────────────────── */&ndash;&gt;-->
+<!--&lt;!&ndash;    let _pendingUrl = '';&ndash;&gt;-->
+
+<!--&lt;!&ndash;    function openModal(type, url) {&ndash;&gt;-->
+<!--&lt;!&ndash;        _pendingUrl = url || '';&ndash;&gt;-->
+<!--&lt;!&ndash;        const overlay  = document.getElementById('modalOverlay');&ndash;&gt;-->
+<!--&lt;!&ndash;        const icon     = document.getElementById('modalIcon');&ndash;&gt;-->
+<!--&lt;!&ndash;        const title    = document.getElementById('modalTitle');&ndash;&gt;-->
+<!--&lt;!&ndash;        const body     = document.getElementById('modalBody');&ndash;&gt;-->
+<!--&lt;!&ndash;        const btn      = document.getElementById('modalConfirmBtn');&ndash;&gt;-->
+
+<!--&lt;!&ndash;        if (type === 'approve') {&ndash;&gt;-->
+<!--&lt;!&ndash;            icon.className  = 'modal-icon-wrap modal-icon-approve';&ndash;&gt;-->
+<!--&lt;!&ndash;            icon.innerHTML  = '<i class="fas fa-check-double fa-lg"></i>';&ndash;&gt;-->
+<!--&lt;!&ndash;            title.textContent = 'Approve this course?';&ndash;&gt;-->
+<!--&lt;!&ndash;            body.textContent  = 'Once approved, the course will be ready for publishing. The instructor will be notified automatically.';&ndash;&gt;-->
+<!--&lt;!&ndash;            btn.className   = 'mbtn confirm-approve';&ndash;&gt;-->
+<!--&lt;!&ndash;            btn.innerHTML   = '<i class="fas fa-check"></i> Yes, approve';&ndash;&gt;-->
+<!--&lt;!&ndash;        } else {&ndash;&gt;-->
+<!--&lt;!&ndash;            icon.className  = 'modal-icon-wrap modal-icon-publish';&ndash;&gt;-->
+<!--&lt;!&ndash;            icon.innerHTML  = '<i class="fas fa-upload fa-lg"></i>';&ndash;&gt;-->
+<!--&lt;!&ndash;            title.textContent = 'Publish to Store?';&ndash;&gt;-->
+<!--&lt;!&ndash;            body.textContent  = 'Students will be able to find and enroll in this course immediately after publishing.';&ndash;&gt;-->
+<!--&lt;!&ndash;            btn.className   = 'mbtn confirm-publish';&ndash;&gt;-->
+<!--&lt;!&ndash;            btn.innerHTML   = '<i class="fas fa-rocket"></i> Yes, publish';&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        overlay.classList.add('open');&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    function closeModal() {&ndash;&gt;-->
+<!--&lt;!&ndash;        document.getElementById('modalOverlay').classList.remove('open');&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    function handleOverlayClick(e) {&ndash;&gt;-->
+<!--&lt;!&ndash;        if (e.target === document.getElementById('modalOverlay')) closeModal();&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    function confirmAction() {&ndash;&gt;-->
+<!--&lt;!&ndash;        if (_pendingUrl) window.location.href = _pendingUrl;&ndash;&gt;-->
+<!--&lt;!&ndash;        closeModal();&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    /* ─────────────────────────────────────────────&ndash;&gt;-->
+<!--&lt;!&ndash;       WEEKLY CURRICULUM RENDERER&ndash;&gt;-->
+<!--&lt;!&ndash;       Supports two formats:&ndash;&gt;-->
+<!--&lt;!&ndash;       1. JSON array: [{"week":1,"title":"Intro","topics":["Topic A","Topic B"]}, ...]&ndash;&gt;-->
+<!--&lt;!&ndash;       2. Plain text — one week per blank-line block, first line = title, rest = topics&ndash;&gt;-->
+<!--&lt;!&ndash;    ───────────────────────────────────────────── */&ndash;&gt;-->
+<!--&lt;!&ndash;    (function renderCurriculum() {&ndash;&gt;-->
+<!--&lt;!&ndash;        const raw  = document.getElementById('rawModules');&ndash;&gt;-->
+<!--&lt;!&ndash;        const grid = document.getElementById('weekGrid');&ndash;&gt;-->
+<!--&lt;!&ndash;        if (!raw || !grid) return;&ndash;&gt;-->
+
+<!--&lt;!&ndash;        const text = raw.textContent.trim();&ndash;&gt;-->
+<!--&lt;!&ndash;        if (!text) return;&ndash;&gt;-->
+
+<!--&lt;!&ndash;        let weeks = [];&ndash;&gt;-->
+
+<!--&lt;!&ndash;        /* Try JSON first */&ndash;&gt;-->
+<!--&lt;!&ndash;        try {&ndash;&gt;-->
+<!--&lt;!&ndash;            const parsed = JSON.parse(text);&ndash;&gt;-->
+<!--&lt;!&ndash;            if (Array.isArray(parsed)) {&ndash;&gt;-->
+<!--&lt;!&ndash;                weeks = parsed.map((w, i) => ({&ndash;&gt;-->
+<!--&lt;!&ndash;                    num:      w.weekNumber || w.week || (i + 1),&ndash;&gt;-->
+<!--&lt;!&ndash;                    title:    w.title || ('Week ' + (i + 1)),&ndash;&gt;-->
+<!--&lt;!&ndash;                    duration: w.duration || null,&ndash;&gt;-->
+<!--&lt;!&ndash;                    topics:   Array.isArray(w.details) ? w.details&ndash;&gt;-->
+<!--&lt;!&ndash;                        : Array.isArray(w.topics)  ? w.topics&ndash;&gt;-->
+<!--&lt;!&ndash;                            : []&ndash;&gt;-->
+<!--&lt;!&ndash;                }));&ndash;&gt;-->
+<!--&lt;!&ndash;            }&ndash;&gt;-->
+<!--&lt;!&ndash;        } catch (_) {&ndash;&gt;-->
+<!--&lt;!&ndash;            /* Fallback: parse plain text blocks separated by blank lines */&ndash;&gt;-->
+<!--&lt;!&ndash;            const blocks = text.split(/\n\s*\n/).filter(b => b.trim());&ndash;&gt;-->
+<!--&lt;!&ndash;            blocks.forEach((block, i) => {&ndash;&gt;-->
+<!--&lt;!&ndash;                const lines = block.split('\n').map(l => l.trim()).filter(Boolean);&ndash;&gt;-->
+<!--&lt;!&ndash;                if (!lines.length) return;&ndash;&gt;-->
+
+<!--&lt;!&ndash;                /* First line is the week title (strip leading "Week N:" if present) */&ndash;&gt;-->
+<!--&lt;!&ndash;                let titleLine = lines[0].replace(/^week\s*\d+\s*[:\-–]?\s*/i, '').trim() || ('Week ' + (i + 1));&ndash;&gt;-->
+<!--&lt;!&ndash;                const topics  = lines.slice(1);&ndash;&gt;-->
+
+<!--&lt;!&ndash;                weeks.push({ num: i + 1, title: titleLine, topics });&ndash;&gt;-->
+<!--&lt;!&ndash;            });&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        if (!weeks.length) {&ndash;&gt;-->
+<!--&lt;!&ndash;            grid.innerHTML = '<div class="no-curriculum"><i class="fas fa-inbox fa-2x mb-2 d-block"></i>No curriculum data found.</div>';&ndash;&gt;-->
+<!--&lt;!&ndash;            return;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        grid.innerHTML = weeks.map(w => `&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="week-card">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="week-header">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="week-num">${w.num}</div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="week-title">${escHtml(w.title)}</div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    ${w.duration ? `<div style="font-size:11px;color:rgba(255,255,255,0.65);margin-top:2px;"><i class="fas fa-clock" style="font-size:10px;"></i> ${escHtml(w.duration)}</div>` : ''}&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="week-topics">&ndash;&gt;-->
+<!--&lt;!&ndash;                ${w.topics.length&ndash;&gt;-->
+<!--&lt;!&ndash;            ? w.topics.map(t => `&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="topic-item">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div class="topic-dot"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <span>${escHtml(t)}</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>`).join('')&ndash;&gt;-->
+<!--&lt;!&ndash;            : '<div class="topic-item" style="color:#a0b8aa; font-size:12px;">No topics listed</div>'&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    `).join('');&ndash;&gt;-->
+<!--&lt;!&ndash;    })();&ndash;&gt;-->
+
+<!--&lt;!&ndash;    function escHtml(str) {&ndash;&gt;-->
+<!--&lt;!&ndash;        return String(str)&ndash;&gt;-->
+<!--&lt;!&ndash;            .replace(/&/g,'&amp;')&ndash;&gt;-->
+<!--&lt;!&ndash;            .replace(/</g,'&lt;')&ndash;&gt;-->
+<!--&lt;!&ndash;            .replace(/>/g,'&gt;')&ndash;&gt;-->
+<!--&lt;!&ndash;            .replace(/"/g,'&quot;');&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+<!--&lt;!&ndash;</script>&ndash;&gt;-->
+<!--&lt;!&ndash;</body>&ndash;&gt;-->
+<!--&lt;!&ndash;</html>&ndash;&gt;-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">-->
+<!--    <title>Course Insights | Admin Panel</title>-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">-->
+<!--    <style>-->
+<!--        * { margin: 0; padding: 0; box-sizing: border-box; }-->
+
+<!--        body {-->
+<!--            font-family: 'Inter', system-ui, -apple-system, sans-serif;-->
+<!--            background: #f0f7f0;-->
+<!--            min-height: 100vh;-->
+<!--        }-->
+
+<!--        /* ── TOP NAV ── */-->
+<!--        .top-nav {-->
+<!--            background: #0f3b2c;-->
+<!--            color: white;-->
+<!--            padding: 12px 32px;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: space-between;-->
+<!--            position: sticky;-->
+<!--            top: 0;-->
+<!--            z-index: 100;-->
+<!--            box-shadow: 0 2px 12px rgba(0,0,0,0.08);-->
+<!--        }-->
+<!--        .top-nav-left { display: flex; align-items: center; gap: 24px; }-->
+<!--        .back-btn {-->
+<!--            display: inline-flex;-->
+<!--            align-items: center;-->
+<!--            gap: 8px;-->
+<!--            background: rgba(255,255,255,0.12);-->
+<!--            color: white;-->
+<!--            padding: 6px 16px;-->
+<!--            border-radius: 40px;-->
+<!--            text-decoration: none;-->
+<!--            font-size: 13px;-->
+<!--            font-weight: 500;-->
+<!--            transition: all 0.2s;-->
+<!--            border: 1px solid rgba(255,255,255,0.2);-->
+<!--        }-->
+<!--        .back-btn:hover { background: white; color: #0f3b2c; transform: translateY(-1px); }-->
+<!--        .top-nav h1 { font-size: 18px; font-weight: 600; margin: 0; letter-spacing: -0.2px; }-->
+<!--        .admin-name {-->
+<!--            font-size: 13px;-->
+<!--            background: rgba(255,255,255,0.1);-->
+<!--            padding: 6px 14px;-->
+<!--            border-radius: 40px;-->
+<!--            font-weight: 500;-->
+<!--        }-->
+
+<!--        /* ── PAGE ── */-->
+<!--        .page-container {-->
+<!--            max-width: 1400px;-->
+<!--            margin: 0 auto;-->
+<!--            padding: 28px 24px 50px;-->
+<!--        }-->
+
+<!--        /* ── HERO CARD ── */-->
+<!--        .hero-card {-->
+<!--            background: white;-->
+<!--            border-radius: 20px;-->
+<!--            overflow: hidden;-->
+<!--            box-shadow: 0 4px 12px rgba(0,0,0,0.05);-->
+<!--            margin-bottom: 28px;-->
+<!--            border: 1px solid #e2efe5;-->
+<!--        }-->
+<!--        .hero-banner {-->
+<!--            position: relative;-->
+<!--            height: 160px;-->
+<!--            background: linear-gradient(105deg, #1a5d3a, #2b7e4b);-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            overflow: hidden;-->
+<!--        }-->
+<!--        .hero-banner img { width: 100%; height: 100%; object-fit: cover; }-->
+<!--        .hero-banner-placeholder { font-size: 56px; color: rgba(255,255,255,0.2); }-->
+<!--        .approval-ribbon {-->
+<!--            position: absolute;-->
+<!--            top: 14px;-->
+<!--            right: 20px;-->
+<!--            padding: 5px 16px;-->
+<!--            border-radius: 40px;-->
+<!--            font-size: 11px;-->
+<!--            font-weight: 700;-->
+<!--            letter-spacing: 0.5px;-->
+<!--            backdrop-filter: blur(8px);-->
+<!--            box-shadow: 0 2px 8px rgba(0,0,0,0.1);-->
+<!--        }-->
+<!--        .ribbon-pending  { background: rgba(255,241,184,0.95); color: #b45f06; }-->
+<!--        .ribbon-approved { background: rgba(187,247,208,0.96); color: #166534; }-->
+<!--        .ribbon-published{ background: rgba(191,219,254,0.96); color: #1e3a8a; }-->
+
+<!--        .hero-info { padding: 20px 24px; }-->
+<!--        .hero-info h2 { font-size: 22px; font-weight: 700; color: #1a3a2a; margin-bottom: 6px; }-->
+<!--        .hero-info .subtitle {-->
+<!--            font-size: 13px; color: #5f7a6b; margin-bottom: 14px;-->
+<!--            border-left: 3px solid #4ade80; padding-left: 12px;-->
+<!--        }-->
+<!--        .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }-->
+<!--        .tag {-->
+<!--            background: #eef6ee; color: #1f6e2d;-->
+<!--            padding: 4px 14px; border-radius: 30px;-->
+<!--            font-size: 11px; font-weight: 600;-->
+<!--            display: inline-flex; align-items: center; gap: 6px;-->
+<!--        }-->
+
+<!--        /* ── ACTION STRIP ── */-->
+<!--        .action-strip { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }-->
+<!--        .btn-action {-->
+<!--            padding: 8px 20px;-->
+<!--            border-radius: 40px;-->
+<!--            font-size: 13px;-->
+<!--            font-weight: 600;-->
+<!--            display: inline-flex;-->
+<!--            align-items: center;-->
+<!--            gap: 8px;-->
+<!--            text-decoration: none;-->
+<!--            transition: all 0.2s;-->
+<!--            border: none;-->
+<!--            cursor: pointer;-->
+<!--            background: none;-->
+<!--        }-->
+<!--        .btn-approve-main  { background: #10b981; color: white; box-shadow: 0 2px 6px rgba(16,185,129,0.2); }-->
+<!--        .btn-approve-main:hover  { background: #059669; color: white; transform: translateY(-1px); }-->
+<!--        .btn-publish-main  { background: #3b82f6; color: white; }-->
+<!--        .btn-publish-main:hover  { background: #2563eb; color: white; transform: translateY(-1px); }-->
+<!--        .btn-teacher-main  { background: white; color: #2b7e4b; border: 1.5px solid #2b7e4b; }-->
+<!--        .btn-teacher-main:hover  { background: #eef6ee; transform: translateY(-1px); }-->
+
+<!--        /* ── INFO GRID ── */-->
+<!--        .compact-grid {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));-->
+<!--            gap: 20px;-->
+<!--            margin-bottom: 28px;-->
+<!--        }-->
+<!--        .info-card {-->
+<!--            background: white;-->
+<!--            border-radius: 18px;-->
+<!--            padding: 18px 20px;-->
+<!--            border: 1px solid #e6f0e6;-->
+<!--            box-shadow: 0 2px 8px rgba(0,0,0,0.03);-->
+<!--            transition: all 0.2s;-->
+<!--        }-->
+<!--        .info-card:hover { border-color: #c0e0c3; box-shadow: 0 6px 14px rgba(0,0,0,0.05); }-->
+<!--        .info-card-title {-->
+<!--            font-size: 13px; font-weight: 700; letter-spacing: 0.4px;-->
+<!--            color: #2b7e4b; margin-bottom: 14px;-->
+<!--            display: flex; align-items: center; gap: 8px;-->
+<!--            border-bottom: 1.5px solid #eef3e8; padding-bottom: 8px;-->
+<!--        }-->
+<!--        .info-row {-->
+<!--            display: flex; justify-content: space-between; align-items: center;-->
+<!--            padding: 8px 0; border-bottom: 1px solid #f5faf5; gap: 10px;-->
+<!--        }-->
+<!--        .info-label { font-size: 12px; font-weight: 500; color: #6b7c72; }-->
+<!--        .info-value {-->
+<!--            font-size: 13px; font-weight: 600; color: #1f3a2a;-->
+<!--            background: #fafef7; padding: 2px 12px; border-radius: 30px;-->
+<!--        }-->
+<!--        .badge-status {-->
+<!--            padding: 4px 12px; border-radius: 40px; font-size: 11px; font-weight: 700;-->
+<!--            display: inline-flex; align-items: center; gap: 6px;-->
+<!--        }-->
+<!--        .badge-pending   { background: #fff2e0; color: #c47b2e; }-->
+<!--        .badge-approved  { background: #e2f3e6; color: #1f7840; }-->
+<!--        .badge-published { background: #e0ebff; color: #1e40af; }-->
+<!--        .badge-unpublished{ background: #f1f3f5; color: #5a6b62; }-->
+
+<!--        /* ── FULL CARDS ── */-->
+<!--        .full-card {-->
+<!--            background: white; border-radius: 18px; padding: 18px 24px;-->
+<!--            border: 1px solid #e6f0e6; margin-bottom: 20px;-->
+<!--            box-shadow: 0 2px 6px rgba(0,0,0,0.02);-->
+<!--        }-->
+<!--        .full-card p {-->
+<!--            font-size: 13px; line-height: 1.5; color: #3b5546; margin-bottom: 0;-->
+<!--        }-->
+<!--        .video-placeholder {-->
+<!--            background: #f4fbf4; border-radius: 14px; padding: 12px;-->
+<!--            text-align: center; color: #6b8f7a; font-size: 12px;-->
+<!--        }-->
+<!--        .ratio-16x9 { border-radius: 14px; overflow: hidden; }-->
+<!--        .text-muted { color: #819b8c; font-size: 12px; }-->
+
+<!--        /* ── WEEKLY CURRICULUM CARDS ── */-->
+<!--        .curriculum-section { margin-bottom: 20px; }-->
+<!--        .week-grid {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));-->
+<!--            gap: 14px;-->
+<!--            margin-top: 14px;-->
+<!--        }-->
+<!--        .week-card {-->
+<!--            background: #fafef7;-->
+<!--            border: 1px solid #daeeda;-->
+<!--            border-radius: 14px;-->
+<!--            overflow: hidden;-->
+<!--            transition: all 0.2s;-->
+<!--        }-->
+<!--        .week-card:hover {-->
+<!--            border-color: #a7d7b0;-->
+<!--            box-shadow: 0 6px 18px rgba(43,126,75,0.08);-->
+<!--            transform: translateY(-2px);-->
+<!--        }-->
+<!--        .week-header {-->
+<!--            background: linear-gradient(105deg, #1a5d3a, #2b7e4b);-->
+<!--            padding: 12px 16px;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            gap: 10px;-->
+<!--        }-->
+<!--        .week-num {-->
+<!--            width: 30px; height: 30px; border-radius: 50%;-->
+<!--            background: rgba(255,255,255,0.2);-->
+<!--            color: white;-->
+<!--            font-size: 12px; font-weight: 700;-->
+<!--            display: flex; align-items: center; justify-content: center;-->
+<!--            flex-shrink: 0;-->
+<!--            border: 1.5px solid rgba(255,255,255,0.35);-->
+<!--        }-->
+<!--        .week-title {-->
+<!--            font-size: 13px; font-weight: 600; color: white; line-height: 1.35;-->
+<!--        }-->
+<!--        .week-topics { padding: 12px 14px; display: flex; flex-direction: column; gap: 7px; }-->
+<!--        .topic-item {-->
+<!--            display: flex; align-items: flex-start; gap: 8px;-->
+<!--            font-size: 12px; color: #3b5546; line-height: 1.45;-->
+<!--        }-->
+<!--        .topic-dot {-->
+<!--            width: 5px; height: 5px; border-radius: 50%;-->
+<!--            background: #4ade80; margin-top: 5px; flex-shrink: 0;-->
+<!--        }-->
+<!--        .no-curriculum {-->
+<!--            text-align: center; padding: 30px 20px; color: #7a9982;-->
+<!--            font-size: 13px;-->
+<!--        }-->
+
+<!--        /* ── BOTTOM STRIP ── */-->
+<!--        .bottom-strip {-->
+<!--            display: flex; justify-content: flex-start;-->
+<!--            gap: 16px; margin-top: 20px; flex-wrap: wrap;-->
+<!--        }-->
+
+<!--        /* ── CUSTOM MODAL OVERLAY ── */-->
+<!--        .modal-overlay {-->
+<!--            position: fixed; inset: 0;-->
+<!--            background: rgba(0,0,0,0.5);-->
+<!--            backdrop-filter: blur(4px);-->
+<!--            display: flex; align-items: center; justify-content: center;-->
+<!--            z-index: 9999;-->
+<!--            opacity: 0; pointer-events: none;-->
+<!--            transition: opacity 0.25s ease;-->
+<!--        }-->
+<!--        .modal-overlay.open { opacity: 1; pointer-events: all; }-->
+<!--        .modal-box {-->
+<!--            background: white;-->
+<!--            border-radius: 24px;-->
+<!--            padding: 32px 28px 28px;-->
+<!--            max-width: 440px; width: 90%;-->
+<!--            border: 1px solid #e2efe5;-->
+<!--            box-shadow: 0 25px 50px rgba(0,0,0,0.2);-->
+<!--            transform: translateY(20px) scale(0.96);-->
+<!--            transition: transform 0.25s ease;-->
+<!--        }-->
+<!--        .modal-overlay.open .modal-box { transform: translateY(0) scale(1); }-->
+<!--        .modal-icon-wrap {-->
+<!--            width: 64px; height: 64px; border-radius: 50%;-->
+<!--            display: flex; align-items: center; justify-content: center;-->
+<!--            font-size: 28px; margin: 0 auto 16px;-->
+<!--        }-->
+<!--        .modal-icon-approve  { background: #d1fae5; color: #065f46; }-->
+<!--        .modal-icon-publish  { background: #dbeafe; color: #1e40af; }-->
+<!--        .modal-icon-price    { background: #fed7aa; color: #9b4e00; }-->
+<!--        .modal-title-text {-->
+<!--            font-size: 20px; font-weight: 700; color: #1a3a2a;-->
+<!--            text-align: center; margin-bottom: 8px;-->
+<!--        }-->
+<!--        .modal-body-text {-->
+<!--            font-size: 14px; color: #5a7a68;-->
+<!--            text-align: center; line-height: 1.6; margin-bottom: 24px;-->
+<!--        }-->
+<!--        .modal-action-row { display: flex; gap: 12px; justify-content: center; margin-top: 8px; }-->
+<!--        .mbtn {-->
+<!--            padding: 10px 24px; border-radius: 40px; font-size: 13px;-->
+<!--            font-weight: 600; cursor: pointer; transition: all 0.18s;-->
+<!--            border: 1.5px solid #d0e8d5;-->
+<!--            background: white; color: #3b5546;-->
+<!--            display: inline-flex; align-items: center; gap: 7px;-->
+<!--        }-->
+<!--        .mbtn:hover { background: #f0f7f0; transform: translateY(-1px); }-->
+<!--        .mbtn.confirm-approve { background: #10b981; color: white; border-color: #10b981; }-->
+<!--        .mbtn.confirm-approve:hover { background: #059669; }-->
+<!--        .mbtn.confirm-publish { background: #3b82f6; color: white; border-color: #3b82f6; }-->
+<!--        .mbtn.confirm-publish:hover { background: #2563eb; }-->
+<!--        .price-input-group {-->
+<!--            margin: 20px 0 16px;-->
+<!--            text-align: left;-->
+<!--        }-->
+<!--        .price-input-group label {-->
+<!--            display: block;-->
+<!--            font-size: 12px;-->
+<!--            font-weight: 700;-->
+<!--            color: #2b7e4b;-->
+<!--            margin-bottom: 8px;-->
+<!--            text-transform: uppercase;-->
+<!--            letter-spacing: 0.5px;-->
+<!--        }-->
+<!--        .price-input-wrapper {-->
+<!--            position: relative;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--        }-->
+<!--        .price-currency {-->
+<!--            position: absolute;-->
+<!--            left: 16px;-->
+<!--            font-size: 18px;-->
+<!--            font-weight: 700;-->
+<!--            color: #2b7e4b;-->
+<!--        }-->
+<!--        .price-input {-->
+<!--            width: 100%;-->
+<!--            padding: 14px 16px 14px 40px;-->
+<!--            border: 2px solid #e2efe5;-->
+<!--            border-radius: 16px;-->
+<!--            font-size: 16px;-->
+<!--            font-weight: 600;-->
+<!--            font-family: 'Inter', sans-serif;-->
+<!--            transition: all 0.2s;-->
+<!--            outline: none;-->
+<!--        }-->
+<!--        .price-input:focus {-->
+<!--            border-color: #2b8c5e;-->
+<!--            box-shadow: 0 0 0 3px rgba(43, 140, 94, 0.1);-->
+<!--        }-->
+<!--        .price-note {-->
+<!--            font-size: 11px;-->
+<!--            color: #819b8c;-->
+<!--            margin-top: 6px;-->
+<!--            display: block;-->
+<!--        }-->
+
+<!--        @media (max-width: 700px) {-->
+<!--            .page-container { padding: 20px 16px; }-->
+<!--            .hero-info h2 { font-size: 18px; }-->
+<!--            .compact-grid { grid-template-columns: 1fr; }-->
+<!--            .week-grid { grid-template-columns: 1fr; }-->
+<!--            .top-nav { padding: 10px 18px; }-->
+<!--            .top-nav-left { gap: 12px; }-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--&lt;!&ndash; ── TOP NAV ── &ndash;&gt;-->
+<!--<div class="top-nav">-->
+<!--    <div class="top-nav-left">-->
+<!--        <a href="/admin/teachers" class="back-btn">-->
+<!--            <i class="fas fa-arrow-left"></i> Dashboard-->
+<!--        </a>-->
+<!--        <h1><i class="fas fa-graduation-cap me-2"></i> Course Studio</h1>-->
+<!--    </div>-->
+<!--    <div class="top-nav-right d-flex gap-2 align-items-center">-->
+<!--        <span class="admin-name">-->
+<!--            <i class="fas fa-user-shield me-1"></i>-->
+<!--            <span th:text="${session.admin.fullName}">Admin</span>-->
+<!--        </span>-->
+<!--        <a href="/admin/logout" class="back-btn"><i class="fas fa-sign-out-alt"></i> Exit</a>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; ── MAIN ── &ndash;&gt;-->
+<!--<div class="page-container">-->
+
+<!--    &lt;!&ndash; HERO &ndash;&gt;-->
+<!--    <div class="hero-card">-->
+<!--        <div class="hero-banner">-->
+<!--            <img th:if="${course.thumbnailUrl != null and !course.thumbnailUrl.isEmpty()}"-->
+<!--                 th:src="${course.thumbnailUrl}" alt="Course Thumbnail"-->
+<!--                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">-->
+<!--            <i class="fas fa-book-open hero-banner-placeholder"-->
+<!--               th:classappend="${course.thumbnailUrl != null and !course.thumbnailUrl.isEmpty()} ? 'd-none' : ''"></i>-->
+<!--            <span th:if="${course.isApproved == 0}" class="approval-ribbon ribbon-pending">-->
+<!--                <i class="fas fa-clock"></i> PENDING-->
+<!--            </span>-->
+<!--            <span th:if="${course.isApproved == 1 and course.isPublished == 0}" class="approval-ribbon ribbon-approved">-->
+<!--                <i class="fas fa-thumbs-up"></i> APPROVED-->
+<!--            </span>-->
+<!--            <span th:if="${course.isApproved == 1 and course.isPublished == 1}" class="approval-ribbon ribbon-published">-->
+<!--                <i class="fas fa-globe"></i> LIVE-->
+<!--            </span>-->
+<!--        </div>-->
+<!--        <div class="hero-info">-->
+<!--            <h2 th:text="${course.courseTitle}">Strategic Leadership Masterclass</h2>-->
+<!--            <p class="subtitle" th:text="${course.subTitle}">Advance your career with expert insights</p>-->
+<!--            <div class="hero-tags">-->
+<!--                <span class="tag" th:if="${course.category != null}">-->
+<!--                    <i class="fas fa-folder-open"></i>-->
+<!--                    <span th:text="${course.category}">Business</span>-->
+<!--                </span>-->
+<!--                <span class="tag" th:if="${course.level != null}">-->
+<!--                    <i class="fas fa-chart-line"></i>-->
+<!--                    <span th:text="${course.level}">Intermediate</span>-->
+<!--                </span>-->
+<!--                <span class="tag" th:if="${course.language != null}">-->
+<!--                    <i class="fas fa-language"></i>-->
+<!--                    <span th:text="${course.language}">English</span>-->
+<!--                </span>-->
+<!--                <span class="tag" th:if="${course.durationInWeeks != null}">-->
+<!--                    <i class="far fa-calendar-check"></i>-->
+<!--                    <span th:text="${course.durationInWeeks}"></span> weeks-->
+<!--                </span>-->
+<!--                <span class="tag" th:if="${course.totalClasses != null}">-->
+<!--                    <i class="fas fa-video"></i>-->
+<!--                    <span th:text="${course.totalClasses}"></span> lessons-->
+<!--                </span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; ACTION STRIP &ndash;&gt;-->
+<!--    <div class="action-strip">-->
+<!--        &lt;!&ndash; Approve with Price button for pending courses &ndash;&gt;-->
+<!--        <button th:if="${course.isApproved == 0}"-->
+<!--                th:attr="data-id=${course.id}, data-title=${course.courseTitle}, data-price=${course.price}"-->
+<!--                class="btn-action btn-approve-main approve-price-btn">-->
+<!--            <i class="fas fa-tag"></i> Approve with Price-->
+<!--        </button>-->
+<!--        <button th:if="${course.isApproved == 1 and course.isPublished == 0}"-->
+<!--                th:attr="data-url=@{/admin/course/publish/{id}(id=${course.id})}"-->
+<!--                class="btn-action btn-publish-main publish-btn">-->
+<!--            <i class="fas fa-upload"></i> Publish to Store-->
+<!--        </button>-->
+<!--        <a th:if="${course.teacherId != null}"-->
+<!--           th:href="@{/admin/teacher-details/{id}(id=${course.teacherId})}"-->
+<!--           class="btn-action btn-teacher-main">-->
+<!--            <i class="fas fa-chalkboard-user"></i> Instructor Profile-->
+<!--        </a>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; COMPACT INFO GRID &ndash;&gt;-->
+<!--    <div class="compact-grid">-->
+
+<!--        &lt;!&ndash; Card 1: Essentials &ndash;&gt;-->
+<!--        <div class="info-card">-->
+<!--            <div class="info-card-title"><i class="fas fa-crown"></i> Essentials</div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Course ID</span>-->
+<!--                <span class="info-value" th:text="${course.id}">#101</span>-->
+<!--            </div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Price</span>-->
+<!--                <span class="info-value">৳ <span th:text="${course.price != null ? course.price : 'Free'}">0</span></span>-->
+<!--            </div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Seats</span>-->
+<!--                <span class="info-value" th:text="${course.totalSeats != null ? course.totalSeats : 'Unlimited'}">Unlimited</span>-->
+<!--            </div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Enrolled</span>-->
+<!--                <span class="info-value" th:text="${course.enrolledStudents != null ? course.enrolledStudents : 0}">0</span>-->
+<!--            </div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Schedule</span>-->
+<!--                <span class="info-value" th:text="${course.schedule != null ? course.schedule : 'Flexible'}">—</span>-->
+<!--            </div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Rating</span>-->
+<!--                <span class="info-value">-->
+<!--                    <span th:text="${course.rating != null ? course.rating : 'N/A'}"></span> ⭐-->
+<!--                    (<span th:text="${course.totalRatings != null ? course.totalRatings : 0}"></span>)-->
+<!--                </span>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Card 2: Moderation &ndash;&gt;-->
+<!--        <div class="info-card">-->
+<!--            <div class="info-card-title"><i class="fas fa-flag-checkered"></i> Moderation</div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Approval</span>-->
+<!--                <span class="info-value">-->
+<!--                    <span th:if="${course.isApproved == 0}" class="badge-status badge-pending">-->
+<!--                        <i class="fas fa-hourglass-half"></i> Pending-->
+<!--                    </span>-->
+<!--                    <span th:if="${course.isApproved == 1}" class="badge-status badge-approved">-->
+<!--                        <i class="fas fa-check-circle"></i> Approved-->
+<!--                    </span>-->
+<!--                </span>-->
+<!--            </div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Visibility</span>-->
+<!--                <span class="info-value">-->
+<!--                    <span th:if="${course.isPublished == 0}" class="badge-status badge-unpublished">-->
+<!--                        <i class="fas fa-lock"></i> Unpublished-->
+<!--                    </span>-->
+<!--                    <span th:if="${course.isPublished == 1}" class="badge-status badge-published">-->
+<!--                        <i class="fas fa-globe"></i> Published-->
+<!--                    </span>-->
+<!--                </span>-->
+<!--            </div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Status</span>-->
+<!--                <span class="info-value" th:text="${course.status != null ? course.status : 'DRAFT'}">DRAFT</span>-->
+<!--            </div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Created</span>-->
+<!--                <span class="info-value" th:text="${course.createdAt != null ? #temporals.format(course.createdAt, 'dd MMM yyyy') : '—'}">—</span>-->
+<!--            </div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Updated</span>-->
+<!--                <span class="info-value" th:text="${course.updatedAt != null ? #temporals.format(course.updatedAt, 'dd MMM yyyy') : '—'}">—</span>-->
+<!--            </div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Teacher ID</span>-->
+<!--                <span class="info-value" th:text="${course.teacherId != null ? course.teacherId : 'N/A'}"></span>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Card 3: Lead Instructor &ndash;&gt;-->
+<!--        <div class="info-card">-->
+<!--            <div class="info-card-title"><i class="fas fa-person-chalkboard"></i> Lead Instructor</div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Full Name</span>-->
+<!--                <span class="info-value" th:text="${course.instructorName != null ? course.instructorName : 'Not assigned'}">—</span>-->
+<!--            </div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Title/Role</span>-->
+<!--                <span class="info-value" th:text="${course.instructorTitle != null ? course.instructorTitle : '—'}">—</span>-->
+<!--            </div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Experience</span>-->
+<!--                <span class="info-value" th:text="${course.instructorExperience != null ? course.instructorExperience : '—'}">—</span>-->
+<!--            </div>-->
+<!--            <div class="info-row">-->
+<!--                <span class="info-label">Email</span>-->
+<!--                <span class="info-value" th:text="${course.teacherEmail != null ? course.teacherEmail : '—'}">—</span>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Card 4: Promo Video &ndash;&gt;-->
+<!--        <div class="info-card">-->
+<!--            <div class="info-card-title"><i class="fas fa-play-circle"></i> Media Preview</div>-->
+<!--            <div th:if="${course.promoVideoUrl != null and !course.promoVideoUrl.isEmpty()}">-->
+<!--                <div class="ratio ratio-16x9 mt-1" style="border-radius: 12px; overflow: hidden; margin-bottom: 6px;">-->
+<!--                    <iframe th:src="${course.promoVideoUrl}" title="Promo" frameborder="0" allowfullscreen style="width:100%; height:100%;"></iframe>-->
+<!--                </div>-->
+<!--                <div class="text-muted mt-1"><i class="fas fa-video"></i> Promo teaser</div>-->
+<!--            </div>-->
+<!--            <div th:unless="${course.promoVideoUrl != null and !course.promoVideoUrl.isEmpty()}">-->
+<!--                <div class="video-placeholder text-center py-3">-->
+<!--                    <i class="fas fa-video-slash fa-2x mb-2 d-block"></i>-->
+<!--                    <span>No promo video</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; FULL WIDTH CONTENT CARDS &ndash;&gt;-->
+<!--    <div class="full-card" th:if="${course.description != null and !course.description.isEmpty()}">-->
+<!--        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-align-left"></i> Description</div>-->
+<!--        <p th:text="${course.description}"></p>-->
+<!--    </div>-->
+
+<!--    <div class="full-card" th:if="${course.learningOutcomes != null and !course.learningOutcomes.isEmpty()}">-->
+<!--        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-brain"></i> Learning Outcomes</div>-->
+<!--        <p th:text="${course.learningOutcomes}"></p>-->
+<!--    </div>-->
+
+<!--    <div class="full-card" th:if="${course.requirements != null and !course.requirements.isEmpty()}">-->
+<!--        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-microchip"></i> Requirements</div>-->
+<!--        <p th:text="${course.requirements}"></p>-->
+<!--    </div>-->
+
+<!--    <div class="full-card" th:if="${course.audience != null and !course.audience.isEmpty()}">-->
+<!--        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-users"></i> Target Audience</div>-->
+<!--        <p th:text="${course.audience}"></p>-->
+<!--    </div>-->
+
+<!--    <div class="full-card" th:if="${course.whatsIncluded != null and !course.whatsIncluded.isEmpty()}">-->
+<!--        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-gem"></i> What's Included</div>-->
+<!--        <p th:text="${course.whatsIncluded}"></p>-->
+<!--    </div>-->
+
+<!--    <div class="full-card" th:if="${course.instructorBio != null and !course.instructorBio.isEmpty()}">-->
+<!--        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-microphone-alt"></i> Instructor Bio</div>-->
+<!--        <p th:text="${course.instructorBio}"></p>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; ── WEEKLY CURRICULUM — card grid view ── &ndash;&gt;-->
+<!--    <div class="full-card curriculum-section"-->
+<!--         th:if="${course.weeklyModules != null and !course.weeklyModules.isEmpty()}">-->
+<!--        <div class="info-card-title">-->
+<!--            <i class="fas fa-layer-group"></i> Weekly Curriculum-->
+<!--        </div>-->
+<!--        <div id="rawModules" th:text="${course.weeklyModules}" style="display:none;"></div>-->
+<!--        <div class="week-grid" id="weekGrid"></div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; BOTTOM ACTIONS &ndash;&gt;-->
+<!--    <div class="bottom-strip">-->
+<!--        <button th:if="${course.isApproved == 0}"-->
+<!--                th:attr="data-id=${course.id}, data-title=${course.courseTitle}, data-price=${course.price}"-->
+<!--                class="btn-action btn-approve-main approve-price-btn">-->
+<!--            <i class="fas fa-check-circle"></i> Approve with Price-->
+<!--        </button>-->
+<!--        <button th:if="${course.isApproved == 1 and course.isPublished == 0}"-->
+<!--                th:attr="data-url=@{/admin/course/publish/{id}(id=${course.id})}"-->
+<!--                class="btn-action btn-publish-main publish-btn">-->
+<!--            <i class="fas fa-rocket"></i> Publish-->
+<!--        </button>-->
+<!--        <a href="/admin/teachers" class="btn-action btn-teacher-main">-->
+<!--            <i class="fas fa-arrow-left"></i> Back to Dashboard-->
+<!--        </a>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; ── PRICE MODAL (First Step) ── &ndash;&gt;-->
+<!--<div class="modal-overlay" id="priceModal">-->
+<!--    <div class="modal-box">-->
+<!--        <div class="modal-icon-wrap modal-icon-price">-->
+<!--            <i class="fas fa-tag"></i>-->
+<!--        </div>-->
+<!--        <div class="modal-title-text">Set Course Price</div>-->
+<!--        <div class="modal-body-text" id="priceModalCourseTitle"></div>-->
+<!--        <div class="price-input-group">-->
+<!--            <label><i class="fas fa-money-bill-wave"></i> Price (BDT)</label>-->
+<!--            <div class="price-input-wrapper">-->
+<!--                <span class="price-currency">৳</span>-->
+<!--                <input type="number" id="coursePriceInput" class="price-input" placeholder="Enter price" value="0" min="0" step="100">-->
+<!--            </div>-->
+<!--            <span class="price-note">Set price for this course. 0 = Free course.</span>-->
+<!--        </div>-->
+<!--        <div class="modal-action-row">-->
+<!--            <button class="mbtn" onclick="closePriceModal()">-->
+<!--                <i class="fas fa-times"></i> Cancel-->
+<!--            </button>-->
+<!--            <button class="mbtn confirm-approve" id="confirmPriceBtn">-->
+<!--                <i class="fas fa-check"></i> Continue-->
+<!--            </button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; ── CONFIRMATION MODAL (Second Step) ── &ndash;&gt;-->
+<!--<div class="modal-overlay" id="confirmModal">-->
+<!--    <div class="modal-box">-->
+<!--        <div class="modal-icon-wrap" id="confirmIcon"></div>-->
+<!--        <div class="modal-title-text" id="confirmTitle"></div>-->
+<!--        <div class="modal-body-text" id="confirmBody"></div>-->
+<!--        <div class="modal-action-row">-->
+<!--            <button class="mbtn" onclick="closeConfirmModal()">-->
+<!--                <i class="fas fa-times"></i> Cancel-->
+<!--            </button>-->
+<!--            <button class="mbtn" id="finalConfirmBtn">Confirm</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--<script>-->
+<!--    // Variables for approval flow-->
+<!--    let pendingCourseId = null;-->
+<!--    let pendingCourseTitle = null;-->
+<!--    let pendingPublishUrl = null;-->
+
+<!--    // Elements-->
+<!--    const priceModal = document.getElementById('priceModal');-->
+<!--    const confirmModal = document.getElementById('confirmModal');-->
+<!--    const coursePriceInput = document.getElementById('coursePriceInput');-->
+<!--    const confirmPriceBtn = document.getElementById('confirmPriceBtn');-->
+<!--    const finalConfirmBtn = document.getElementById('finalConfirmBtn');-->
+<!--    const confirmIcon = document.getElementById('confirmIcon');-->
+<!--    const confirmTitle = document.getElementById('confirmTitle');-->
+<!--    const confirmBody = document.getElementById('confirmBody');-->
+
+<!--    // Toast function-->
+<!--    function showToast(message, isError = false) {-->
+<!--        const toast = document.createElement('div');-->
+<!--        toast.style.position = 'fixed';-->
+<!--        toast.style.bottom = '30px';-->
+<!--        toast.style.right = '30px';-->
+<!--        toast.style.background = isError ? '#ef4444' : '#2b8c5e';-->
+<!--        toast.style.color = 'white';-->
+<!--        toast.style.padding = '12px 24px';-->
+<!--        toast.style.borderRadius = '50px';-->
+<!--        toast.style.display = 'flex';-->
+<!--        toast.style.alignItems = 'center';-->
+<!--        toast.style.gap = '10px';-->
+<!--        toast.style.fontWeight = '600';-->
+<!--        toast.style.fontSize = '13px';-->
+<!--        toast.style.zIndex = '10000';-->
+<!--        toast.style.boxShadow = '0 8px 20px rgba(0,0,0,0.2)';-->
+<!--        toast.style.animation = 'slideIn 0.3s ease';-->
+<!--        toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i> ${message}`;-->
+<!--        document.body.appendChild(toast);-->
+<!--        setTimeout(() => {-->
+<!--            toast.style.opacity = '0';-->
+<!--            setTimeout(() => toast.remove(), 300);-->
+<!--        }, 3500);-->
+<!--    }-->
+
+<!--    // Add slideIn animation-->
+<!--    const style = document.createElement('style');-->
+<!--    style.textContent = `@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`;-->
+<!--    document.head.appendChild(style);-->
+
+<!--    // Price Modal functions-->
+<!--    function openPriceModal(courseId, courseTitle, currentPrice) {-->
+<!--        pendingCourseId = courseId;-->
+<!--        pendingCourseTitle = courseTitle;-->
+<!--        document.getElementById('priceModalCourseTitle').innerHTML = `<strong>${escapeHtml(courseTitle)}</strong>`;-->
+<!--        coursePriceInput.value = (currentPrice && currentPrice > 0) ? currentPrice : 0;-->
+<!--        priceModal.classList.add('open');-->
+<!--        document.body.style.overflow = 'hidden';-->
+<!--    }-->
+
+<!--    function closePriceModal() {-->
+<!--        priceModal.classList.remove('open');-->
+<!--        document.body.style.overflow = '';-->
+<!--        setTimeout(() => {-->
+<!--            pendingCourseId = null;-->
+<!--            pendingCourseTitle = null;-->
+<!--        }, 300);-->
+<!--    }-->
+
+<!--    // Confirmation Modal functions-->
+<!--    function openConfirmModal(iconHtml, title, body, confirmBtnClass, confirmBtnText, onConfirm) {-->
+<!--        confirmIcon.innerHTML = iconHtml;-->
+<!--        confirmTitle.textContent = title;-->
+<!--        confirmBody.innerHTML = body;-->
+<!--        finalConfirmBtn.className = `mbtn ${confirmBtnClass}`;-->
+<!--        finalConfirmBtn.innerHTML = confirmBtnText;-->
+
+<!--        // Store confirm callback-->
+<!--        window._confirmCallback = onConfirm;-->
+<!--        confirmModal.classList.add('open');-->
+<!--        document.body.style.overflow = 'hidden';-->
+<!--    }-->
+
+<!--    function closeConfirmModal() {-->
+<!--        confirmModal.classList.remove('open');-->
+<!--        document.body.style.overflow = '';-->
+<!--        window._confirmCallback = null;-->
+<!--    }-->
+
+<!--    // Handle final confirmation-->
+<!--    finalConfirmBtn.addEventListener('click', function() {-->
+<!--        if (window._confirmCallback) {-->
+<!--            window._confirmCallback();-->
+<!--            window._confirmCallback = null;-->
+<!--        }-->
+<!--        closeConfirmModal();-->
+<!--    });-->
+
+<!--    // Handle price confirmation (first step)-->
+<!--    confirmPriceBtn.addEventListener('click', function() {-->
+<!--        const price = coursePriceInput.value.trim();-->
+<!--        if (price === '' || isNaN(price) || parseInt(price) < 0) {-->
+<!--            showToast('Please enter a valid price (0 or positive number)', true);-->
+<!--            return;-->
+<!--        }-->
+<!--        const finalPrice = parseInt(price);-->
+
+<!--        // Close price modal-->
+<!--        closePriceModal();-->
+
+<!--        // Open second confirmation modal-->
+<!--        openConfirmModal(-->
+<!--            '<i class="fas fa-check-double" style="font-size:32px; color:#065f46;"></i>',-->
+<!--            'Confirm Course Approval',-->
+<!--            `Are you sure you want to approve <strong>${escapeHtml(pendingCourseTitle)}</strong> with price <strong>৳${finalPrice}</strong>?`,-->
+<!--            'confirm-approve',-->
+<!--            '<i class="fas fa-check"></i> Yes, Approve',-->
+<!--            function() {-->
+<!--                // Submit the approval with price-->
+<!--                const form = document.createElement('form');-->
+<!--                form.method = 'POST';-->
+<!--                form.action = `/admin/course/approve/${pendingCourseId}`;-->
+<!--                form.style.display = 'none';-->
+<!--                const priceField = document.createElement('input');-->
+<!--                priceField.type = 'hidden';-->
+<!--                priceField.name = 'price';-->
+<!--                priceField.value = finalPrice;-->
+<!--                form.appendChild(priceField);-->
+<!--                document.body.appendChild(form);-->
+<!--                form.submit();-->
+<!--            }-->
+<!--        );-->
+<!--    });-->
+
+<!--    // Publish confirmation (single step)-->
+<!--    function openPublishConfirm(url, courseTitle) {-->
+<!--        openConfirmModal(-->
+<!--            '<i class="fas fa-rocket" style="font-size:32px; color:#1e40af;"></i>',-->
+<!--            'Publish Course?',-->
+<!--            `Are you sure you want to publish <strong>${escapeHtml(courseTitle)}</strong>?<br><br>Students will be able to find and enroll in this course immediately.`,-->
+<!--            'confirm-publish',-->
+<!--            '<i class="fas fa-rocket"></i> Yes, Publish',-->
+<!--            function() {-->
+<!--                window.location.href = url;-->
+<!--            }-->
+<!--        );-->
+<!--    }-->
+
+<!--    // Attach event listeners for Approve with Price buttons-->
+<!--    document.querySelectorAll('.approve-price-btn').forEach(btn => {-->
+<!--        btn.addEventListener('click', function(e) {-->
+<!--            e.preventDefault();-->
+<!--            const courseId = this.getAttribute('data-id');-->
+<!--            const courseTitle = this.getAttribute('data-title');-->
+<!--            const currentPrice = this.getAttribute('data-price');-->
+<!--            openPriceModal(courseId, courseTitle, currentPrice);-->
+<!--        });-->
+<!--    });-->
+
+<!--    // Attach event listeners for Publish buttons-->
+<!--    document.querySelectorAll('.publish-btn').forEach(btn => {-->
+<!--        btn.addEventListener('click', function(e) {-->
+<!--            e.preventDefault();-->
+<!--            const url = this.getAttribute('data-url');-->
+<!--            const courseTitle = document.querySelector('.hero-info h2')?.innerText || 'this course';-->
+<!--            openPublishConfirm(url, courseTitle);-->
+<!--        });-->
+<!--    });-->
+
+<!--    // Close modals when clicking outside-->
+<!--    priceModal.addEventListener('click', function(e) {-->
+<!--        if (e.target === priceModal) closePriceModal();-->
+<!--    });-->
+
+<!--    confirmModal.addEventListener('click', function(e) {-->
+<!--        if (e.target === confirmModal) closeConfirmModal();-->
+<!--    });-->
+
+<!--    // Escape HTML helper-->
+<!--    function escapeHtml(str) {-->
+<!--        if (!str) return '';-->
+<!--        return String(str)-->
+<!--            .replace(/&/g, '&amp;')-->
+<!--            .replace(/</g, '&lt;')-->
+<!--            .replace(/>/g, '&gt;')-->
+<!--            .replace(/"/g, '&quot;')-->
+<!--            .replace(/'/g, '&#39;');-->
+<!--    }-->
+
+<!--    /* ─────────────────────────────────────────────-->
+<!--       WEEKLY CURRICULUM RENDERER-->
+<!--    ───────────────────────────────────────────── */-->
+<!--    (function renderCurriculum() {-->
+<!--        const raw  = document.getElementById('rawModules');-->
+<!--        const grid = document.getElementById('weekGrid');-->
+<!--        if (!raw || !grid) return;-->
+
+<!--        const text = raw.textContent.trim();-->
+<!--        if (!text) return;-->
+
+<!--        let weeks = [];-->
+
+<!--        try {-->
+<!--            const parsed = JSON.parse(text);-->
+<!--            if (Array.isArray(parsed)) {-->
+<!--                weeks = parsed.map((w, i) => ({-->
+<!--                    num:      w.weekNumber || w.week || (i + 1),-->
+<!--                    title:    w.title || ('Week ' + (i + 1)),-->
+<!--                    duration: w.duration || null,-->
+<!--                    topics:   Array.isArray(w.details) ? w.details-->
+<!--                        : Array.isArray(w.topics)  ? w.topics-->
+<!--                            : []-->
+<!--                }));-->
+<!--            }-->
+<!--        } catch (_) {-->
+<!--            const blocks = text.split(/\n\s*\n/).filter(b => b.trim());-->
+<!--            blocks.forEach((block, i) => {-->
+<!--                const lines = block.split('\n').map(l => l.trim()).filter(Boolean);-->
+<!--                if (!lines.length) return;-->
+<!--                let titleLine = lines[0].replace(/^week\s*\d+\s*[:\-–]?\s*/i, '').trim() || ('Week ' + (i + 1));-->
+<!--                const topics  = lines.slice(1);-->
+<!--                weeks.push({ num: i + 1, title: titleLine, topics });-->
+<!--            });-->
+<!--        }-->
+
+<!--        if (!weeks.length) {-->
+<!--            grid.innerHTML = '<div class="no-curriculum"><i class="fas fa-inbox fa-2x mb-2 d-block"></i>No curriculum data found.</div>';-->
+<!--            return;-->
+<!--        }-->
+
+<!--        grid.innerHTML = weeks.map(w => `-->
+<!--        <div class="week-card">-->
+<!--            <div class="week-header">-->
+<!--                <div class="week-num">${w.num}</div>-->
+<!--                <div>-->
+<!--                    <div class="week-title">${escapeHtml(w.title)}</div>-->
+<!--                    ${w.duration ? `<div style="font-size:11px;color:rgba(255,255,255,0.65);margin-top:2px;"><i class="fas fa-clock" style="font-size:10px;"></i> ${escapeHtml(w.duration)}</div>` : ''}-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="week-topics">-->
+<!--                ${w.topics.length-->
+<!--            ? w.topics.map(t => `-->
+<!--                        <div class="topic-item">-->
+<!--                            <div class="topic-dot"></div>-->
+<!--                            <span>${escapeHtml(t)}</span>-->
+<!--                        </div>`).join('')-->
+<!--            : '<div class="topic-item" style="color:#a0b8aa; font-size:12px;">No topics listed</div>'-->
+<!--        }-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    `).join('');-->
+<!--    })();-->
+
+<!--    // Show toast for URL parameters-->
+<!--    const urlParams = new URLSearchParams(window.location.search);-->
+<!--    if (urlParams.get('success') === 'course_approved') {-->
+<!--        showToast('✅ Course approved successfully!');-->
+<!--    } else if (urlParams.get('success') === 'course_published') {-->
+<!--        showToast('🚀 Course published successfully!');-->
+<!--    } else if (urlParams.get('error')) {-->
+<!--        showToast(urlParams.get('error'), true);-->
+<!--    }-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Course Insights | Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #f0f7f0;
+            min-height: 100vh;
+        }
+
+        /* ── TOP NAV ── */
+        .top-nav {
+            background: #0f3b2c;
+            color: white;
+            padding: 12px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .top-nav-left { display: flex; align-items: center; gap: 24px; }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.12);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .back-btn:hover { background: white; color: #0f3b2c; transform: translateY(-1px); }
+        .top-nav h1 { font-size: 18px; font-weight: 600; margin: 0; letter-spacing: -0.2px; }
+        .admin-name {
+            font-size: 13px;
+            background: rgba(255,255,255,0.1);
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-weight: 500;
+        }
+
+        /* ── PAGE ── */
+        .page-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 28px 24px 50px;
+        }
+
+        /* ── HERO CARD ── */
+        .hero-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 28px;
+            border: 1px solid #e2efe5;
+        }
+        .hero-banner {
+            position: relative;
+            height: 160px;
+            background: linear-gradient(105deg, #1a5d3a, #2b7e4b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .hero-banner img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-banner-placeholder { font-size: 56px; color: rgba(255,255,255,0.2); }
+        .approval-ribbon {
+            position: absolute;
+            top: 14px;
+            right: 20px;
+            padding: 5px 16px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .ribbon-pending  { background: rgba(255,241,184,0.95); color: #b45f06; }
+        .ribbon-approved { background: rgba(187,247,208,0.96); color: #166534; }
+        .ribbon-published{ background: rgba(191,219,254,0.96); color: #1e3a8a; }
+
+        .hero-info { padding: 20px 24px; }
+        .hero-info h2 { font-size: 22px; font-weight: 700; color: #1a3a2a; margin-bottom: 6px; }
+        .hero-info .subtitle {
+            font-size: 13px; color: #5f7a6b; margin-bottom: 14px;
+            border-left: 3px solid #4ade80; padding-left: 12px;
+        }
+        .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag {
+            background: #eef6ee; color: #1f6e2d;
+            padding: 4px 14px; border-radius: 30px;
+            font-size: 11px; font-weight: 600;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+
+        /* ── ACTION STRIP ── */
+        .action-strip { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+        .btn-action {
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            background: none;
+        }
+        .btn-approve-main  { background: #10b981; color: white; box-shadow: 0 2px 6px rgba(16,185,129,0.2); }
+        .btn-approve-main:hover  { background: #059669; color: white; transform: translateY(-1px); }
+        .btn-publish-main  { background: #3b82f6; color: white; }
+        .btn-publish-main:hover  { background: #2563eb; color: white; transform: translateY(-1px); }
+        .btn-teacher-main  { background: white; color: #2b7e4b; border: 1.5px solid #2b7e4b; }
+        .btn-teacher-main:hover  { background: #eef6ee; transform: translateY(-1px); }
+
+        /* ── INFO GRID ── */
+        .compact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+        .info-card {
+            background: white;
+            border-radius: 18px;
+            padding: 18px 20px;
+            border: 1px solid #e6f0e6;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            transition: all 0.2s;
+        }
+        .info-card:hover { border-color: #c0e0c3; box-shadow: 0 6px 14px rgba(0,0,0,0.05); }
+        .info-card-title {
+            font-size: 13px; font-weight: 700; letter-spacing: 0.4px;
+            color: #2b7e4b; margin-bottom: 14px;
+            display: flex; align-items: center; gap: 8px;
+            border-bottom: 1.5px solid #eef3e8; padding-bottom: 8px;
+        }
+        .info-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 0; border-bottom: 1px solid #f5faf5; gap: 10px;
+        }
+        .info-label { font-size: 12px; font-weight: 500; color: #6b7c72; }
+        .info-value {
+            font-size: 13px; font-weight: 600; color: #1f3a2a;
+            background: #fafef7; padding: 2px 12px; border-radius: 30px;
+        }
+        .badge-status {
+            padding: 4px 12px; border-radius: 40px; font-size: 11px; font-weight: 700;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .badge-pending   { background: #fff2e0; color: #c47b2e; }
+        .badge-approved  { background: #e2f3e6; color: #1f7840; }
+        .badge-published { background: #e0ebff; color: #1e40af; }
+        .badge-unpublished{ background: #f1f3f5; color: #5a6b62; }
+
+        /* ── FULL CARDS ── */
+        .full-card {
+            background: white; border-radius: 18px; padding: 18px 24px;
+            border: 1px solid #e6f0e6; margin-bottom: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .full-card p {
+            font-size: 13px; line-height: 1.5; color: #3b5546; margin-bottom: 0;
+        }
+        .video-placeholder {
+            background: #f4fbf4; border-radius: 14px; padding: 12px;
+            text-align: center; color: #6b8f7a; font-size: 12px;
+        }
+        .ratio-16x9 { border-radius: 14px; overflow: hidden; }
+        .text-muted { color: #819b8c; font-size: 12px; }
+
+        /* ── WEEKLY CURRICULUM CARDS ── */
+        .curriculum-section { margin-bottom: 20px; }
+        .week-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 14px;
+            margin-top: 14px;
+        }
+        .week-card {
+            background: #fafef7;
+            border: 1px solid #daeeda;
+            border-radius: 14px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        .week-card:hover {
+            border-color: #a7d7b0;
+            box-shadow: 0 6px 18px rgba(43,126,75,0.08);
+            transform: translateY(-2px);
+        }
+        .week-header {
+            background: linear-gradient(105deg, #1a5d3a, #2b7e4b);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-num {
+            width: 30px; height: 30px; border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            font-size: 12px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            border: 1.5px solid rgba(255,255,255,0.35);
+        }
+        .week-title {
+            font-size: 13px; font-weight: 600; color: white; line-height: 1.35;
+        }
+        .week-topics { padding: 12px 14px; display: flex; flex-direction: column; gap: 7px; }
+        .topic-item {
+            display: flex; align-items: flex-start; gap: 8px;
+            font-size: 12px; color: #3b5546; line-height: 1.45;
+        }
+        .topic-dot {
+            width: 5px; height: 5px; border-radius: 50%;
+            background: #4ade80; margin-top: 5px; flex-shrink: 0;
+        }
+        .no-curriculum {
+            text-align: center; padding: 30px 20px; color: #7a9982;
+            font-size: 13px;
+        }
+
+        /* ── BOTTOM STRIP ── */
+        .bottom-strip {
+            display: flex; justify-content: flex-start;
+            gap: 16px; margin-top: 20px; flex-wrap: wrap;
+        }
+
+        /* ── CUSTOM MODAL OVERLAY ── */
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(6px);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        .modal-overlay.open { opacity: 1; pointer-events: all; }
+        .modal-box {
+            background: white;
+            border-radius: 28px;
+            padding: 32px 28px 28px;
+            max-width: 480px; width: 90%;
+            border: 1px solid #e2efe5;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            transform: translateY(20px) scale(0.96);
+            transition: transform 0.25s ease;
+        }
+        .modal-overlay.open .modal-box { transform: translateY(0) scale(1); }
+        .modal-icon-wrap {
+            width: 70px; height: 70px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px; margin: 0 auto 16px;
+        }
+        .modal-icon-approve  { background: #d1fae5; color: #065f46; }
+        .modal-icon-publish  { background: #dbeafe; color: #1e40af; }
+        .modal-icon-price    { background: #fed7aa; color: #9b4e00; }
+        .modal-title-text {
+            font-size: 22px; font-weight: 700; color: #1a3a2a;
+            text-align: center; margin-bottom: 8px;
+        }
+        .modal-body-text {
+            font-size: 14px; color: #5a7a68;
+            text-align: center; line-height: 1.6; margin-bottom: 24px;
+        }
+        .modal-body-text strong {
+            color: #0a3d2f;
+        }
+        .modal-action-row { display: flex; gap: 12px; justify-content: center; margin-top: 8px; }
+        .mbtn {
+            padding: 12px 28px; border-radius: 50px; font-size: 14px;
+            font-weight: 600; cursor: pointer; transition: all 0.18s;
+            border: 1.5px solid #d0e8d5;
+            background: white; color: #3b5546;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        .mbtn:hover { background: #f0f7f0; transform: translateY(-2px); }
+        .mbtn.confirm-approve { background: #10b981; color: white; border-color: #10b981; }
+        .mbtn.confirm-approve:hover { background: #059669; }
+        .mbtn.confirm-publish { background: #3b82f6; color: white; border-color: #3b82f6; }
+        .mbtn.confirm-publish:hover { background: #2563eb; }
+        .price-input-group {
+            margin: 20px 0 16px;
+            text-align: left;
+        }
+        .price-input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #2b7e4b;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .price-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .price-currency {
+            position: absolute;
+            left: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #2b7e4b;
+        }
+        .price-input {
+            width: 100%;
+            padding: 14px 16px 14px 40px;
+            border: 2px solid #e2efe5;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+            outline: none;
+        }
+        .price-input:focus {
+            border-color: #2b8c5e;
+            box-shadow: 0 0 0 3px rgba(43, 140, 94, 0.1);
+        }
+        .price-note {
+            font-size: 11px;
+            color: #819b8c;
+            margin-top: 6px;
+            display: block;
+        }
+
+        @media (max-width: 700px) {
+            .page-container { padding: 20px 16px; }
+            .hero-info h2 { font-size: 18px; }
+            .compact-grid { grid-template-columns: 1fr; }
+            .week-grid { grid-template-columns: 1fr; }
+            .top-nav { padding: 10px 18px; }
+            .top-nav-left { gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── TOP NAV ── -->
+<div class="top-nav">
+    <div class="top-nav-left">
+        <a href="/admin/teachers" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Dashboard
+        </a>
+        <h1><i class="fas fa-graduation-cap me-2"></i> Course Studio</h1>
+    </div>
+    <div class="top-nav-right d-flex gap-2 align-items-center">
+        <span class="admin-name">
+            <i class="fas fa-user-shield me-1"></i>
+            <span th:text="${session.admin.fullName}">Admin</span>
+        </span>
+        <a href="/admin/logout" class="back-btn"><i class="fas fa-sign-out-alt"></i> Exit</a>
+    </div>
+</div>
+
+<!-- ── MAIN ── -->
+<div class="page-container">
+
+    <!-- HERO -->
+    <div class="hero-card">
+        <div class="hero-banner">
+            <img th:if="${course.thumbnailUrl != null and !course.thumbnailUrl.isEmpty()}"
+                 th:src="${course.thumbnailUrl}" alt="Course Thumbnail"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <i class="fas fa-book-open hero-banner-placeholder"
+               th:classappend="${course.thumbnailUrl != null and !course.thumbnailUrl.isEmpty()} ? 'd-none' : ''"></i>
+            <span th:if="${course.isApproved == 0}" class="approval-ribbon ribbon-pending">
+                <i class="fas fa-clock"></i> PENDING
+            </span>
+            <span th:if="${course.isApproved == 1 and course.isPublished == 0}" class="approval-ribbon ribbon-approved">
+                <i class="fas fa-thumbs-up"></i> APPROVED
+            </span>
+            <span th:if="${course.isApproved == 1 and course.isPublished == 1}" class="approval-ribbon ribbon-published">
+                <i class="fas fa-globe"></i> LIVE
+            </span>
+        </div>
+        <div class="hero-info">
+            <h2 th:text="${course.courseTitle}">Strategic Leadership Masterclass</h2>
+            <p class="subtitle" th:text="${course.subTitle}">Advance your career with expert insights</p>
+            <div class="hero-tags">
+                <span class="tag" th:if="${course.category != null}">
+                    <i class="fas fa-folder-open"></i>
+                    <span th:text="${course.category}">Business</span>
+                </span>
+                <span class="tag" th:if="${course.level != null}">
+                    <i class="fas fa-chart-line"></i>
+                    <span th:text="${course.level}">Intermediate</span>
+                </span>
+                <span class="tag" th:if="${course.language != null}">
+                    <i class="fas fa-language"></i>
+                    <span th:text="${course.language}">English</span>
+                </span>
+                <span class="tag" th:if="${course.durationInWeeks != null}">
+                    <i class="far fa-calendar-check"></i>
+                    <span th:text="${course.durationInWeeks}"></span> weeks
+                </span>
+                <span class="tag" th:if="${course.totalClasses != null}">
+                    <i class="fas fa-video"></i>
+                    <span th:text="${course.totalClasses}"></span> lessons
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTION STRIP -->
+    <div class="action-strip">
+        <button th:if="${course.isApproved == 0}"
+                th:attr="data-id=${course.id}, data-title=${course.courseTitle}, data-price=${course.price}"
+                class="btn-action btn-approve-main approve-price-btn">
+            <i class="fas fa-tag"></i> Approve with Price
+        </button>
+        <button th:if="${course.isApproved == 1 and course.isPublished == 0}"
+                th:attr="data-url=@{/admin/course/publish/{id}(id=${course.id})}"
+                class="btn-action btn-publish-main publish-btn">
+            <i class="fas fa-upload"></i> Publish to Store
+        </button>
+        <a th:if="${course.teacherId != null}"
+           th:href="@{/admin/teacher-details/{id}(id=${course.teacherId})}"
+           class="btn-action btn-teacher-main">
+            <i class="fas fa-chalkboard-user"></i> Instructor Profile
+        </a>
+    </div>
+
+    <!-- COMPACT INFO GRID -->
+    <div class="compact-grid">
+
+        <!-- Card 1: Essentials -->
+        <div class="info-card">
+            <div class="info-card-title"><i class="fas fa-crown"></i> Essentials</div>
+            <div class="info-row">
+                <span class="info-label">Course ID</span>
+                <span class="info-value" th:text="${course.id}">#101</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Price</span>
+                <span class="info-value">
+                    <span th:if="${course.price != null and course.price > 0}">৳ <span th:text="${course.price}"></span></span>
+                    <span th:if="${course.price == null or course.price == 0}"><i class="fas fa-gift"></i> Free</span>
+                </span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Seats</span>
+                <span class="info-value" th:text="${course.totalSeats != null ? course.totalSeats : 'Unlimited'}">Unlimited</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Enrolled</span>
+                <span class="info-value" th:text="${course.enrolledStudents != null ? course.enrolledStudents : 0}">0</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Schedule</span>
+                <span class="info-value" th:text="${course.schedule != null ? course.schedule : 'Flexible'}">—</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Rating</span>
+                <span class="info-value">
+                    <span th:text="${course.rating != null ? course.rating : 'N/A'}"></span> ⭐
+                    (<span th:text="${course.totalRatings != null ? course.totalRatings : 0}"></span>)
+                </span>
+            </div>
+        </div>
+
+        <!-- Card 2: Moderation -->
+        <div class="info-card">
+            <div class="info-card-title"><i class="fas fa-flag-checkered"></i> Moderation</div>
+            <div class="info-row">
+                <span class="info-label">Approval</span>
+                <span class="info-value">
+                    <span th:if="${course.isApproved == 0}" class="badge-status badge-pending">
+                        <i class="fas fa-hourglass-half"></i> Pending
+                    </span>
+                    <span th:if="${course.isApproved == 1}" class="badge-status badge-approved">
+                        <i class="fas fa-check-circle"></i> Approved
+                    </span>
+                </span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Visibility</span>
+                <span class="info-value">
+                    <span th:if="${course.isPublished == 0}" class="badge-status badge-unpublished">
+                        <i class="fas fa-lock"></i> Unpublished
+                    </span>
+                    <span th:if="${course.isPublished == 1}" class="badge-status badge-published">
+                        <i class="fas fa-globe"></i> Published
+                    </span>
+                </span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Status</span>
+                <span class="info-value" th:text="${course.status != null ? course.status : 'DRAFT'}">DRAFT</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Created</span>
+                <span class="info-value" th:text="${course.createdAt != null ? #temporals.format(course.createdAt, 'dd MMM yyyy') : '—'}">—</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Updated</span>
+                <span class="info-value" th:text="${course.updatedAt != null ? #temporals.format(course.updatedAt, 'dd MMM yyyy') : '—'}">—</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Teacher ID</span>
+                <span class="info-value" th:text="${course.teacherId != null ? course.teacherId : 'N/A'}"></span>
+            </div>
+        </div>
+
+        <!-- Card 3: Lead Instructor -->
+        <div class="info-card">
+            <div class="info-card-title"><i class="fas fa-person-chalkboard"></i> Lead Instructor</div>
+            <div class="info-row">
+                <span class="info-label">Full Name</span>
+                <span class="info-value" th:text="${course.instructorName != null ? course.instructorName : 'Not assigned'}">—</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Title/Role</span>
+                <span class="info-value" th:text="${course.instructorTitle != null ? course.instructorTitle : '—'}">—</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Experience</span>
+                <span class="info-value" th:text="${course.instructorExperience != null ? course.instructorExperience : '—'}">—</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Email</span>
+                <span class="info-value" th:text="${course.teacherEmail != null ? course.teacherEmail : '—'}">—</span>
+            </div>
+        </div>
+
+        <!-- Card 4: Promo Video -->
+        <div class="info-card">
+            <div class="info-card-title"><i class="fas fa-play-circle"></i> Media Preview</div>
+            <div th:if="${course.promoVideoUrl != null and !course.promoVideoUrl.isEmpty()}">
+                <div class="ratio ratio-16x9 mt-1" style="border-radius: 12px; overflow: hidden; margin-bottom: 6px;">
+                    <iframe th:src="${course.promoVideoUrl}" title="Promo" frameborder="0" allowfullscreen style="width:100%; height:100%;"></iframe>
+                </div>
+                <div class="text-muted mt-1"><i class="fas fa-video"></i> Promo teaser</div>
+            </div>
+            <div th:unless="${course.promoVideoUrl != null and !course.promoVideoUrl.isEmpty()}">
+                <div class="video-placeholder text-center py-3">
+                    <i class="fas fa-video-slash fa-2x mb-2 d-block"></i>
+                    <span>No promo video</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FULL WIDTH CONTENT CARDS -->
+    <div class="full-card" th:if="${course.description != null and !course.description.isEmpty()}">
+        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-align-left"></i> Description</div>
+        <p th:text="${course.description}"></p>
+    </div>
+
+    <div class="full-card" th:if="${course.learningOutcomes != null and !course.learningOutcomes.isEmpty()}">
+        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-brain"></i> Learning Outcomes</div>
+        <p th:text="${course.learningOutcomes}"></p>
+    </div>
+
+    <div class="full-card" th:if="${course.requirements != null and !course.requirements.isEmpty()}">
+        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-microchip"></i> Requirements</div>
+        <p th:text="${course.requirements}"></p>
+    </div>
+
+    <div class="full-card" th:if="${course.audience != null and !course.audience.isEmpty()}">
+        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-users"></i> Target Audience</div>
+        <p th:text="${course.audience}"></p>
+    </div>
+
+    <div class="full-card" th:if="${course.whatsIncluded != null and !course.whatsIncluded.isEmpty()}">
+        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-gem"></i> What's Included</div>
+        <p th:text="${course.whatsIncluded}"></p>
+    </div>
+
+    <div class="full-card" th:if="${course.instructorBio != null and !course.instructorBio.isEmpty()}">
+        <div class="info-card-title" style="margin-bottom:8px;"><i class="fas fa-microphone-alt"></i> Instructor Bio</div>
+        <p th:text="${course.instructorBio}"></p>
+    </div>
+
+    <!-- ── WEEKLY CURRICULUM — card grid view ── -->
+    <div class="full-card curriculum-section"
+         th:if="${course.weeklyModules != null and !course.weeklyModules.isEmpty()}">
+        <div class="info-card-title">
+            <i class="fas fa-layer-group"></i> Weekly Curriculum
+        </div>
+        <div id="rawModules" th:text="${course.weeklyModules}" style="display:none;"></div>
+        <div class="week-grid" id="weekGrid"></div>
+    </div>
+
+    <!-- BOTTOM ACTIONS -->
+    <div class="bottom-strip">
+        <button th:if="${course.isApproved == 0}"
+                th:attr="data-id=${course.id}, data-title=${course.courseTitle}, data-price=${course.price}"
+                class="btn-action btn-approve-main approve-price-btn">
+            <i class="fas fa-check-circle"></i> Approve with Price
+        </button>
+        <button th:if="${course.isApproved == 1 and course.isPublished == 0}"
+                th:attr="data-url=@{/admin/course/publish/{id}(id=${course.id})}"
+                class="btn-action btn-publish-main publish-btn">
+            <i class="fas fa-rocket"></i> Publish
+        </button>
+        <a href="/admin/teachers" class="btn-action btn-teacher-main">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<!-- ── PRICE MODAL (First Step) ── -->
+<div class="modal-overlay" id="priceModal">
+    <div class="modal-box">
+        <div class="modal-icon-wrap modal-icon-price">
+            <i class="fas fa-tag"></i>
+        </div>
+        <div class="modal-title-text">Set Course Price</div>
+        <div class="modal-body-text" id="priceModalCourseTitle"></div>
+        <div class="price-input-group">
+            <label><i class="fas fa-money-bill-wave"></i> Price (BDT)</label>
+            <div class="price-input-wrapper">
+                <span class="price-currency">৳</span>
+                <input type="number" id="coursePriceInput" class="price-input" placeholder="Enter price" value="0" min="0" step="100">
+            </div>
+            <span class="price-note">Set price for this course. 0 = Free course.</span>
+        </div>
+        <div class="modal-action-row">
+            <button class="mbtn" id="cancelPriceBtn">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+            <button class="mbtn confirm-approve" id="confirmPriceBtn">
+                <i class="fas fa-check"></i> Continue
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ── CONFIRMATION MODAL (Second Step) ── -->
+<div class="modal-overlay" id="confirmModal">
+    <div class="modal-box">
+        <div class="modal-icon-wrap" id="confirmIcon"></div>
+        <div class="modal-title-text" id="confirmTitle"></div>
+        <div class="modal-body-text" id="confirmBody"></div>
+        <div class="modal-action-row">
+            <button class="mbtn" id="cancelConfirmBtn">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+            <button class="mbtn" id="finalConfirmBtn">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Variables for approval flow
+    let pendingCourseId = null;
+    let pendingCourseTitle = null;
+    let pendingPrice = null;
+
+    // Elements
+    const priceModal = document.getElementById('priceModal');
+    const confirmModal = document.getElementById('confirmModal');
+    const coursePriceInput = document.getElementById('coursePriceInput');
+    const confirmPriceBtn = document.getElementById('confirmPriceBtn');
+    const cancelPriceBtn = document.getElementById('cancelPriceBtn');
+    const finalConfirmBtn = document.getElementById('finalConfirmBtn');
+    const cancelConfirmBtn = document.getElementById('cancelConfirmBtn');
+    const confirmIcon = document.getElementById('confirmIcon');
+    const confirmTitle = document.getElementById('confirmTitle');
+    const confirmBody = document.getElementById('confirmBody');
+
+    // Toast function
+    function showToast(message, isError = false) {
+        const toast = document.createElement('div');
+        toast.style.position = 'fixed';
+        toast.style.bottom = '30px';
+        toast.style.right = '30px';
+        toast.style.background = isError ? '#ef4444' : '#2b8c5e';
+        toast.style.color = 'white';
+        toast.style.padding = '12px 24px';
+        toast.style.borderRadius = '50px';
+        toast.style.display = 'flex';
+        toast.style.alignItems = 'center';
+        toast.style.gap = '10px';
+        toast.style.fontWeight = '600';
+        toast.style.fontSize = '13px';
+        toast.style.zIndex = '10000';
+        toast.style.boxShadow = '0 8px 20px rgba(0,0,0,0.2)';
+        toast.style.animation = 'slideIn 0.3s ease';
+        toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i> ${message}`;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 3500);
+    }
+
+    // Add slideIn animation
+    const style = document.createElement('style');
+    style.textContent = `@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`;
+    document.head.appendChild(style);
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    // ==================== PRICE MODAL FUNCTIONS ====================
+    function openPriceModal(courseId, courseTitle, currentPrice) {
+        pendingCourseId = courseId;
+        pendingCourseTitle = courseTitle;
+        document.getElementById('priceModalCourseTitle').innerHTML = `<strong>${escapeHtml(courseTitle)}</strong>`;
+        // Set current price or default to 0
+        const priceValue = (currentPrice !== null && currentPrice !== undefined && currentPrice !== '') ? parseInt(currentPrice) : 0;
+        coursePriceInput.value = priceValue;
+        priceModal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closePriceModal() {
+        priceModal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    // ==================== CONFIRMATION MODAL FUNCTIONS ====================
+    function openConfirmModal(iconHtml, title, body, confirmBtnClass, confirmBtnText, onConfirm) {
+        confirmIcon.innerHTML = iconHtml;
+        confirmTitle.textContent = title;
+        confirmBody.innerHTML = body;
+        finalConfirmBtn.className = `mbtn ${confirmBtnClass}`;
+        finalConfirmBtn.innerHTML = confirmBtnText;
+
+        // Store confirm callback
+        window._confirmCallback = onConfirm;
+        confirmModal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeConfirmModal() {
+        confirmModal.classList.remove('open');
+        document.body.style.overflow = '';
+        window._confirmCallback = null;
+    }
+
+    // ==================== PRICE CONFIRMATION HANDLER - FIXED ====================
+    confirmPriceBtn.addEventListener('click', function() {
+        if (!pendingCourseId) return;
+
+        const price = coursePriceInput.value.trim();
+
+        // Validate price - allow 0
+        if (price === '' || isNaN(price)) {
+            showToast('Please enter a valid price (0 or positive number)', true);
+            return;
+        }
+
+        const finalPrice = parseInt(price);
+
+        if (finalPrice < 0) {
+            showToast('Price cannot be negative', true);
+            return;
+        }
+
+        pendingPrice = finalPrice;
+
+        // Close price modal
+        closePriceModal();
+
+        // Open confirmation modal
+        openConfirmModal(
+            '<i class="fas fa-check-double" style="font-size:36px; color:#065f46;"></i>',
+            'Confirm Course Approval',
+            `Are you sure you want to approve <strong>${escapeHtml(pendingCourseTitle)}</strong> with price <strong>৳${finalPrice}</strong>?`,
+            'confirm-approve',
+            '<i class="fas fa-check"></i> Yes, Approve',
+            function() {
+                // Submit the approval with price
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/admin/course/approve/${pendingCourseId}`;
+                form.style.display = 'none';
+                const priceField = document.createElement('input');
+                priceField.type = 'hidden';
+                priceField.name = 'price';
+                priceField.value = pendingPrice;
+                form.appendChild(priceField);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        );
+    });
+
+    // ==================== PUBLISH CONFIRMATION - SAME AS BEFORE ====================
+    function openPublishConfirm(url, courseTitle) {
+        openConfirmModal(
+            '<i class="fas fa-rocket" style="font-size:36px; color:#1e40af;"></i>',
+            'Publish Course?',
+            `Are you sure you want to publish <strong>${escapeHtml(courseTitle)}</strong>?<br><br>Students will be able to find and enroll in this course immediately.`,
+            'confirm-publish',
+            '<i class="fas fa-rocket"></i> Yes, Publish',
+            function() {
+                window.location.href = url;
+            }
+        );
+    }
+
+    // ==================== ATTACH EVENT LISTENERS ====================
+
+    // Approve with Price buttons
+    document.querySelectorAll('.approve-price-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const courseId = this.getAttribute('data-id');
+            const courseTitle = this.getAttribute('data-title');
+            const currentPrice = this.getAttribute('data-price');
+            openPriceModal(courseId, courseTitle, currentPrice);
+        });
+    });
+
+    // Publish buttons - SAME AS BEFORE (using data-url)
+    document.querySelectorAll('.publish-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const url = this.getAttribute('data-url');
+            const courseTitle = document.querySelector('.hero-info h2')?.innerText || 'this course';
+            openPublishConfirm(url, courseTitle);
+        });
+    });
+
+    // Close modals
+    cancelPriceBtn.addEventListener('click', closePriceModal);
+    cancelConfirmBtn.addEventListener('click', closeConfirmModal);
+
+    // Close when clicking outside
+    priceModal.addEventListener('click', function(e) {
+        if (e.target === priceModal) closePriceModal();
+    });
+
+    confirmModal.addEventListener('click', function(e) {
+        if (e.target === confirmModal) closeConfirmModal();
+    });
+
+    // Handle final confirmation button
+    finalConfirmBtn.addEventListener('click', function() {
+        if (window._confirmCallback) {
+            window._confirmCallback();
+            window._confirmCallback = null;
+        }
+        closeConfirmModal();
+    });
+
+    // ==================== WEEKLY CURRICULUM RENDERER ====================
+    (function renderCurriculum() {
+        const raw  = document.getElementById('rawModules');
+        const grid = document.getElementById('weekGrid');
+        if (!raw || !grid) return;
+
+        const text = raw.textContent.trim();
+        if (!text) return;
+
+        let weeks = [];
+
+        try {
+            const parsed = JSON.parse(text);
+            if (Array.isArray(parsed)) {
+                weeks = parsed.map((w, i) => ({
+                    num:      w.weekNumber || w.week || (i + 1),
+                    title:    w.title || ('Week ' + (i + 1)),
+                    duration: w.duration || null,
+                    topics:   Array.isArray(w.details) ? w.details
+                        : Array.isArray(w.topics)  ? w.topics
+                            : []
+                }));
+            }
+        } catch (_) {
+            const blocks = text.split(/\n\s*\n/).filter(b => b.trim());
+            blocks.forEach((block, i) => {
+                const lines = block.split('\n').map(l => l.trim()).filter(Boolean);
+                if (!lines.length) return;
+                let titleLine = lines[0].replace(/^week\s*\d+\s*[:\-–]?\s*/i, '').trim() || ('Week ' + (i + 1));
+                const topics  = lines.slice(1);
+                weeks.push({ num: i + 1, title: titleLine, topics });
+            });
+        }
+
+        if (!weeks.length) {
+            grid.innerHTML = '<div class="no-curriculum"><i class="fas fa-inbox fa-2x mb-2 d-block"></i>No curriculum data found.</div>';
+            return;
+        }
+
+        grid.innerHTML = weeks.map(w => `
+        <div class="week-card">
+            <div class="week-header">
+                <div class="week-num">${w.num}</div>
+                <div>
+                    <div class="week-title">${escapeHtml(w.title)}</div>
+                    ${w.duration ? `<div style="font-size:11px;color:rgba(255,255,255,0.65);margin-top:2px;"><i class="fas fa-clock" style="font-size:10px;"></i> ${escapeHtml(w.duration)}</div>` : ''}
+                </div>
+            </div>
+            <div class="week-topics">
+                ${w.topics.length
+            ? w.topics.map(t => `
+                        <div class="topic-item">
+                            <div class="topic-dot"></div>
+                            <span>${escapeHtml(t)}</span>
+                        </div>`).join('')
+            : '<div class="topic-item" style="color:#a0b8aa; font-size:12px;">No topics listed</div>'
+        }
+            </div>
+        </div>
+    `).join('');
+    })();
+
+    // Check URL parameters for success/error messages
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'course_approved') {
+        showToast('✅ Course approved successfully!');
+    } else if (urlParams.get('success') === 'course_published') {
+        showToast('🚀 Course published successfully!');
+    } else if (urlParams.get('error')) {
+        showToast(urlParams.get('error'), true);
+    }
+</script>
+</body>
+</html>

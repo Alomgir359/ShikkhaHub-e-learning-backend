@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f0f7f0; }
+        .header {
+            background: linear-gradient(135deg, #0a3d2f, #1a6e48);
+            color: white;
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-icon { font-size: 28px; color: #7ed957; }
+        .logo-text h1 { font-size: 20px; font-weight: 700; }
+        .logo-text p { font-size: 11px; opacity: 0.8; }
+        .user-info { background: rgba(255,255,255,0.15); padding: 8px 20px; border-radius: 40px; display: flex; align-items: center; gap: 12px; }
+        .logout-btn { background: #ef4444; color: white; padding: 8px 20px; border-radius: 40px; text-decoration: none; font-weight: 600; font-size: 13px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid #e2efe5;
+        }
+        .stat-card h3 { font-size: 36px; font-weight: 800; color: #0a3d2f; }
+        .stat-card p { color: #6f8f82; margin-top: 8px; }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid #e2efe5;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0a3d2f;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaf5ea;
+        }
+        .exam-list { display: flex; flex-direction: column; gap: 12px; }
+        .exam-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: #fafef7;
+            border-radius: 16px;
+            border: 1px solid #eef3ea;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .exam-info h4 { font-size: 16px; font-weight: 700; color: #0a3d2f; margin-bottom: 4px; }
+        .exam-info p { font-size: 12px; color: #6f8f82; }
+        .btn {
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary { background: #2b8c5e; color: white; }
+        .btn-primary:hover { background: #1e6e48; }
+        .btn-secondary { background: #eef2fa; color: #2b8c5e; }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .status-passed { background: #d1fae5; color: #065f46; }
+        .status-failed { background: #fee2e2; color: #dc2626; }
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .exam-item { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="logo-area">
+        <i class="fas fa-graduation-cap logo-icon"></i>
+        <div class="logo-text">
+            <h1>Employee Learning System</h1>
+            <p>Exam Portal</p>
+        </div>
+    </div>
+    <div style="display: flex; gap: 12px; align-items: center;">
+        <div class="user-info">
+            <i class="fas fa-user-circle"></i>
+            <span th:text="${employee.fullName}">Employee Name</span>
+            <span style="font-size: 11px; background: #7ed957; padding: 2px 8px; border-radius: 20px;" th:text="${employee.rank != null ? employee.rank.rankName : 'No Rank'}">Rank</span>
+        </div>
+        <a href="/employee/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Stats -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3 th:text="${availableExams.size()}">0</h3>
+            <p>Available Exams</p>
+        </div>
+        <div class="stat-card">
+            <h3 th:text="${previousAttempts.size()}">0</h3>
+            <p>Exams Taken</p>
+        </div>
+        <div class="stat-card">
+            <h3 th:if="${employee.rank != null}" th:text="${employee.rank.rankName}">Rank</h3>
+            <p>Your Current Rank</p>
+        </div>
+    </div>
+
+    <!-- Available Exams -->
+    <div class="card">
+        <div class="card-title"><i class="fas fa-calendar-alt"></i> Available Exams</div>
+        <div class="exam-list">
+            <div th:each="exam : ${availableExams}" class="exam-item">
+                <div class="exam-info">
+                    <h4 th:text="${exam.examName}">Exam Name</h4>
+                    <p th:text="${exam.description}">Description</p>
+                    <p><i class="fas fa-clock"></i> Duration: <span th:text="${exam.durationMinutes}"></span> minutes |
+                        <i class="fas fa-calendar"></i> <span th:text="${#temporals.format(exam.examDate, 'dd MMM yyyy')}"></span> |
+                        <i class="fas fa-hourglass-half"></i> <span th:text="${#temporals.format(exam.startTime, 'hh:mm a')}"></span> - <span th:text="${#temporals.format(exam.endTime, 'hh:mm a')}"></span></p>
+                </div>
+                <a th:href="@{/employee/exam/start/{id}(id=${exam.id})}" class="btn btn-primary"><i class="fas fa-play"></i> Start Exam</a>
+            </div>
+            <div th:if="${availableExams.isEmpty()}" style="text-align: center; padding: 40px;">
+                <i class="fas fa-inbox" style="font-size: 48px; color: #cbd5e1;"></i>
+                <p style="margin-top: 16px; color: #6f8f82;">No exams available for your rank at this time.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Previous Attempts -->
+    <div class="card">
+        <div class="card-title"><i class="fas fa-history"></i> Previous Exam Attempts</div>
+        <div class="exam-list">
+            <div th:each="attempt : ${previousAttempts}" class="exam-item">
+                <div class="exam-info">
+                    <h4 th:text="${attempt.exam.examName}">Exam Name</h4>
+                    <p>Attempted on: <span th:text="${#temporals.format(attempt.startTime, 'dd MMM yyyy, hh:mm a')}"></span></p>
+                    <p>Obtained Marks: <strong th:text="${attempt.obtainedMarks} + ' / ' + ${attempt.exam.totalMarks}"></strong>
+                        (<span th:text="${(attempt.obtainedMarks * 100 / attempt.exam.totalMarks)} + '%'"></span>)</p>
+                </div>
+                <div>
+                    <span class="status-badge" th:class="${attempt.obtainedMarks >= attempt.exam.passingMarks} ? 'status-passed' : 'status-failed'">
+                        <i th:if="${attempt.obtainedMarks >= attempt.exam.passingMarks}" class="fas fa-check-circle"></i>
+                        <i th:unless="${attempt.obtainedMarks >= attempt.exam.passingMarks}" class="fas fa-times-circle"></i>
+                        <span th:text="${attempt.obtainedMarks >= attempt.exam.passingMarks} ? 'PASSED' : 'FAILED'"></span>
+                    </span>
+                    <a th:href="@{/employee/exam/result/{id}(id=${attempt.id})}" class="btn btn-secondary" style="margin-left: 12px;"><i class="fas fa-chart-line"></i> View Result</a>
+                </div>
+            </div>
+            <div th:if="${previousAttempts.isEmpty()}" style="text-align: center; padding: 40px;">
+                <i class="fas fa-file-alt" style="font-size: 48px; color: #cbd5e1;"></i>
+                <p style="margin-top: 16px; color: #6f8f82;">No exams attempted yet.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

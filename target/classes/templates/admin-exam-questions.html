@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Questions - <span th:text="${exam.examName}"></span></title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f0f7f0; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; background: #0a3d2f; color: white; padding: 8px 20px; border-radius: 40px; text-decoration: none; margin-bottom: 24px; }
+        .card { background: white; border-radius: 20px; padding: 24px; margin-bottom: 24px; border: 1px solid #e2efe5; }
+        .card-title { font-size: 18px; font-weight: 700; color: #0a3d2f; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #eaf5ea; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; color: #0a3d2f; margin-bottom: 6px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 14px; border: 1px solid #e2efe5; border-radius: 12px; font-family: 'Inter', sans-serif; }
+        .form-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .btn { padding: 10px 24px; border-radius: 40px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+        .btn-primary { background: #2b8c5e; color: white; }
+        .btn-primary:hover { background: #1e6e48; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-secondary { background: #eef2fa; color: #2b8c5e; }
+        .question-tabs { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+        .tab-btn { padding: 10px 24px; border-radius: 40px; background: #eef2fa; color: #2b8c5e; border: none; cursor: pointer; font-weight: 600; }
+        .tab-btn.active { background: #2b8c5e; color: white; }
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #eef3ea; }
+        th { background: #f8faf8; font-weight: 700; color: #0a3d2f; }
+        .badge-mcq { background: #dbeafe; color: #1e40af; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
+        .badge-short { background: #fef3c7; color: #d97706; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
+        .badge-broad { background: #d1fae5; color: #065f46; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
+        .question-text { max-width: 300px; word-wrap: break-word; }
+        .options { font-size: 12px; color: #6f8f82; max-width: 250px; }
+        @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } table { display: block; overflow-x: auto; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="/admin/exam/settings" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Exams</a>
+
+    <!-- Exam Info Card -->
+    <div class="card">
+        <div class="card-title">
+            <span><i class="fas fa-file-alt"></i> <span th:text="${exam.examName}">Exam Name</span></span>
+            <span style="font-size: 14px; font-weight: normal;">
+                Total Questions: <strong th:text="${exam.totalQuestions}">0</strong> |
+                Total Marks: <strong th:text="${exam.totalMarks}">0</strong>
+            </span>
+        </div>
+        <p th:text="${exam.description}" style="color: #6f8f82;">Description</p>
+    </div>
+
+    <!-- Question Type Tabs -->
+    <div class="question-tabs">
+        <button class="tab-btn active" data-tab="mcq"><i class="fas fa-list-ul"></i> Add MCQ Question</button>
+        <button class="tab-btn" data-tab="short"><i class="fas fa-pen-alt"></i> Add Short Question</button>
+        <button class="tab-btn" data-tab="broad"><i class="fas fa-file-alt"></i> Add Broad Question</button>
+    </div>
+
+    <!-- MCQ Form Tab -->
+    <div class="tab-pane active" id="mcq-pane">
+        <div class="card">
+            <div class="card-title"><i class="fas fa-plus-circle"></i> Add New MCQ Question</div>
+            <form th:action="@{/admin/exam/questions/add-mcq/{id}(id=${exam.id})}" method="post">
+                <div class="form-group">
+                    <label>Question Text</label>
+                    <textarea name="questionText" rows="2" required placeholder="Enter your question here..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Option A</label><input type="text" name="optionA" required placeholder="Option A"></div>
+                    <div class="form-group"><label>Option B</label><input type="text" name="optionB" required placeholder="Option B"></div>
+                    <div class="form-group"><label>Option C</label><input type="text" name="optionC" required placeholder="Option C"></div>
+                    <div class="form-group"><label>Option D</label><input type="text" name="optionD" required placeholder="Option D"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Correct Answer</label>
+                        <select name="correctAnswer" required>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Marks</label>
+                        <input type="number" name="marks" required min="1" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Explanation (Optional)</label>
+                        <input type="text" name="explanation" placeholder="Explanation for correct answer">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Add MCQ Question</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Short Question Form Tab -->
+    <div class="tab-pane" id="short-pane">
+        <div class="card">
+            <div class="card-title"><i class="fas fa-plus-circle"></i> Add New Short Question</div>
+            <form th:action="@{/admin/exam/questions/add-short/{id}(id=${exam.id})}" method="post">
+                <div class="form-group">
+                    <label>Question Text</label>
+                    <textarea name="questionText" rows="2" required placeholder="Enter your short question here..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Expected Answer / Keywords</label>
+                        <textarea name="correctAnswer" rows="2" required placeholder="Enter expected answer or keywords for evaluation"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Marks</label>
+                        <input type="number" name="marks" required min="1" value="2">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Explanation (Optional)</label>
+                    <input type="text" name="explanation" placeholder="Explanation for the answer">
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Add Short Question</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Broad Question Form Tab -->
+    <div class="tab-pane" id="broad-pane">
+        <div class="card">
+            <div class="card-title"><i class="fas fa-plus-circle"></i> Add New Broad Question</div>
+            <form th:action="@{/admin/exam/questions/add-broad/{id}(id=${exam.id})}" method="post">
+                <div class="form-group">
+                    <label>Question Text</label>
+                    <textarea name="questionText" rows="3" required placeholder="Enter your broad question here..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Expected Answer / Key Points</label>
+                        <textarea name="correctAnswer" rows="3" required placeholder="Enter expected answer or key points for evaluation"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Marks</label>
+                        <input type="number" name="marks" required min="1" value="5">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Explanation (Optional)</label>
+                    <input type="text" name="explanation" placeholder="Explanation for the answer">
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Add Broad Question</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- All Questions List -->
+    <div class="card">
+        <div class="card-title"><i class="fas fa-list"></i> All Questions in this Exam</div>
+        <table>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Question</th>
+                <th>Type</th>
+                <th>Options</th>
+                <th>Correct Answer</th>
+                <th>Marks</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="q, stat : ${questions}">
+                <td th:text="${stat.index + 1}">1</td>
+                <td class="question-text" th:text="${q.questionText}">Question</td>
+                <td>
+                    <span th:class="${q.questionType == 'MCQ'} ? 'badge-mcq' : (${q.questionType == 'SHORT'} ? 'badge-short' : 'badge-broad')" th:text="${q.questionType}">MCQ</span>
+                </td>
+                <td class="options" th:if="${q.questionType == 'MCQ'}">
+                    A: <span th:text="${q.optionA}"></span><br>
+                    B: <span th:text="${q.optionB}"></span><br>
+                    C: <span th:text="${q.optionC}"></span><br>
+                    D: <span th:text="${q.optionD}"></span>
+                </td>
+                <td class="options" th:unless="${q.questionType == 'MCQ'}">
+                    <span th:text="${q.correctAnswer != null ? q.correctAnswer : 'N/A'}"></span>
+                </td>
+                <td class="options" th:if="${q.questionType == 'MCQ'}">
+                    <strong th:text="${q.correctAnswer}"></strong>
+                </td>
+                <td th:text="${q.marks}">1</td>
+                <td>
+                    <button class="btn btn-secondary edit-question" style="padding:6px 12px; font-size:12px;"
+                            th:data-id="${q.id}"
+                            th:data-text="${q.questionText}"
+                            th:data-type="${q.questionType}"
+                            th:data-optionA="${q.optionA}"
+                            th:data-optionB="${q.optionB}"
+                            th:data-optionC="${q.optionC}"
+                            th:data-optionD="${q.optionD}"
+                            th:data-answer="${q.correctAnswer}"
+                            th:data-marks="${q.marks}"
+                            th:data-explanation="${q.explanation}">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <a th:href="@{/admin/exam/questions/delete/{id}(id=${q.id})}" class="btn btn-danger" style="padding:6px 12px; font-size:12px;" onclick="return confirm('Delete this question?')">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                </td>
+            </tr>
+            <tr th:if="${questions.isEmpty()}">
+                <td colspan="7" style="text-align:center; padding:40px;">
+                    <i class="fas fa-inbox" style="font-size:48px; color:#cbd5e1;"></i>
+                    <p style="margin-top:16px;">No questions added yet. Use the forms above to add questions.</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Edit Question Modal -->
+<div id="editModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:2000;">
+    <div style="background:white; border-radius:24px; width:90%; max-width:700px; padding:28px; max-height:90vh; overflow-y:auto;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h3>Edit Question</h3>
+            <button onclick="closeEditModal()" style="background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
+        </div>
+        <form id="editForm" method="post">
+            <div class="form-group">
+                <label>Question Text</label>
+                <textarea name="questionText" id="editText" rows="2" required></textarea>
+            </div>
+            <div id="mcqFields" style="display:none;">
+                <div class="form-row">
+                    <div class="form-group"><label>Option A</label><input type="text" name="optionA" id="editOptionA"></div>
+                    <div class="form-group"><label>Option B</label><input type="text" name="optionB" id="editOptionB"></div>
+                    <div class="form-group"><label>Option C</label><input type="text" name="optionC" id="editOptionC"></div>
+                    <div class="form-group"><label>Option D</label><input type="text" name="optionD" id="editOptionD"></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Correct Answer</label>
+                    <textarea name="correctAnswer" id="editAnswer" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Marks</label>
+                    <input type="number" name="marks" id="editMarks" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Explanation</label>
+                <input type="text" name="explanation" id="editExplanation">
+            </div>
+            <button type="submit" class="btn btn-primary">Update Question</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            this.classList.add('active');
+            document.getElementById(this.getAttribute('data-tab') + '-pane').classList.add('active');
+        });
+    });
+
+    function closeEditModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+
+    document.querySelectorAll('.edit-question').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const type = this.getAttribute('data-type');
+            document.getElementById('editText').value = this.getAttribute('data-text') || '';
+            document.getElementById('editAnswer').value = this.getAttribute('data-answer') || '';
+            document.getElementById('editMarks').value = this.getAttribute('data-marks') || '1';
+            document.getElementById('editExplanation').value = this.getAttribute('data-explanation') || '';
+
+            if (type === 'MCQ') {
+                document.getElementById('mcqFields').style.display = 'block';
+                document.getElementById('editOptionA').value = this.getAttribute('data-optionA') || '';
+                document.getElementById('editOptionB').value = this.getAttribute('data-optionB') || '';
+                document.getElementById('editOptionC').value = this.getAttribute('data-optionC') || '';
+                document.getElementById('editOptionD').value = this.getAttribute('data-optionD') || '';
+            } else {
+                document.getElementById('mcqFields').style.display = 'none';
+            }
+
+            document.getElementById('editForm').action = '/admin/exam/questions/update/' + this.getAttribute('data-id');
+            document.getElementById('editModal').style.display = 'flex';
+        });
+    });
+
+    document.getElementById('editModal').addEventListener('click', function(e) {
+        if (e.target === this) closeEditModal();
+    });
+</script>
+</body>
+</html>

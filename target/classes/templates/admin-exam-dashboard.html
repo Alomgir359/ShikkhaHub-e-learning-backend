@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Exam Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f7f0;
+            overflow-x: hidden;
+        }
+        .dashboard { display: flex; min-height: 100vh; }
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #0a3d2f;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+        }
+        .sidebar-header {
+            padding: 32px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            background: linear-gradient(135deg, #0a3d2f, #0f5a45);
+        }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-icon { font-size: 32px; color: #7ed957; }
+        .logo-text h3 { font-size: 18px; font-weight: 700; margin: 0; }
+        .logo-text p { font-size: 11px; opacity: 0.7; margin-top: 4px; }
+        .nav-menu { flex: 1; padding: 24px 20px; display: flex; flex-direction: column; gap: 6px; }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 18px;
+            border-radius: 14px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #e2f0e9;
+            text-decoration: none;
+        }
+        .nav-item i { width: 24px; font-size: 1.2rem; }
+        .nav-item.active, .nav-item:hover {
+            background: #2b8c5e;
+            color: white;
+        }
+        .nav-divider { height: 1px; background: rgba(255,255,255,0.15); margin: 12px 4px; }
+        .nav-section-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: rgba(255,255,255,0.45);
+            padding: 8px 18px 4px;
+        }
+        .sidebar-footer {
+            padding: 24px 20px 32px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 24px 32px;
+            min-height: 100vh;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .page-title h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0a3d2f, #1a6e48);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .admin-badge {
+            background: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            color: #1f3b34;
+        }
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+            margin-bottom: 32px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2efe5;
+        }
+        .stat-card h3 { font-size: 32px; font-weight: 800; color: #0a3d2f; }
+        .stat-card p { color: #6f8f82; font-size: 13px; margin-top: 5px; }
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid #e2efe5;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0a3d2f;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaf5ea;
+        }
+        .exam-list { display: flex; flex-direction: column; gap: 12px; }
+        .exam-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: #fafef7;
+            border-radius: 12px;
+            border: 1px solid #eef3ea;
+        }
+        .btn-sm {
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-primary { background: #2b8c5e; color: white; }
+        .btn-secondary { background: #eef2fa; color: #2b8c5e; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-warning { background: #f59e0b; color: white; }
+        .badge {
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .badge-draft { background: #fef3c7; color: #d97706; }
+        .badge-published { background: #d1fae5; color: #065f46; }
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; }
+            .stats-grid { grid-template-columns: repeat(2,1fr); }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-area">
+                <i class="fas fa-chalkboard-user logo-icon"></i>
+                <div class="logo-text">
+                    <h3>Employee Learning System</h3>
+                    <p>Admin Portal</p>
+                </div>
+            </div>
+        </div>
+        <div class="nav-menu">
+            <div class="nav-section-title">MAIN</div>
+            <a href="/admin/teachers" class="nav-item">
+                <i class="fas fa-users"></i> <span>Teachers</span>
+            </a>
+            <div class="nav-divider"></div>
+            <div class="nav-section-title">EXAM MANAGEMENT</div>
+            <a href="/admin/exam/dashboard" class="nav-item active">
+                <i class="fas fa-tachometer-alt"></i> <span>Exam Dashboard</span>
+            </a>
+            <a href="/admin/exam/ranks" class="nav-item">
+                <i class="fas fa-chart-line"></i> <span>Manage Ranks</span>
+            </a>
+            <a href="/admin/exam/employees" class="nav-item">
+                <i class="fas fa-users"></i> <span>Manage Employees</span>
+            </a>
+            <a href="/admin/exam/settings" class="nav-item">
+                <i class="fas fa-cog"></i> <span>Exam Settings</span>
+            </a>
+            <a href="/admin/exam/results" class="nav-item">
+                <i class="fas fa-chart-bar"></i> <span>Results & Analytics</span>
+            </a>
+            <div class="nav-divider"></div>
+            <a href="/admin/logout" class="nav-item">
+                <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+            </a>
+        </div>
+        <div class="sidebar-footer">
+            <i class="fas fa-shield-alt"></i> Admin Access • v2.0
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title">
+                <h1>Exam Management Dashboard</h1>
+            </div>
+            <div class="admin-section">
+                <div class="admin-badge">
+                    <i class="fas fa-user-cog"></i>
+                    <span th:text="${session.admin.fullName}">Admin</span>
+                </div>
+                <a href="/admin/logout" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3 th:text="${exams.size()}">0</h3>
+                <p>Total Exams</p>
+            </div>
+            <div class="stat-card">
+                <h3 th:text="${draftExams.size()}">0</h3>
+                <p>Draft Exams</p>
+            </div>
+            <div class="stat-card">
+                <h3 th:text="${publishedExams.size()}">0</h3>
+                <p>Published Exams</p>
+            </div>
+            <div class="stat-card">
+                <h3 th:text="${ranks.size()}">0</h3>
+                <p>Ranks Configured</p>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card">
+            <div class="card-title">Quick Actions</div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <a href="/admin/exam/ranks" class="btn-sm btn-primary"><i class="fas fa-plus"></i> Add Rank</a>
+                <a href="/admin/exam/employees" class="btn-sm btn-primary"><i class="fas fa-user-plus"></i> Add Employee</a>
+                <a href="/admin/exam/settings" class="btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Create Exam</a>
+            </div>
+        </div>
+
+        <!-- Draft Exams -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-pencil-alt"></i> Draft Exams</div>
+            <div class="exam-list">
+                <div th:each="exam : ${draftExams}" class="exam-item">
+                    <div>
+                        <strong th:text="${exam.examName}">Exam Name</strong>
+                        <span class="badge badge-draft" style="margin-left: 10px;">DRAFT</span>
+                        <div style="font-size: 12px; color: #6f8f82;" th:text="'Questions: ' + ${exam.totalQuestions} + ' | Marks: ' + ${exam.totalMarks}"></div>
+                    </div>
+                    <div>
+                        <a th:href="@{/admin/exam/questions/{id}(id=${exam.id})}" class="btn-sm btn-secondary"><i class="fas fa-edit"></i> Add Questions</a>
+                        <a th:href="@{/admin/exam/settings/publish/{id}(id=${exam.id})}" class="btn-sm btn-primary"><i class="fas fa-upload"></i> Publish</a>
+                    </div>
+                </div>
+                <div th:if="${draftExams.isEmpty()}" style="text-align: center; padding: 30px; color: #6f8f82;">
+                    <i class="fas fa-inbox"></i> No draft exams
+                </div>
+            </div>
+        </div>
+
+        <!-- Published Exams -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-check-circle"></i> Published Exams</div>
+            <div class="exam-list">
+                <div th:each="exam : ${publishedExams}" class="exam-item">
+                    <div>
+                        <strong th:text="${exam.examName}">Exam Name</strong>
+                        <span class="badge badge-published" style="margin-left: 10px;">PUBLISHED</span>
+                        <div style="font-size: 12px; color: #6f8f82;" th:text="'Duration: ' + ${exam.durationMinutes} + ' mins | Passing: ' + ${exam.passingMarks}"></div>
+                    </div>
+                    <div>
+                        <a th:href="@{/admin/exam/results/{id}(id=${exam.id})}" class="btn-sm btn-secondary"><i class="fas fa-chart-line"></i> Results</a>
+                    </div>
+                </div>
+                <div th:if="${publishedExams.isEmpty()}" style="text-align: center; padding: 30px; color: #6f8f82;">
+                    <i class="fas fa-inbox"></i> No published exams
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

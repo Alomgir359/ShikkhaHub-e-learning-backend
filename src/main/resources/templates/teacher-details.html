@@ -1,0 +1,1931 @@
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">-->
+<!--    <title>Teacher Profile | Admin Portal</title>-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">-->
+<!--    <style>-->
+<!--        * {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            box-sizing: border-box;-->
+<!--        }-->
+
+<!--        body {-->
+<!--            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;-->
+<!--            background: #edf2ef;-->
+<!--            min-height: 100vh;-->
+<!--            padding: 32px 24px;-->
+<!--        }-->
+
+<!--        .container {-->
+<!--            max-width: 1280px;-->
+<!--            margin: 0 auto;-->
+<!--        }-->
+
+<!--        /* Back Button (compact) */-->
+<!--        .back-btn {-->
+<!--            display: inline-flex;-->
+<!--            align-items: center;-->
+<!--            gap: 8px;-->
+<!--            background: #114411;-->
+<!--            color: white;-->
+<!--            padding: 8px 20px;-->
+<!--            border-radius: 40px;-->
+<!--            text-decoration: none;-->
+<!--            font-weight: 500;-->
+<!--            font-size: 13px;-->
+<!--            margin-bottom: 24px;-->
+<!--            transition: all 0.2s ease;-->
+<!--            border: none;-->
+<!--        }-->
+
+<!--        .back-btn:hover {-->
+<!--            background: #1e6239;-->
+<!--            transform: translateX(-3px);-->
+<!--        }-->
+
+<!--        /* Header Card - cleaner */-->
+<!--        .header-card {-->
+<!--            background: linear-gradient(115deg, #0f3b2a 0%, #1b6e48 100%);-->
+<!--            border-radius: 24px;-->
+<!--            padding: 24px 32px;-->
+<!--            color: white;-->
+<!--            margin-bottom: 28px;-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            align-items: center;-->
+<!--            flex-wrap: wrap;-->
+<!--            gap: 18px;-->
+<!--            box-shadow: 0 6px 14px rgba(0,0,0,0.08);-->
+<!--        }-->
+
+<!--        .header-info h1 {-->
+<!--            font-size: 26px;-->
+<!--            font-weight: 700;-->
+<!--            margin-bottom: 6px;-->
+<!--            letter-spacing: -0.3px;-->
+<!--        }-->
+
+<!--        .header-info p {-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            gap: 24px;-->
+<!--            flex-wrap: wrap;-->
+<!--            font-size: 13px;-->
+<!--            opacity: 0.88;-->
+<!--        }-->
+
+<!--        .status-badge-large {-->
+<!--            display: inline-flex;-->
+<!--            align-items: center;-->
+<!--            gap: 8px;-->
+<!--            padding: 6px 18px;-->
+<!--            border-radius: 40px;-->
+<!--            font-size: 13px;-->
+<!--            font-weight: 600;-->
+<!--            backdrop-filter: blur(2px);-->
+<!--        }-->
+
+<!--        .status-pending { background: #f59e0b; color: #2c1a00; }-->
+<!--        .status-approved { background: #10b981; color: #064e3b; }-->
+<!--        .status-rejected { background: #ef4444; color: #2c0f0a; }-->
+
+<!--        /* Stats Grid - Compact Cards */-->
+<!--        .stats-grid {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(4, 1fr);-->
+<!--            gap: 18px;-->
+<!--            margin-bottom: 28px;-->
+<!--        }-->
+
+<!--        .stat-item {-->
+<!--            background: white;-->
+<!--            border-radius: 20px;-->
+<!--            padding: 16px 12px;-->
+<!--            text-align: center;-->
+<!--            box-shadow: 0 1px 4px rgba(0,0,0,0.04);-->
+<!--            border: 1px solid #ddebe0;-->
+<!--            transition: all 0.2s;-->
+<!--        }-->
+
+<!--        .stat-item:hover {-->
+<!--            transform: translateY(-2px);-->
+<!--            border-color: #bcddbf;-->
+<!--        }-->
+
+<!--        .stat-icon {-->
+<!--            font-size: 28px;-->
+<!--            color: #2b7e4b;-->
+<!--            margin-bottom: 6px;-->
+<!--        }-->
+
+<!--        .stat-value {-->
+<!--            font-size: 15px;-->
+<!--            font-weight: 700;-->
+<!--            color: #1f3f31;-->
+<!--            background: #f4fbf6;-->
+<!--            display: inline-block;-->
+<!--            padding: 2px 12px;-->
+<!--            border-radius: 30px;-->
+<!--            margin-top: 6px;-->
+<!--        }-->
+
+<!--        .stat-label {-->
+<!--            font-size: 11px;-->
+<!--            font-weight: 600;-->
+<!--            text-transform: uppercase;-->
+<!--            color: #7b8c84;-->
+<!--            letter-spacing: 0.4px;-->
+<!--            margin-top: 8px;-->
+<!--        }-->
+
+<!--        /* Info Sections (compact & minimal) */-->
+<!--        .info-section {-->
+<!--            background: white;-->
+<!--            border-radius: 22px;-->
+<!--            padding: 22px 26px;-->
+<!--            margin-bottom: 24px;-->
+<!--            box-shadow: 0 2px 8px rgba(0,0,0,0.02);-->
+<!--            border: 1px solid #e2efe5;-->
+<!--        }-->
+
+<!--        .section-title {-->
+<!--            font-size: 18px;-->
+<!--            font-weight: 700;-->
+<!--            color: #1a412e;-->
+<!--            margin-bottom: 18px;-->
+<!--            padding-bottom: 10px;-->
+<!--            border-bottom: 2px solid #eaf5ea;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            gap: 10px;-->
+<!--        }-->
+
+<!--        .info-grid {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));-->
+<!--            gap: 16px;-->
+<!--        }-->
+
+<!--        .info-item {-->
+<!--            background: #fcfef9;-->
+<!--            border-radius: 16px;-->
+<!--            padding: 12px 16px;-->
+<!--            border: 1px solid #eef3ea;-->
+<!--            transition: all 0.2s;-->
+<!--        }-->
+
+<!--        .info-label {-->
+<!--            font-size: 11px;-->
+<!--            text-transform: uppercase;-->
+<!--            font-weight: 700;-->
+<!--            color: #3c8b5c;-->
+<!--            letter-spacing: 0.4px;-->
+<!--            margin-bottom: 6px;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            gap: 6px;-->
+<!--        }-->
+
+<!--        .info-value {-->
+<!--            font-size: 14px;-->
+<!--            font-weight: 500;-->
+<!--            color: #263f35;-->
+<!--            line-height: 1.45;-->
+<!--            word-break: break-word;-->
+<!--        }-->
+
+<!--        /* Experience Box */-->
+<!--        .experience-text {-->
+<!--            background: #f9fef7;-->
+<!--            border-radius: 18px;-->
+<!--            padding: 18px 20px;-->
+<!--            margin-top: 16px;-->
+<!--            border-left: 4px solid #2b7e4b;-->
+<!--            line-height: 1.55;-->
+<!--        }-->
+
+<!--        /* Documents Grid - Compact Cards */-->
+<!--        .docs-grid {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));-->
+<!--            gap: 18px;-->
+<!--        }-->
+
+<!--        .doc-card {-->
+<!--            background: #fbfef9;-->
+<!--            border-radius: 18px;-->
+<!--            padding: 16px 12px;-->
+<!--            text-align: center;-->
+<!--            border: 1px solid #e5f0e5;-->
+<!--            transition: all 0.2s ease;-->
+<!--        }-->
+
+<!--        .doc-card:hover {-->
+<!--            transform: translateY(-3px);-->
+<!--            box-shadow: 0 8px 18px rgba(0,0,0,0.05);-->
+<!--            border-color: #b9dfbf;-->
+<!--        }-->
+
+<!--        .doc-icon {-->
+<!--            font-size: 38px;-->
+<!--            margin-bottom: 8px;-->
+<!--            color: #2b7e4b;-->
+<!--        }-->
+
+<!--        .doc-name {-->
+<!--            font-weight: 700;-->
+<!--            color: #1f4f38;-->
+<!--            margin-bottom: 12px;-->
+<!--            font-size: 13px;-->
+<!--        }-->
+
+<!--        .doc-link {-->
+<!--            display: inline-flex;-->
+<!--            align-items: center;-->
+<!--            gap: 6px;-->
+<!--            padding: 6px 14px;-->
+<!--            background: #2b7e4b;-->
+<!--            color: white;-->
+<!--            text-decoration: none;-->
+<!--            border-radius: 30px;-->
+<!--            font-size: 11px;-->
+<!--            font-weight: 600;-->
+<!--            transition: 0.2s;-->
+<!--        }-->
+
+<!--        .doc-link:hover {-->
+<!--            background: #1e6239;-->
+<!--            transform: scale(0.98);-->
+<!--        }-->
+
+<!--        .no-doc {-->
+<!--            color: #99aa9f;-->
+<!--            font-size: 12px;-->
+<!--            display: inline-flex;-->
+<!--            align-items: center;-->
+<!--            gap: 6px;-->
+<!--            background: #f3f7f2;-->
+<!--            padding: 5px 12px;-->
+<!--            border-radius: 30px;-->
+<!--        }-->
+
+<!--        /* Action Buttons (Professional) */-->
+<!--        .action-buttons {-->
+<!--            display: flex;-->
+<!--            gap: 14px;-->
+<!--            justify-content: flex-end;-->
+<!--            flex-wrap: wrap;-->
+<!--            margin-top: 16px;-->
+<!--            margin-bottom: 10px;-->
+<!--        }-->
+
+<!--        .btn {-->
+<!--            padding: 8px 24px;-->
+<!--            border-radius: 40px;-->
+<!--            font-size: 13px;-->
+<!--            font-weight: 600;-->
+<!--            cursor: pointer;-->
+<!--            transition: all 0.2s;-->
+<!--            border: none;-->
+<!--            text-decoration: none;-->
+<!--            display: inline-flex;-->
+<!--            align-items: center;-->
+<!--            gap: 8px;-->
+<!--        }-->
+
+<!--        .btn-approve {-->
+<!--            background: #10b981;-->
+<!--            color: white;-->
+<!--            box-shadow: 0 2px 6px rgba(16,185,129,0.2);-->
+<!--        }-->
+<!--        .btn-approve:hover { background: #059669; transform: translateY(-1px); }-->
+
+<!--        .btn-reject {-->
+<!--            background: #ef4444;-->
+<!--            color: white;-->
+<!--        }-->
+<!--        .btn-reject:hover { background: #dc2626; transform: translateY(-1px); }-->
+
+<!--        .btn-delete {-->
+<!--            background: #6f8f82;-->
+<!--            color: white;-->
+<!--        }-->
+<!--        .btn-delete:hover { background: #577a6a; transform: translateY(-1px); }-->
+
+<!--        .btn-back {-->
+<!--            background: #114411;-->
+<!--            color: white;-->
+<!--        }-->
+<!--        .btn-back:hover { background: #1e6239; transform: translateY(-1px); }-->
+
+<!--        /* ==================== CUSTOM MODAL ==================== */-->
+<!--        .modal-overlay {-->
+<!--            position: fixed;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            background: rgba(0, 0, 0, 0.6);-->
+<!--            backdrop-filter: blur(6px);-->
+<!--            z-index: 2000;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            visibility: hidden;-->
+<!--            opacity: 0;-->
+<!--            transition: all 0.3s ease;-->
+<!--        }-->
+
+<!--        .modal-overlay.active {-->
+<!--            visibility: visible;-->
+<!--            opacity: 1;-->
+<!--        }-->
+
+<!--        .modal-container {-->
+<!--            background: white;-->
+<!--            border-radius: 32px;-->
+<!--            width: 90%;-->
+<!--            max-width: 480px;-->
+<!--            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);-->
+<!--            overflow: hidden;-->
+<!--            transform: scale(0.95) translateY(20px);-->
+<!--            transition: transform 0.3s ease;-->
+<!--        }-->
+
+<!--        .modal-overlay.active .modal-container {-->
+<!--            transform: scale(1) translateY(0);-->
+<!--        }-->
+
+<!--        .modal-header {-->
+<!--            background: linear-gradient(135deg, #0a3d2f, #1a6e48);-->
+<!--            color: white;-->
+<!--            padding: 24px 28px;-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            align-items: center;-->
+<!--        }-->
+
+<!--        .modal-header h3 {-->
+<!--            font-size: 22px;-->
+<!--            font-weight: 700;-->
+<!--            margin: 0;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            gap: 12px;-->
+<!--        }-->
+
+<!--        .modal-header h3 i {-->
+<!--            font-size: 26px;-->
+<!--        }-->
+
+<!--        .modal-close {-->
+<!--            background: rgba(255,255,255,0.2);-->
+<!--            border: none;-->
+<!--            color: white;-->
+<!--            width: 36px;-->
+<!--            height: 36px;-->
+<!--            border-radius: 50%;-->
+<!--            cursor: pointer;-->
+<!--            font-size: 20px;-->
+<!--            transition: all 0.2s;-->
+<!--        }-->
+
+<!--        .modal-close:hover {-->
+<!--            background: rgba(255,255,255,0.4);-->
+<!--            transform: rotate(90deg);-->
+<!--        }-->
+
+<!--        .modal-body {-->
+<!--            padding: 32px 28px;-->
+<!--        }-->
+
+<!--        .modal-message {-->
+<!--            text-align: center;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+
+<!--        .modal-icon {-->
+<!--            font-size: 64px;-->
+<!--            margin-bottom: 16px;-->
+<!--        }-->
+
+<!--        .modal-message p {-->
+<!--            font-size: 16px;-->
+<!--            color: #2d3e3a;-->
+<!--            line-height: 1.5;-->
+<!--            margin-bottom: 12px;-->
+<!--        }-->
+
+<!--        .modal-message strong {-->
+<!--            color: #0a3d2f;-->
+<!--            display: block;-->
+<!--            margin-top: 8px;-->
+<!--            font-size: 18px;-->
+<!--            font-weight: 700;-->
+<!--        }-->
+
+<!--        .modal-warning {-->
+<!--            background: #fef3c7;-->
+<!--            padding: 12px;-->
+<!--            border-radius: 12px;-->
+<!--            margin-top: 16px;-->
+<!--            font-size: 13px;-->
+<!--            color: #92400e;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            gap: 8px;-->
+<!--            justify-content: center;-->
+<!--        }-->
+
+<!--        .modal-footer {-->
+<!--            padding: 20px 28px 32px;-->
+<!--            display: flex;-->
+<!--            gap: 12px;-->
+<!--            justify-content: flex-end;-->
+<!--            border-top: 1px solid #eef3e8;-->
+<!--        }-->
+
+<!--        .modal-btn {-->
+<!--            padding: 12px 28px;-->
+<!--            border-radius: 50px;-->
+<!--            font-weight: 700;-->
+<!--            font-size: 14px;-->
+<!--            cursor: pointer;-->
+<!--            transition: all 0.2s;-->
+<!--            border: none;-->
+<!--        }-->
+
+<!--        .modal-btn-cancel {-->
+<!--            background: #f1f3f5;-->
+<!--            color: #5a6b62;-->
+<!--        }-->
+
+<!--        .modal-btn-cancel:hover {-->
+<!--            background: #e9ecef;-->
+<!--        }-->
+
+<!--        .modal-btn-submit {-->
+<!--            background: #2b8c5e;-->
+<!--            color: white;-->
+<!--        }-->
+
+<!--        .modal-btn-submit:hover {-->
+<!--            background: #1e6e48;-->
+<!--            transform: translateY(-2px);-->
+<!--        }-->
+
+<!--        .modal-btn-danger {-->
+<!--            background: #ef4444;-->
+<!--            color: white;-->
+<!--        }-->
+
+<!--        .modal-btn-danger:hover {-->
+<!--            background: #dc2626;-->
+<!--            transform: translateY(-2px);-->
+<!--        }-->
+
+<!--        .modal-btn-warning {-->
+<!--            background: #f59e0b;-->
+<!--            color: white;-->
+<!--        }-->
+
+<!--        .modal-btn-warning:hover {-->
+<!--            background: #d97706;-->
+<!--            transform: translateY(-2px);-->
+<!--        }-->
+
+<!--        /* Toast */-->
+<!--        .toast {-->
+<!--            position: fixed;-->
+<!--            bottom: 30px;-->
+<!--            right: 30px;-->
+<!--            background: #2b7e4b;-->
+<!--            color: white;-->
+<!--            padding: 12px 22px;-->
+<!--            border-radius: 50px;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            gap: 10px;-->
+<!--            z-index: 2100;-->
+<!--            display: none;-->
+<!--            font-weight: 500;-->
+<!--            font-size: 13px;-->
+<!--            box-shadow: 0 8px 20px rgba(0,0,0,0.1);-->
+<!--            animation: slideIn 0.3s ease;-->
+<!--        }-->
+
+<!--        @keyframes slideIn {-->
+<!--            from { transform: translateX(100%); opacity: 0; }-->
+<!--            to { transform: translateX(0); opacity: 1; }-->
+<!--        }-->
+
+<!--        /* Responsive */-->
+<!--        @media (max-width: 850px) {-->
+<!--            .stats-grid { grid-template-columns: repeat(2,1fr); }-->
+<!--            body { padding: 20px 16px; }-->
+<!--        }-->
+<!--        @media (max-width: 650px) {-->
+<!--            .stats-grid { grid-template-columns: 1fr; }-->
+<!--            .header-card { flex-direction: column; align-items: flex-start; text-align: left; }-->
+<!--            .info-grid { grid-template-columns: 1fr; }-->
+<!--            .action-buttons { justify-content: stretch; }-->
+<!--            .btn { width: 100%; justify-content: center; }-->
+<!--            .info-section { padding: 18px; }-->
+<!--        }-->
+<!--        @media (max-width: 480px) {-->
+<!--            .docs-grid { grid-template-columns: 1fr; }-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--    &lt;!&ndash; Back Button &ndash;&gt;-->
+<!--    <a href="/admin/teachers" class="back-btn">-->
+<!--        <i class="fas fa-arrow-left"></i> Back to Dashboard-->
+<!--    </a>-->
+
+<!--    &lt;!&ndash; Header Card (Professional Compact) &ndash;&gt;-->
+<!--    <div class="header-card">-->
+<!--        <div class="header-info">-->
+<!--            <h1 th:text="${teacher.fullName}">Emily Clarke</h1>-->
+<!--            <p>-->
+<!--                <i class="fas fa-envelope"></i> <span th:text="${teacher.email}">emily@example.com</span>-->
+<!--                <i class="fas fa-phone-alt"></i> <span th:text="${teacher.phone}">+880 1712 345678</span>-->
+<!--            </p>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <span class="status-badge-large"-->
+<!--                  th:classappend="${teacher.status == 'PENDING'} ? 'status-pending' : (${teacher.status == 'APPROVED'} ? 'status-approved' : 'status-rejected')"-->
+<!--                  th:text="${teacher.status}">-->
+<!--                PENDING-->
+<!--            </span>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Stats Grid (Compact cards) &ndash;&gt;-->
+<!--    <div class="stats-grid">-->
+<!--        <div class="stat-item">-->
+<!--            <div class="stat-icon"><i class="fas fa-user-tie"></i></div>-->
+<!--            <div class="stat-value" th:text="${teacher.currentProfession != null ? teacher.currentProfession : '—'}">Financial Analyst</div>-->
+<!--            <div class="stat-label">Current Profession</div>-->
+<!--        </div>-->
+<!--        <div class="stat-item">-->
+<!--            <div class="stat-icon"><i class="fas fa-building"></i></div>-->
+<!--            <div class="stat-value" th:text="${teacher.organization != null ? teacher.organization : '—'}">Global Bank Ltd.</div>-->
+<!--            <div class="stat-label">Organization</div>-->
+<!--        </div>-->
+<!--        <div class="stat-item">-->
+<!--            <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>-->
+<!--            <div class="stat-value" th:text="${#temporals.format(teacher.appliedAt, 'dd MMM yyyy')}">12 Jan 2025</div>-->
+<!--            <div class="stat-label">Applied On</div>-->
+<!--        </div>-->
+<!--        <div class="stat-item">-->
+<!--            <div class="stat-icon"><i class="fas fa-clock"></i></div>-->
+<!--            <div class="stat-value" th:text="${#temporals.format(teacher.updatedAt, 'dd MMM yyyy')}">20 Mar 2025</div>-->
+<!--            <div class="stat-label">Last Updated</div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Personal Information &ndash;&gt;-->
+<!--    <div class="info-section">-->
+<!--        <div class="section-title">-->
+<!--            <i class="fas fa-user-circle"></i> Personal Information-->
+<!--        </div>-->
+<!--        <div class="info-grid">-->
+<!--            <div class="info-item">-->
+<!--                <div class="info-label"><i class="fas fa-user"></i> Full Name</div>-->
+<!--                <div class="info-value" th:text="${teacher.fullName}">Emily Clarke</div>-->
+<!--            </div>-->
+<!--            <div class="info-item">-->
+<!--                <div class="info-label"><i class="fas fa-envelope"></i> Email Address</div>-->
+<!--                <div class="info-value" th:text="${teacher.email}">emily@example.com</div>-->
+<!--            </div>-->
+<!--            <div class="info-item">-->
+<!--                <div class="info-label"><i class="fas fa-phone-alt"></i> Phone Number</div>-->
+<!--                <div class="info-value" th:text="${teacher.phone}">+8801712345678</div>-->
+<!--            </div>-->
+<!--            <div class="info-item">-->
+<!--                <div class="info-label"><i class="fas fa-tag"></i> Role</div>-->
+<!--                <div class="info-value" th:text="${teacher.role}">TEACHER</div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Professional Information &ndash;&gt;-->
+<!--    <div class="info-section">-->
+<!--        <div class="section-title">-->
+<!--            <i class="fas fa-briefcase"></i> Professional Background-->
+<!--        </div>-->
+<!--        <div class="info-grid">-->
+<!--            <div class="info-item">-->
+<!--                <div class="info-label"><i class="fas fa-user-tie"></i> Current Profession</div>-->
+<!--                <div class="info-value" th:text="${teacher.currentProfession != null ? teacher.currentProfession : 'Not provided'}">Senior Banking Executive</div>-->
+<!--            </div>-->
+<!--            <div class="info-item">-->
+<!--                <div class="info-label"><i class="fas fa-building"></i> Organization</div>-->
+<!--                <div class="info-value" th:text="${teacher.organization != null ? teacher.organization : 'Not provided'}">City Bank</div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="experience-text">-->
+<!--            <div class="info-label" style="margin-bottom: 8px;"><i class="fas fa-briefcase"></i> Experience & Bio</div>-->
+<!--            <div class="info-value" th:text="${teacher.experience != null ? teacher.experience : 'No experience details provided.'}">-->
+<!--                Over 12 years in financial education, trained 500+ professionals in investment banking.-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Uploaded Documents (Clean card style) &ndash;&gt;-->
+<!--    <div class="info-section">-->
+<!--        <div class="section-title">-->
+<!--            <i class="fas fa-file-alt"></i> Uploaded Documents-->
+<!--        </div>-->
+<!--        <div class="docs-grid">-->
+<!--            &lt;!&ndash; CV Document &ndash;&gt;-->
+<!--            <div class="doc-card">-->
+<!--                <div class="doc-icon"><i class="fas fa-file-pdf"></i></div>-->
+<!--                <div class="doc-name">CV / Resume</div>-->
+<!--                <a th:if="${teacher.cvPath != null}" th:href="@{/admin/files/{filename}(filename=${teacher.cvPath})}" target="_blank" class="doc-link">-->
+<!--                    <i class="fas fa-eye"></i> View CV-->
+<!--                </a>-->
+<!--                <span th:unless="${teacher.cvPath != null}" class="no-doc">-->
+<!--                    <i class="fas fa-times-circle"></i> Not uploaded-->
+<!--                </span>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; NID / Passport &ndash;&gt;-->
+<!--            <div class="doc-card">-->
+<!--                <div class="doc-icon"><i class="fas fa-id-card"></i></div>-->
+<!--                <div class="doc-name">NID / Passport</div>-->
+<!--                <a th:if="${teacher.nidPhotoPath != null}" th:href="@{/admin/files/{filename}(filename=${teacher.nidPhotoPath})}" target="_blank" class="doc-link">-->
+<!--                    <i class="fas fa-eye"></i> View Document-->
+<!--                </a>-->
+<!--                <span th:unless="${teacher.nidPhotoPath != null}" class="no-doc">-->
+<!--                    <i class="fas fa-times-circle"></i> Not uploaded-->
+<!--                </span>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Profile Picture &ndash;&gt;-->
+<!--            <div class="doc-card">-->
+<!--                <div class="doc-icon"><i class="fas fa-user-circle"></i></div>-->
+<!--                <div class="doc-name">Profile Photo</div>-->
+<!--                <a th:if="${teacher.profilePhotoPath != null}" th:href="@{/admin/files/{filename}(filename=${teacher.profilePhotoPath})}" target="_blank" class="doc-link">-->
+<!--                    <i class="fas fa-eye"></i> View Photo-->
+<!--                </a>-->
+<!--                <span th:unless="${teacher.profilePhotoPath != null}" class="no-doc">-->
+<!--                    <i class="fas fa-times-circle"></i> Not uploaded-->
+<!--                </span>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Organization ID Card &ndash;&gt;-->
+<!--            <div class="doc-card">-->
+<!--                <div class="doc-icon"><i class="fas fa-building"></i></div>-->
+<!--                <div class="doc-name">Organization ID Card</div>-->
+<!--                <a th:if="${teacher.organizationIdPath != null}" th:href="@{/admin/files/{filename}(filename=${teacher.organizationIdPath})}" target="_blank" class="doc-link">-->
+<!--                    <i class="fas fa-eye"></i> View ID Card-->
+<!--                </a>-->
+<!--                <span th:unless="${teacher.organizationIdPath != null}" class="no-doc">-->
+<!--                    <i class="fas fa-times-circle"></i> Not uploaded-->
+<!--                </span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Action Buttons (Elegant & compact) &ndash;&gt;-->
+<!--    <div class="action-buttons">-->
+<!--        <a th:if="${teacher.status == 'PENDING'}" th:href="@{/admin/approve/{id}(id=${teacher.id})}" class="btn btn-approve confirm-approve" th:data-name="${teacher.fullName}">-->
+<!--            <i class="fas fa-check-circle"></i> Approve Application-->
+<!--        </a>-->
+<!--        <a th:if="${teacher.status == 'PENDING'}" th:href="@{/admin/reject/{id}(id=${teacher.id})}" class="btn btn-reject confirm-reject" th:data-name="${teacher.fullName}">-->
+<!--            <i class="fas fa-ban"></i> Reject Application-->
+<!--        </a>-->
+<!--        <a th:href="@{/admin/delete/{id}(id=${teacher.id})}" class="btn btn-delete confirm-delete" th:data-name="${teacher.fullName}">-->
+<!--            <i class="fas fa-trash-alt"></i> Delete Teacher-->
+<!--        </a>-->
+<!--        <a href="/admin/teachers" class="btn btn-back">-->
+<!--            <i class="fas fa-arrow-left"></i> Back to Dashboard-->
+<!--        </a>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; ==================== CUSTOM CONFIRMATION MODAL ==================== &ndash;&gt;-->
+<!--<div class="modal-overlay" id="confirmModal">-->
+<!--    <div class="modal-container">-->
+<!--        <div class="modal-header">-->
+<!--            <h3><i class="fas fa-question-circle"></i> Confirm Action</h3>-->
+<!--            <button class="modal-close" id="modalCloseBtn">&times;</button>-->
+<!--        </div>-->
+<!--        <div class="modal-body">-->
+<!--            <div class="modal-message">-->
+<!--                <div class="modal-icon" id="modalIcon">-->
+<!--                    <i class="fas fa-shield-alt" style="color:#2b8c5e;"></i>-->
+<!--                </div>-->
+<!--                <p id="modalMessage">Are you sure you want to perform this action?</p>-->
+<!--                <strong id="modalDetail"></strong>-->
+<!--                <div id="modalWarning" class="modal-warning" style="display: none;">-->
+<!--                    <i class="fas fa-exclamation-triangle"></i>-->
+<!--                    <span>This action cannot be undone!</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="modal-footer">-->
+<!--            <button class="modal-btn modal-btn-cancel" id="modalCancelBtn">Cancel</button>-->
+<!--            <button class="modal-btn" id="modalConfirmBtn">Yes, Proceed</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Toast Notifications &ndash;&gt;-->
+<!--<div id="toastMsg" class="toast">-->
+<!--    <i class="fas fa-check-circle"></i>-->
+<!--    <span id="toastText">Action completed</span>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    // Toast Notification Function-->
+<!--    function showToast(message, isError = false) {-->
+<!--        const toast = document.getElementById('toastMsg');-->
+<!--        const toastText = document.getElementById('toastText');-->
+<!--        toastText.innerText = message;-->
+<!--        toast.style.backgroundColor = isError ? '#ef4444' : '#2b7e4b';-->
+<!--        toast.style.display = 'flex';-->
+<!--        setTimeout(() => { toast.style.display = 'none'; }, 3500);-->
+<!--    }-->
+
+<!--    // ==================== CUSTOM CONFIRMATION MODAL SYSTEM ====================-->
+<!--    let pendingActionUrl = null;-->
+<!--    let pendingActionType = null;-->
+
+<!--    const confirmModal = document.getElementById('confirmModal');-->
+<!--    const modalMessage = document.getElementById('modalMessage');-->
+<!--    const modalDetail = document.getElementById('modalDetail');-->
+<!--    const modalIcon = document.getElementById('modalIcon');-->
+<!--    const modalWarning = document.getElementById('modalWarning');-->
+<!--    const modalConfirmBtn = document.getElementById('modalConfirmBtn');-->
+<!--    const modalCancelBtn = document.getElementById('modalCancelBtn');-->
+<!--    const modalCloseBtn = document.getElementById('modalCloseBtn');-->
+
+<!--    function showConfirmModal(message, detail, actionType, url) {-->
+<!--        modalMessage.textContent = message;-->
+<!--        modalDetail.textContent = detail || '';-->
+<!--        pendingActionUrl = url;-->
+<!--        pendingActionType = actionType;-->
+
+<!--        // Customize modal based on action type-->
+<!--        if (actionType === 'approve') {-->
+<!--            modalIcon.innerHTML = '<i class="fas fa-check-circle" style="color:#10b981; font-size:64px;"></i>';-->
+<!--            modalConfirmBtn.className = 'modal-btn modal-btn-submit';-->
+<!--            modalConfirmBtn.innerHTML = '<i class="fas fa-check"></i> Yes, Approve';-->
+<!--            modalWarning.style.display = 'none';-->
+<!--        } else if (actionType === 'reject') {-->
+<!--            modalIcon.innerHTML = '<i class="fas fa-times-circle" style="color:#ef4444; font-size:64px;"></i>';-->
+<!--            modalConfirmBtn.className = 'modal-btn modal-btn-danger';-->
+<!--            modalConfirmBtn.innerHTML = '<i class="fas fa-ban"></i> Yes, Reject';-->
+<!--            modalWarning.style.display = 'none';-->
+<!--        } else if (actionType === 'delete') {-->
+<!--            modalIcon.innerHTML = '<i class="fas fa-trash-alt" style="color:#ef4444; font-size:64px;"></i>';-->
+<!--            modalConfirmBtn.className = 'modal-btn modal-btn-danger';-->
+<!--            modalConfirmBtn.innerHTML = '<i class="fas fa-trash"></i> Yes, Delete Permanently';-->
+<!--            modalWarning.style.display = 'flex';-->
+<!--        }-->
+
+<!--        confirmModal.classList.add('active');-->
+<!--        document.body.style.overflow = 'hidden';-->
+<!--    }-->
+
+<!--    function closeConfirmModal() {-->
+<!--        confirmModal.classList.remove('active');-->
+<!--        document.body.style.overflow = '';-->
+<!--        setTimeout(() => {-->
+<!--            pendingActionUrl = null;-->
+<!--            pendingActionType = null;-->
+<!--        }, 300);-->
+<!--    }-->
+
+<!--    modalConfirmBtn.addEventListener('click', function() {-->
+<!--        if (pendingActionUrl) {-->
+<!--            window.location.href = pendingActionUrl;-->
+<!--        }-->
+<!--        closeConfirmModal();-->
+<!--    });-->
+
+<!--    modalCancelBtn.addEventListener('click', closeConfirmModal);-->
+<!--    modalCloseBtn.addEventListener('click', closeConfirmModal);-->
+
+<!--    // Close modal when clicking outside-->
+<!--    confirmModal.addEventListener('click', function(e) {-->
+<!--        if (e.target === confirmModal) {-->
+<!--            closeConfirmModal();-->
+<!--        }-->
+<!--    });-->
+
+<!--    // Handle Approve button click-->
+<!--    document.querySelectorAll('.confirm-approve').forEach(link => {-->
+<!--        link.addEventListener('click', function(e) {-->
+<!--            e.preventDefault();-->
+<!--            const teacherName = this.getAttribute('data-name') || 'this teacher';-->
+<!--            const url = this.getAttribute('href');-->
+<!--            showConfirmModal(-->
+<!--                'Approve Teacher Application?',-->
+<!--                `Teacher: ${teacherName}`,-->
+<!--                'approve',-->
+<!--                url-->
+<!--            );-->
+<!--        });-->
+<!--    });-->
+
+<!--    // Handle Reject button click-->
+<!--    document.querySelectorAll('.confirm-reject').forEach(link => {-->
+<!--        link.addEventListener('click', function(e) {-->
+<!--            e.preventDefault();-->
+<!--            const teacherName = this.getAttribute('data-name') || 'this teacher';-->
+<!--            const url = this.getAttribute('href');-->
+<!--            showConfirmModal(-->
+<!--                'Reject Teacher Application?',-->
+<!--                `Teacher: ${teacherName}`,-->
+<!--                'reject',-->
+<!--                url-->
+<!--            );-->
+<!--        });-->
+<!--    });-->
+
+<!--    // Handle Delete button click-->
+<!--    document.querySelectorAll('.confirm-delete').forEach(link => {-->
+<!--        link.addEventListener('click', function(e) {-->
+<!--            e.preventDefault();-->
+<!--            const teacherName = this.getAttribute('data-name') || 'this teacher';-->
+<!--            const url = this.getAttribute('href');-->
+<!--            showConfirmModal(-->
+<!--                'Delete Teacher Permanently?',-->
+<!--                `Teacher: ${teacherName}`,-->
+<!--                'delete',-->
+<!--                url-->
+<!--            );-->
+<!--        });-->
+<!--    });-->
+
+<!--    // Check URL parameters for success/error messages-->
+<!--    const urlParams = new URLSearchParams(window.location.search);-->
+<!--    if (urlParams.get('success') === 'approved') {-->
+<!--        showToast('✅ Teacher approved successfully! They can now log in.');-->
+<!--    } else if (urlParams.get('success') === 'rejected') {-->
+<!--        showToast('❌ Teacher application rejected.');-->
+<!--    } else if (urlParams.get('success') === 'deleted') {-->
+<!--        showToast('🗑️ Teacher record deleted permanently.');-->
+<!--    } else if (urlParams.get('error')) {-->
+<!--        showToast(urlParams.get('error'), true);-->
+<!--    }-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Teacher Profile | Admin Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: #edf2ef;
+            min-height: 100vh;
+            padding: 32px 24px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* Back Button (compact) */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #114411;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 13px;
+            margin-bottom: 24px;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .back-btn:hover {
+            background: #1e6239;
+            transform: translateX(-3px);
+        }
+
+        /* Header Card - cleaner */
+        .header-card {
+            background: linear-gradient(115deg, #0f3b2a 0%, #1b6e48 100%);
+            border-radius: 24px;
+            padding: 24px 32px;
+            color: white;
+            margin-bottom: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+
+        .header-info h1 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+
+        .header-info p {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            opacity: 0.88;
+        }
+
+        .status-badge-large {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: blur(2px);
+        }
+
+        .status-pending { background: #f59e0b; color: #2c1a00; }
+        .status-approved { background: #10b981; color: #064e3b; }
+        .status-rejected { background: #ef4444; color: #2c0f0a; }
+
+        /* Stats Grid - Compact Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .stat-item {
+            background: white;
+            border-radius: 20px;
+            padding: 16px 12px;
+            text-align: center;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            border: 1px solid #ddebe0;
+            transition: all 0.2s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-2px);
+            border-color: #bcddbf;
+        }
+
+        .stat-icon {
+            font-size: 28px;
+            color: #2b7e4b;
+            margin-bottom: 6px;
+        }
+
+        .stat-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1f3f31;
+            background: #f4fbf6;
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 30px;
+            margin-top: 6px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #7b8c84;
+            letter-spacing: 0.4px;
+            margin-top: 8px;
+        }
+
+        /* Info Sections (compact & minimal) */
+        .info-section {
+            background: white;
+            border-radius: 22px;
+            padding: 22px 26px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            border: 1px solid #e2efe5;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a412e;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaf5ea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .info-item {
+            background: #fcfef9;
+            border-radius: 16px;
+            padding: 12px 16px;
+            border: 1px solid #eef3ea;
+            transition: all 0.2s;
+        }
+
+        .info-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #3c8b5c;
+            letter-spacing: 0.4px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: #263f35;
+            line-height: 1.45;
+            word-break: break-word;
+        }
+
+        /* Experience Box */
+        .experience-text {
+            background: #f9fef7;
+            border-radius: 18px;
+            padding: 18px 20px;
+            margin-top: 16px;
+            border-left: 4px solid #2b7e4b;
+            line-height: 1.55;
+        }
+
+        /* Documents Grid - Compact Cards */
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+        }
+
+        .doc-card {
+            background: #fbfef9;
+            border-radius: 18px;
+            padding: 16px 12px;
+            text-align: center;
+            border: 1px solid #e5f0e5;
+            transition: all 0.2s ease;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+            border-color: #b9dfbf;
+        }
+
+        .doc-icon {
+            font-size: 38px;
+            margin-bottom: 8px;
+            color: #2b7e4b;
+        }
+
+        .doc-name {
+            font-weight: 700;
+            color: #1f4f38;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .doc-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: #2b7e4b;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+            transition: 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .doc-link:hover {
+            background: #1e6239;
+            transform: scale(0.98);
+        }
+
+        .no-doc {
+            color: #99aa9f;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f3f7f2;
+            padding: 5px 12px;
+            border-radius: 30px;
+        }
+
+        /* Action Buttons (Professional) */
+        .action-buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            margin-top: 16px;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-approve {
+            background: #10b981;
+            color: white;
+            box-shadow: 0 2px 6px rgba(16,185,129,0.2);
+        }
+        .btn-approve:hover { background: #059669; transform: translateY(-1px); }
+
+        .btn-reject {
+            background: #ef4444;
+            color: white;
+        }
+        .btn-reject:hover { background: #dc2626; transform: translateY(-1px); }
+
+        .btn-delete {
+            background: #6f8f82;
+            color: white;
+        }
+        .btn-delete:hover { background: #577a6a; transform: translateY(-1px); }
+
+        .btn-back {
+            background: #114411;
+            color: white;
+        }
+        .btn-back:hover { background: #1e6239; transform: translateY(-1px); }
+
+        /* ==================== CUSTOM CONFIRMATION MODAL ==================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Confirmation Modal Container */
+        .modal-container {
+            background: white;
+            border-radius: 32px;
+            width: 90%;
+            max-width: 480px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transform: scale(0.95) translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1) translateY(0);
+        }
+
+        /* File Viewer Modal Container */
+        .modal-viewer-container {
+            background: white;
+            border-radius: 28px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            transform: scale(0.95) translateY(20px);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-overlay.active .modal-viewer-container {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #0a3d2f, #1a6e48);
+            color: white;
+            padding: 24px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-header h3 i {
+            font-size: 26px;
+        }
+
+        .modal-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.4);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 32px 28px;
+        }
+
+        .modal-message {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .modal-message p {
+            font-size: 16px;
+            color: #2d3e3a;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .modal-message strong {
+            color: #0a3d2f;
+            display: block;
+            margin-top: 8px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .modal-warning {
+            background: #fef3c7;
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 16px;
+            font-size: 13px;
+            color: #92400e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .modal-footer {
+            padding: 20px 28px 32px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            border-top: 1px solid #eef3e8;
+        }
+
+        .modal-btn {
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .modal-btn-cancel {
+            background: #f1f3f5;
+            color: #5a6b62;
+        }
+
+        .modal-btn-cancel:hover {
+            background: #e9ecef;
+        }
+
+        .modal-btn-submit {
+            background: #2b8c5e;
+            color: white;
+        }
+
+        .modal-btn-submit:hover {
+            background: #1e6e48;
+            transform: translateY(-2px);
+        }
+
+        .modal-btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .modal-btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .modal-btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .modal-btn-warning:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+        }
+
+        /* File Viewer Modal Body */
+        .modal-viewer-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #pdfViewer, #imageViewer, #unsupportedViewer {
+            width: 100%;
+            height: 100%;
+        }
+
+        #pdfFrame {
+            width: 100%;
+            height: 75vh;
+            border: none;
+            border-radius: 12px;
+        }
+
+        #imagePreview {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #2b7e4b;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 2100;
+            display: none;
+            font-weight: 500;
+            font-size: 13px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 850px) {
+            .stats-grid { grid-template-columns: repeat(2,1fr); }
+            body { padding: 20px 16px; }
+        }
+        @media (max-width: 650px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .header-card { flex-direction: column; align-items: flex-start; text-align: left; }
+            .info-grid { grid-template-columns: 1fr; }
+            .action-buttons { justify-content: stretch; }
+            .btn { width: 100%; justify-content: center; }
+            .info-section { padding: 18px; }
+            .modal-viewer-container { width: 95%; }
+            #pdfFrame { height: 60vh; }
+        }
+        @media (max-width: 480px) {
+            .docs-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Back Button -->
+    <a href="/admin/teachers" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+    <!-- Header Card (Professional Compact) -->
+    <div class="header-card">
+        <div class="header-info">
+            <h1 th:text="${teacher.fullName}">Emily Clarke</h1>
+            <p>
+                <i class="fas fa-envelope"></i> <span th:text="${teacher.email}">emily@example.com</span>
+                <i class="fas fa-phone-alt"></i> <span th:text="${teacher.phone}">+880 1712 345678</span>
+            </p>
+        </div>
+        <div>
+            <span class="status-badge-large"
+                  th:classappend="${teacher.status == 'PENDING'} ? 'status-pending' : (${teacher.status == 'APPROVED'} ? 'status-approved' : 'status-rejected')"
+                  th:text="${teacher.status}">
+                PENDING
+            </span>
+        </div>
+    </div>
+
+    <!-- Stats Grid (Compact cards) -->
+    <div class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-icon"><i class="fas fa-user-tie"></i></div>
+            <div class="stat-value" th:text="${teacher.currentProfession != null ? teacher.currentProfession : '—'}">Financial Analyst</div>
+            <div class="stat-label">Current Profession</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-icon"><i class="fas fa-building"></i></div>
+            <div class="stat-value" th:text="${teacher.organization != null ? teacher.organization : '—'}">Global Bank Ltd.</div>
+            <div class="stat-label">Organization</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+            <div class="stat-value" th:text="${#temporals.format(teacher.appliedAt, 'dd MMM yyyy')}">12 Jan 2025</div>
+            <div class="stat-label">Applied On</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-icon"><i class="fas fa-clock"></i></div>
+            <div class="stat-value" th:text="${#temporals.format(teacher.updatedAt, 'dd MMM yyyy')}">20 Mar 2025</div>
+            <div class="stat-label">Last Updated</div>
+        </div>
+    </div>
+
+    <!-- Personal Information -->
+    <div class="info-section">
+        <div class="section-title">
+            <i class="fas fa-user-circle"></i> Personal Information
+        </div>
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-user"></i> Full Name</div>
+                <div class="info-value" th:text="${teacher.fullName}">Emily Clarke</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-envelope"></i> Email Address</div>
+                <div class="info-value" th:text="${teacher.email}">emily@example.com</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-phone-alt"></i> Phone Number</div>
+                <div class="info-value" th:text="${teacher.phone}">+8801712345678</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-tag"></i> Role</div>
+                <div class="info-value" th:text="${teacher.role}">TEACHER</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professional Information -->
+    <div class="info-section">
+        <div class="section-title">
+            <i class="fas fa-briefcase"></i> Professional Background
+        </div>
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-user-tie"></i> Current Profession</div>
+                <div class="info-value" th:text="${teacher.currentProfession != null ? teacher.currentProfession : 'Not provided'}">Senior Banking Executive</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-building"></i> Organization</div>
+                <div class="info-value" th:text="${teacher.organization != null ? teacher.organization : 'Not provided'}">City Bank</div>
+            </div>
+        </div>
+        <div class="experience-text">
+            <div class="info-label" style="margin-bottom: 8px;"><i class="fas fa-briefcase"></i> Experience & Bio</div>
+            <div class="info-value" th:text="${teacher.experience != null ? teacher.experience : 'No experience details provided.'}">
+                Over 12 years in financial education, trained 500+ professionals in investment banking.
+            </div>
+        </div>
+    </div>
+
+    <!-- Uploaded Documents (Clean card style) - UPDATED with buttons instead of links -->
+    <div class="info-section">
+        <div class="section-title">
+            <i class="fas fa-file-alt"></i> Uploaded Documents
+        </div>
+        <div class="docs-grid">
+            <!-- CV Document -->
+            <div class="doc-card">
+                <div class="doc-icon"><i class="fas fa-file-pdf"></i></div>
+                <div class="doc-name">CV / Resume</div>
+                <button th:if="${teacher.cvPath != null}"
+                        th:attr="data-file=${teacher.cvPath}, data-type='pdf'"
+                        class="doc-link view-file-btn">
+                    <i class="fas fa-eye"></i> View CV
+                </button>
+                <span th:unless="${teacher.cvPath != null}" class="no-doc">
+                    <i class="fas fa-times-circle"></i> Not uploaded
+                </span>
+            </div>
+            <!-- NID / Passport -->
+            <div class="doc-card">
+                <div class="doc-icon"><i class="fas fa-id-card"></i></div>
+                <div class="doc-name">NID / Passport</div>
+                <button th:if="${teacher.nidPhotoPath != null}"
+                        th:attr="data-file=${teacher.nidPhotoPath}, data-type='image'"
+                        class="doc-link view-file-btn">
+                    <i class="fas fa-eye"></i> View Document
+                </button>
+                <span th:unless="${teacher.nidPhotoPath != null}" class="no-doc">
+                    <i class="fas fa-times-circle"></i> Not uploaded
+                </span>
+            </div>
+            <!-- Profile Picture -->
+            <div class="doc-card">
+                <div class="doc-icon"><i class="fas fa-user-circle"></i></div>
+                <div class="doc-name">Profile Photo</div>
+                <button th:if="${teacher.profilePhotoPath != null}"
+                        th:attr="data-file=${teacher.profilePhotoPath}, data-type='image'"
+                        class="doc-link view-file-btn">
+                    <i class="fas fa-eye"></i> View Photo
+                </button>
+                <span th:unless="${teacher.profilePhotoPath != null}" class="no-doc">
+                    <i class="fas fa-times-circle"></i> Not uploaded
+                </span>
+            </div>
+            <!-- Organization ID Card -->
+            <div class="doc-card">
+                <div class="doc-icon"><i class="fas fa-building"></i></div>
+                <div class="doc-name">Organization ID Card</div>
+                <button th:if="${teacher.organizationIdPath != null}"
+                        th:attr="data-file=${teacher.organizationIdPath}, data-type='image'"
+                        class="doc-link view-file-btn">
+                    <i class="fas fa-eye"></i> View ID Card
+                </button>
+                <span th:unless="${teacher.organizationIdPath != null}" class="no-doc">
+                    <i class="fas fa-times-circle"></i> Not uploaded
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons (Elegant & compact) -->
+    <div class="action-buttons">
+        <a th:if="${teacher.status == 'PENDING'}" th:href="@{/admin/approve/{id}(id=${teacher.id})}" class="btn btn-approve confirm-approve" th:data-name="${teacher.fullName}">
+            <i class="fas fa-check-circle"></i> Approve Application
+        </a>
+        <a th:if="${teacher.status == 'PENDING'}" th:href="@{/admin/reject/{id}(id=${teacher.id})}" class="btn btn-reject confirm-reject" th:data-name="${teacher.fullName}">
+            <i class="fas fa-ban"></i> Reject Application
+        </a>
+        <a th:href="@{/admin/delete/{id}(id=${teacher.id})}" class="btn btn-delete confirm-delete" th:data-name="${teacher.fullName}">
+            <i class="fas fa-trash-alt"></i> Delete Teacher
+        </a>
+        <a href="/admin/teachers" class="btn btn-back">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<!-- ==================== CUSTOM CONFIRMATION MODAL ==================== -->
+<div class="modal-overlay" id="confirmModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3><i class="fas fa-question-circle"></i> Confirm Action</h3>
+            <button class="modal-close" id="modalCloseBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-message">
+                <div class="modal-icon" id="modalIcon">
+                    <i class="fas fa-shield-alt" style="color:#2b8c5e;"></i>
+                </div>
+                <p id="modalMessage">Are you sure you want to perform this action?</p>
+                <strong id="modalDetail"></strong>
+                <div id="modalWarning" class="modal-warning" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>This action cannot be undone!</span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-btn modal-btn-cancel" id="modalCancelBtn">Cancel</button>
+            <button class="modal-btn" id="modalConfirmBtn">Yes, Proceed</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== FILE VIEWER MODAL ==================== -->
+<div class="modal-overlay" id="fileViewerModal">
+    <div class="modal-viewer-container">
+        <div class="modal-header">
+            <h3><i class="fas fa-file-alt"></i> Document Viewer</h3>
+            <button class="modal-close" id="closeFileViewerBtn">&times;</button>
+        </div>
+        <div class="modal-viewer-body">
+            <div id="pdfViewer" style="display: none;">
+                <iframe id="pdfFrame" src="" title="PDF Viewer"></iframe>
+            </div>
+            <div id="imageViewer" style="display: none; text-align: center;">
+                <img id="imagePreview" src="" alt="Document Preview">
+            </div>
+            <div id="unsupportedViewer" style="display: none; text-align: center; padding: 50px;">
+                <i class="fas fa-file-alt" style="font-size: 64px; color: #2b8c5e; margin-bottom: 16px; display: block;"></i>
+                <p style="margin-bottom: 16px;">This file type cannot be previewed. Please download to view.</p>
+                <a id="downloadLink" href="#" class="doc-link" style="display: inline-flex;">
+                    <i class="fas fa-download"></i> Download File
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notifications -->
+<div id="toastMsg" class="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastText">Action completed</span>
+</div>
+
+<script>
+    // Toast Notification Function
+    function showToast(message, isError = false) {
+        const toast = document.getElementById('toastMsg');
+        const toastText = document.getElementById('toastText');
+        toastText.innerText = message;
+        toast.style.backgroundColor = isError ? '#ef4444' : '#2b7e4b';
+        toast.style.display = 'flex';
+        setTimeout(() => { toast.style.display = 'none'; }, 3500);
+    }
+
+    // ==================== CUSTOM CONFIRMATION MODAL SYSTEM ====================
+    let pendingActionUrl = null;
+    let pendingActionType = null;
+
+    const confirmModal = document.getElementById('confirmModal');
+    const modalMessage = document.getElementById('modalMessage');
+    const modalDetail = document.getElementById('modalDetail');
+    const modalIcon = document.getElementById('modalIcon');
+    const modalWarning = document.getElementById('modalWarning');
+    const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+    const modalCancelBtn = document.getElementById('modalCancelBtn');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+    function showConfirmModal(message, detail, actionType, url) {
+        modalMessage.textContent = message;
+        modalDetail.textContent = detail || '';
+        pendingActionUrl = url;
+        pendingActionType = actionType;
+
+        // Customize modal based on action type
+        if (actionType === 'approve') {
+            modalIcon.innerHTML = '<i class="fas fa-check-circle" style="color:#10b981; font-size:64px;"></i>';
+            modalConfirmBtn.className = 'modal-btn modal-btn-submit';
+            modalConfirmBtn.innerHTML = '<i class="fas fa-check"></i> Yes, Approve';
+            modalWarning.style.display = 'none';
+        } else if (actionType === 'reject') {
+            modalIcon.innerHTML = '<i class="fas fa-times-circle" style="color:#ef4444; font-size:64px;"></i>';
+            modalConfirmBtn.className = 'modal-btn modal-btn-danger';
+            modalConfirmBtn.innerHTML = '<i class="fas fa-ban"></i> Yes, Reject';
+            modalWarning.style.display = 'none';
+        } else if (actionType === 'delete') {
+            modalIcon.innerHTML = '<i class="fas fa-trash-alt" style="color:#ef4444; font-size:64px;"></i>';
+            modalConfirmBtn.className = 'modal-btn modal-btn-danger';
+            modalConfirmBtn.innerHTML = '<i class="fas fa-trash"></i> Yes, Delete Permanently';
+            modalWarning.style.display = 'flex';
+        }
+
+        confirmModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeConfirmModal() {
+        confirmModal.classList.remove('active');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+            pendingActionUrl = null;
+            pendingActionType = null;
+        }, 300);
+    }
+
+    modalConfirmBtn.addEventListener('click', function() {
+        if (pendingActionUrl) {
+            window.location.href = pendingActionUrl;
+        }
+        closeConfirmModal();
+    });
+
+    modalCancelBtn.addEventListener('click', closeConfirmModal);
+    modalCloseBtn.addEventListener('click', closeConfirmModal);
+
+    // Close modal when clicking outside
+    confirmModal.addEventListener('click', function(e) {
+        if (e.target === confirmModal) {
+            closeConfirmModal();
+        }
+    });
+
+    // Handle Approve button click
+    document.querySelectorAll('.confirm-approve').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const teacherName = this.getAttribute('data-name') || 'this teacher';
+            const url = this.getAttribute('href');
+            showConfirmModal(
+                'Approve Teacher Application?',
+                `Teacher: ${teacherName}`,
+                'approve',
+                url
+            );
+        });
+    });
+
+    // Handle Reject button click
+    document.querySelectorAll('.confirm-reject').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const teacherName = this.getAttribute('data-name') || 'this teacher';
+            const url = this.getAttribute('href');
+            showConfirmModal(
+                'Reject Teacher Application?',
+                `Teacher: ${teacherName}`,
+                'reject',
+                url
+            );
+        });
+    });
+
+    // Handle Delete button click
+    document.querySelectorAll('.confirm-delete').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const teacherName = this.getAttribute('data-name') || 'this teacher';
+            const url = this.getAttribute('href');
+            showConfirmModal(
+                'Delete Teacher Permanently?',
+                `Teacher: ${teacherName}`,
+                'delete',
+                url
+            );
+        });
+    });
+
+    // ==================== FILE VIEWER MODAL FUNCTIONALITY ====================
+    const fileViewerModal = document.getElementById('fileViewerModal');
+    const closeFileViewerBtn = document.getElementById('closeFileViewerBtn');
+    const pdfViewer = document.getElementById('pdfViewer');
+    const imageViewer = document.getElementById('imageViewer');
+    const unsupportedViewer = document.getElementById('unsupportedViewer');
+    const pdfFrame = document.getElementById('pdfFrame');
+    const imagePreview = document.getElementById('imagePreview');
+    const downloadLink = document.getElementById('downloadLink');
+
+    function openFileViewer(filePath, fileType) {
+        const fileUrl = `/admin/files/${filePath}`;
+
+        // Hide all viewers first
+        pdfViewer.style.display = 'none';
+        imageViewer.style.display = 'none';
+        unsupportedViewer.style.display = 'none';
+
+        // Check file extension
+        const fileExtension = filePath.split('.').pop().toLowerCase();
+
+        if (fileType === 'pdf' || fileExtension === 'pdf') {
+            // Show PDF viewer
+            pdfViewer.style.display = 'block';
+            pdfFrame.src = fileUrl;
+        } else if (fileType === 'image' || ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'].includes(fileExtension)) {
+            // Show Image viewer
+            imageViewer.style.display = 'block';
+            imagePreview.src = fileUrl;
+        } else {
+            // Show unsupported viewer with download option
+            unsupportedViewer.style.display = 'block';
+            downloadLink.href = fileUrl;
+        }
+
+        fileViewerModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeFileViewer() {
+        fileViewerModal.classList.remove('active');
+        document.body.style.overflow = '';
+        // Clear iframe src to stop loading
+        setTimeout(() => {
+            pdfFrame.src = '';
+            imagePreview.src = '';
+        }, 300);
+    }
+
+    // Attach click handlers to all view file buttons
+    document.querySelectorAll('.view-file-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const filePath = this.getAttribute('data-file');
+            const fileType = this.getAttribute('data-type');
+            openFileViewer(filePath, fileType);
+        });
+    });
+
+    // Close file viewer on X button click
+    if (closeFileViewerBtn) {
+        closeFileViewerBtn.addEventListener('click', closeFileViewer);
+    }
+
+    // Close file viewer when clicking outside
+    fileViewerModal.addEventListener('click', function(e) {
+        if (e.target === fileViewerModal) {
+            closeFileViewer();
+        }
+    });
+
+    // Close file viewer on ESC key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && fileViewerModal.classList.contains('active')) {
+            closeFileViewer();
+        }
+        if (e.key === 'Escape' && confirmModal.classList.contains('active')) {
+            closeConfirmModal();
+        }
+    });
+
+    // Check URL parameters for success/error messages
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'approved') {
+        showToast('✅ Teacher approved successfully! They can now log in.');
+    } else if (urlParams.get('success') === 'rejected') {
+        showToast('❌ Teacher application rejected.');
+    } else if (urlParams.get('success') === 'deleted') {
+        showToast('🗑️ Teacher record deleted permanently.');
+    } else if (urlParams.get('error')) {
+        showToast(urlParams.get('error'), true);
+    }
+</script>
+</body>
+</html>
