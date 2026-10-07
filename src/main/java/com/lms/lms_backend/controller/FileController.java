@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("/api/files")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://shikkha-hub-e-learning-platform.vercel.app"})
 public class FileController {
 
     @GetMapping("/view/{filename:.+}")

@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 /** Public, read-only site content for the React app. */
 @RestController
 @RequestMapping("/api/site")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://shikkha-hub-e-learning-platform.vercel.app"})
 public class SiteController {
 
     private final SiteSettingService settings;

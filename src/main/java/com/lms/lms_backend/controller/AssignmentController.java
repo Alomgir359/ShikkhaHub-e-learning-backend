@@ -15,7 +15,7 @@ import static com.lms.lms_backend.controller.ClassroomResponses.ok;
 /** Assignments (instructor creates, students submit) and submission grading. */
 @RestController
 @RequestMapping("/api/assignments")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://shikkha-hub-e-learning-platform.vercel.app"})
 public class AssignmentController {
 
     private final AssignmentService service;

@@ -17,7 +17,7 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/api/classroom/files")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://shikkha-hub-e-learning-platform.vercel.app"})
 public class ClassroomFileController {
 
     // Only these are shown inside the browser; every other type is downloaded.

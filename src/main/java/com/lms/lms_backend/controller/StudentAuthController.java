@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  */
 @RestController
 @RequestMapping("/api/students")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://shikkha-hub-e-learning-platform.vercel.app"})
 public class StudentAuthController {
 
     private static final Pattern EMAIL = Pattern.compile("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$");

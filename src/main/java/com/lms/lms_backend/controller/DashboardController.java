@@ -13,7 +13,7 @@ import static com.lms.lms_backend.controller.ClassroomResponses.fail;
 /** Course lists and summary numbers for the student and instructor dashboards. */
 @RestController
 @RequestMapping("/api/dashboard")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://shikkha-hub-e-learning-platform.vercel.app"})
 public class DashboardController {
 
     private final DashboardService service;

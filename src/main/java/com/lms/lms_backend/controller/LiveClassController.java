@@ -16,7 +16,7 @@ import static com.lms.lms_backend.controller.ClassroomResponses.ok;
 /** Zoom live classes: the instructor schedules, enrolled students join. */
 @RestController
 @RequestMapping("/api/live-classes")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://shikkha-hub-e-learning-platform.vercel.app"})
 public class LiveClassController {
 
     private final LiveClassService service;

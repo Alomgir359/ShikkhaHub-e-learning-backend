@@ -14,7 +14,7 @@ import static com.lms.lms_backend.controller.ClassroomResponses.ok;
 /** Recorded classes: the instructor uploads, enrolled students watch. */
 @RestController
 @RequestMapping("/api/recorded-classes")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://shikkha-hub-e-learning-platform.vercel.app"})
 public class RecordedClassController {
 
     private final RecordedClassService service;
