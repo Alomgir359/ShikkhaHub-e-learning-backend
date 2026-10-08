@@ -131,6 +131,13 @@ public class TeacherController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
 
+        // Students can always log in (no admin approval for the account itself). Only their COURSE waits
+        // for payment verification. Accounts created by the old flow (PENDING/REJECTED) are fixed here.
+        if ("STUDENT".equals(t.getRole()) && !"APPROVED".equals(t.getStatus())) {
+            t.setStatus("APPROVED");
+            t = teacherService.save(t);
+        }
+
         if ("APPROVED".equals(t.getStatus())) {
             response.put("message", "Login Success");
             response.put("status", t.getStatus());

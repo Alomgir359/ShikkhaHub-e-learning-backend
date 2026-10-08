@@ -142,8 +142,9 @@ public class EnrollmentService {
                 student.setOrganization("Self");
                 student.setExperience("New Student");
                 student.setRole("STUDENT");
-                // Paid course: cannot log in until the admin verifies the payment
-                student.setStatus(free ? "APPROVED" : PENDING);
+                // The account can log in right away. Only the COURSE waits for the admin to verify the payment
+                // (the dashboard lists the course after approval; until then it shows the pending enrollment).
+                student.setStatus("APPROVED");
                 student.setAppliedAt(LocalDateTime.now());
                 student.setUpdatedAt(LocalDateTime.now());
                 student = teacherRepository.save(student);
@@ -158,11 +159,8 @@ public class EnrollmentService {
                 if (password == null || !password.equals(student.getPassword()))
                     throw new EnrollmentException("WRONG_PASSWORD",
                             "এই ইমেইলে আগে একটি এনরোলমেন্ট জমা হয়েছে। সেই সময়ের পাসওয়ার্ডটি দিন।");
-                if (!free) {
-                    student.setStatus(PENDING);
-                } else {
-                    student.setStatus("APPROVED");
-                }
+                // Older accounts created before this change may still be PENDING/REJECTED → let them in
+                student.setStatus("APPROVED");
                 student.setUpdatedAt(LocalDateTime.now());
                 teacherRepository.save(student);
             }
@@ -218,7 +216,7 @@ public class EnrollmentService {
         result.put("accountStatus", student.getStatus());
         result.put("message", free
                 ? "এনরোলমেন্ট সম্পন্ন হয়েছে! এখন লগইন করে কোর্স শুরু করুন।"
-                : "এনরোলমেন্ট সম্পন্ন হয়েছে! অ্যাডমিন আপনার পেমেন্ট যাচাই করে অ্যাপ্রুভ করলে আপনি লগইন করতে পারবেন।");
+                : "এনরোলমেন্ট সম্পন্ন হয়েছে! আপনি এখন লগইন করতে পারবেন। অ্যাডমিন পেমেন্ট যাচাই করে অ্যাপ্রুভ করলে কোর্সটি আপনার ড্যাশবোর্ডে চালু হবে।");
         return result;
     }
 
@@ -267,15 +265,7 @@ public class EnrollmentService {
             courseRepository.findById(e.getCourseId()).ifPresent(this::decrementSeats);
         }
 
-        // A new account whose only enrollment got rejected stays locked and sees the reason at login.
-        teacherRepository.findById(e.getStudentId()).ifPresent(s -> {
-            long okCount = enrollmentRepository.countByStudentIdAndStatusIn(s.getId(), List.of(ACTIVE, COMPLETED, PENDING));
-            if (PENDING.equals(s.getStatus()) && okCount == 0) {
-                s.setStatus(REJECTED);
-                s.setUpdatedAt(LocalDateTime.now());
-                teacherRepository.save(s);
-            }
-        });
+        // The account stays usable: the student logs in and sees the rejection reason on the dashboard.
         return e;
     }
 
