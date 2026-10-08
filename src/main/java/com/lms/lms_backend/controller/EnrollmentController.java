@@ -46,9 +46,15 @@ public class EnrollmentController {
             return ResponseEntity.status(status).body(response);
         } catch (Exception e) {
             e.printStackTrace();
+            // Root cause (e.g. the real PostgreSQL error behind a Hibernate/Spring wrapper)
+            Throwable root = e;
+            while (root.getCause() != null && root.getCause() != root) root = root.getCause();
             response.put("success", false);
             response.put("code", "SERVER_ERROR");
             response.put("message", "কিছু একটা সমস্যা হয়েছে। একটু পরে আবার চেষ্টা করুন।");
+            // TEMPORARY DEBUG: shows the real cause in the browser's Network → Response tab.
+            // Remove this line once enrollment works.
+            response.put("debug", e.getClass().getName() + " | " + root.getClass().getName() + ": " + root.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
